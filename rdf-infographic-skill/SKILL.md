@@ -413,6 +413,83 @@ const customNavItems = [
 ];
 ```
 
+### Knowledge Graph Visualization Modes
+
+When generating an RDF infographic that includes a knowledge graph visualization, you MUST first elicit the visualization mode preference from the user:
+
+> "Would you like a **Basic** (simple, lightweight) or **Advanced** (full-featured, with settings panel) graph visualization?"
+
+#### Basic Mode (Default)
+
+Basic mode provides a lightweight, functional D3.js force-directed graph:
+- Filter buttons: toggle visibility by node type (Classes, Properties, Instances)
+- Search input: filter nodes by name
+- Simple legend with color-coded dots
+- Click any node to open its IRI in the configured resolver (URIBurner describe service)
+- Drag nodes to reposition
+- Mouse wheel zoom and drag-to-pan
+- Hover tooltip showing entity description
+- Edge labels that are clickable hyperlinks to property/type IRIs
+
+**Implementation requirements:**
+- Include D3.js via CDN: `<script src="https://d3js.org/d3.v7.min.js"></script>`
+- Use URIBurner resolver pattern: `https://linkeddata.uriburner.com/describe/?uri={encodedIRI}`
+- Node colors: Classes (orange #ea580c), Properties (blue #0ea5e9), Instances (green #059669)
+- Edge label click behavior:
+  - "a" (rdf:type) → rdf:type predicate IRI
+  - "domain" (rdfs:domain) → rdfs:domain predicate IRI
+  - "range" (rdfs:range) → rdfs:range predicate IRI
+  - Property labels → the property's own IRI
+
+#### Advanced Mode
+
+Advanced mode provides a full-featured visualization with settings panel, inspired by OSDS_extension/graph_gen.js:
+
+**Visual features:**
+- Dark/light theme toggle with gradient backgrounds and vignette effect
+- Arrow markers on edges indicating relationship direction
+- Node type icons: 👤 person, 🏢 organization, 📍 place, 💭 concept, 📅 event, 📝 literal, 🔗 resource
+- Color-coded node sizes based on connectivity/importance
+- Backdrop blur tooltip styling
+
+**Control toolbar (top-right):**
+- Fullscreen toggle button
+- Center graph button
+- Theme toggle (sun/moon)
+- SPARQL construct button (placeholder for future use)
+- Settings gear button
+
+**Settings panel (slides from right):**
+- **Physics Simulation**: Charge strength slider (-1200 to -50), Link distance slider (40-320px), Enable/disable physics toggle
+- **Predicate Display**: Radio option for "Icons" vs "Labels"
+- **Edge Filtering**: Checkbox list of all predicates, Select All/Deselect All buttons
+- **Node Filtering**: Chips for each node type (person, organization, place, concept, event, literal, resource), Select All/Deselect All
+- **Literal Text Filtering**: Text input to show only literal relationships containing specified text
+- **Resolver Preference**: Options for "None", "URIBurner" (https://linkeddata.uriburner.com/describe/?url={uri}), or "Custom" with pattern input
+- **Arrow Style**: "Dual arrows" (render every triple) vs "Single arrow" (merge mutual predicates)
+- **Color-coded Legend**: Dynamic legend showing node type colors with toggle chips
+
+**Interaction:**
+- Mouse wheel zoom (0.2x to 4x scale extent)
+- Drag background to pan
+- Click node to open IRI in resolver
+- Click edge label to open predicate IRI in resolver
+- Drag nodes to reposition
+- Double-click to pin/unpin node
+- Local storage for preferences (theme, physics settings, resolver preference, arrow style)
+
+**Implementation reference**: See `/Users/kidehen/Documents/Management/Development/OSDS_extension/src/graph_gen.js` for complete implementation details.
+
+#### Mode Elicitation
+
+When the user requests an RDF infographic with graph visualization:
+1. Ask: "Would you like a Basic or Advanced graph visualization?"
+2. If Basic → implement Basic mode only
+3. If Advanced → implement Advanced mode with toggle to Basic mode available
+4. Default to Basic if no preference specified
+
+The infographic should include a mode toggle (Basic/Advanced) in the visualization controls if Advanced is selected, allowing users to switch between modes at runtime.
+
 ## Performance Considerations
 
 - **Intersection Observer API**: Used instead of scroll events for optimal performance
