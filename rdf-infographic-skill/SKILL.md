@@ -415,18 +415,18 @@ const customNavItems = [
 
 ### Knowledge Graph Visualization Modes
 
-When generating an RDF infographic that includes a knowledge graph visualization, you MUST first elicit the visualization mode preference from the user:
-
-> "Would you like a **Basic** (simple, lightweight) or **Advanced** (full-featured, with settings panel) graph visualization?"
+When generating an RDF infographic that includes a knowledge graph visualization, the default KG Explorer deliverable is a combined **Basic/Advanced** graph with a runtime mode toggle. Do not make the user choose unless they explicitly ask for a smaller artifact or graph complexity/performance is unclear.
 
 #### Basic Mode (Default)
 
 Basic mode provides a lightweight, functional D3.js force-directed graph:
-- Filter buttons: toggle visibility by node type (Classes, Properties, Instances)
+- Multi-select filter buttons: toggle visibility by node type (Classes, Properties, Instances) with visually obvious selected/unselected states and matching `aria-pressed` values
+- Density buttons: Core and Full graph views. Default to Core + Instances when the full graph is visually busy; keep Full available for complete RDF inspection
 - Search input: filter nodes by name
+- Status readout showing active mode, active filters, and visible node/link counts
 - Simple legend with color-coded dots
 - Click any node to open its IRI in the configured resolver (URIBurner describe service)
-- Drag nodes to reposition
+- Drag nodes to reposition; dragged nodes MUST pin/stick at the drop destination. Double-click unpins
 - Mouse wheel zoom and drag-to-pan
 - Hover tooltip showing entity description
 - Edge/connector labels that are clickable hyperlinks to property/type IRIs
@@ -436,20 +436,23 @@ Basic mode provides a lightweight, functional D3.js force-directed graph:
 
 **Implementation requirements:**
 - Include D3.js via CDN: `<script src="https://d3js.org/d3.v7.min.js"></script>`
-- Use URIBurner resolver pattern: `https://linkeddata.uriburner.com/describe/?uri={encodedIRI}`
+- Use URIBurner resolver pattern: `https://linkeddata.uriburner.com/describe/?url={encodedIRI}`
 - Node colors: Classes (orange #ea580c), Properties (blue #0ea5e9), Instances (green #059669)
+- Improve graph readability with type-aware layout/positioning, collision spacing, curved edges, pill-backed labels, and lower-priority edge labels suppressed or deemphasized in dense views
 - Edge label click behavior:
   - "a" (rdf:type) → rdf:type predicate IRI
   - "domain" (rdfs:domain) → rdfs:domain predicate IRI
   - "range" (rdfs:range) → rdfs:range predicate IRI
   - Property labels → the property's own IRI
+- Do NOT add a separate resolver launchpad/card grid below the KG Explorer unless the user explicitly requests one. The graph itself is the entity resolver surface; the next section should be the next narrative section.
 
 #### Advanced Mode
 
 Advanced mode provides a full-featured visualization with settings panel, inspired by OSDS_extension/graph_gen.js:
 
 **Visual features:**
-- Dark/light theme toggle with gradient backgrounds and vignette effect
+- Uses the page-level dark/light theme state from the floating navigation panel. Do not add a second graph-specific theme toggle
+- Refined graph surface with soft contrast, type-aware clustering, curved relationships, readable label backing, and restrained edge opacity
 - Arrow markers on edges indicating relationship direction
 - Node type icons: 👤 person, 🏢 organization, 📍 place, 💭 concept, 📅 event, 📝 literal, 🔗 resource
 - Color-coded node sizes based on connectivity/importance
@@ -487,27 +490,149 @@ Advanced mode provides a full-featured visualization with settings panel, inspir
   - `"seeAlso"` → `http://www.w3.org/2000/01/rdf-schema#seeAlso`
   - Other labels → `{document-baseIRI}{label}` (hash-based relative IRI)
 - Drag nodes to reposition
-- Double-click to pin/unpin node
-- Local storage for preferences (theme, physics settings, resolver preference, arrow style)
+- Dragged nodes MUST pin/stick at their drop destination; double-click to pin/unpin node
+- Local storage for preferences where useful (physics settings, resolver preference, arrow style). Page theme belongs to the navigation panel theme toggle, not the graph toolbar
 
 **Implementation reference**: See `/Users/kidehen/Documents/Management/Development/OSDS_extension/src/graph_gen.js` for complete implementation details.
 
-#### Mode Elicitation (CRITICAL)
+#### Mode Selection
 
 When the user requests an RDF infographic with graph visualization:
 
-**STOP - Do not generate any HTML until you complete this step:**
+1. Default to a Basic/Advanced runtime toggle.
+2. If the user explicitly asks for a lightweight graph, implement Basic only.
+3. If the user explicitly asks for full controls, make Advanced the default selected mode while preserving the Basic toggle.
+4. Do not include a graph-specific theme toggle in any mode.
 
-1. Ask the user explicitly: "Would you like a **Basic** (lightweight, no settings panel) or **Advanced** (full-featured, with settings panel) graph visualization?"
-2. **Wait for the user's response** before proceeding
-3. If the user does not specify within 2 exchanges, default to Basic mode
-4. Once confirmed, proceed with the appropriate mode:
-   - **Basic** → implement Basic mode only (no Advanced features)
-   - **Advanced** → implement Advanced mode with toggle to switch to Basic at runtime
+## Constructing kgData from RDF (CRITICAL)
 
-> **Why this matters:** Including Advanced features (settings panel, physics controls, theme toggle, etc.) adds complexity and potential bugs. Only include them when the user explicitly requests them.
+When generating an HTML infographic with a D3.js knowledge graph visualization, you MUST derive the `kgData` object from the RDF data - do NOT manually type out nodes and links. This ensures the graph accurately represents the RDF.
 
-The infographic should include a mode toggle (Basic/Advanced) in the visualization controls if Advanced is selected, allowing users to switch between modes at runtime.
+For `file://` reliability, it is acceptable to embed a precomputed `kgData` object in the HTML, but it MUST be generated from the companion RDF artifact at generation time. Include a concise graph note such as "Graph data embedded from companion RDF at generation time" when live RDF parsing is not used.
+
+The graph dataset MUST include:
+- Instance nodes for document entities and domain entities
+- Class nodes from `rdf:type`, schema.org, PROV, RDF, RDFS, or local ontology usage
+- Property nodes or predicate metadata for edge labels and filter/legend surfaces
+- Resolver-backed IRIs for every node and every edge predicate. Class/property nodes that use vocabulary IRIs such as `schema:Person`, `prov:wasGeneratedBy`, or `rdf:type` still open through the configured resolver unless a direct LOD cross-reference is intentionally used
+
+### Option 1: Automatic RDF-to-D3 Parser
+
+Include a JavaScript function that parses the RDF and builds kgData:
+
+```javascript
+// RDF data embedded in HTML (from the TTL)
+const rdfData = `
+:liverpoolFC a :FootballTeam .
+:arneSlot a :FootballManager ; :oversaw :liverpoolFC .
+:virgilVanDijk a schema:Person ; :playsFor :liverpoolFC .
+`;
+
+// Parse RDF to extract nodes and links
+function parseRDFToGraph(rdfText, baseIRI) {
+    const nodes = new Map();
+    const links = [];
+    const triples = rdfText.split(' .\n').filter(t => t.trim());
+    
+    triples.forEach(triple => {
+        // Extract subject, predicate, object
+        const match = triple.match(/^:(\w+)\s+(\w+):(\w+)\s+/);
+        if (!match) return;
+        
+        const [, subject, predNS, predicate] = match;
+        
+        // Add subject as node if not exists
+        if (!nodes.has(subject)) {
+            const isClass = predicate === 'Class' || predicate === 'Property';
+            nodes.set(subject, { 
+                id: subject, 
+                label: subject, 
+                type: isClass ? (predicate === 'Class' ? 'class' : 'property') : 'instance',
+                desc: `RDF entity: ${subject}`
+            });
+        }
+        
+        // Add object as node if not exists
+        const obj = `${predNS}:${predicate}`;
+        if (!nodes.has(obj)) {
+            nodes.set(obj, { 
+                id: obj, 
+                label: predicate, 
+                type: 'instance',
+                desc: `RDF entity: ${predicate}`
+            });
+        }
+        
+        // Add link
+        links.push({ source: subject, target: obj, label: predicate });
+    });
+    
+    return { nodes: Array.from(nodes.values()), links };
+}
+
+// Build kgData from the parsed graph
+const kgData = parseRDFToGraph(rdfData, BASE_IRI);
+```
+
+### Option 2: Embedded Reference Data
+
+Include the key RDF entities as reference data in the HTML that can be used to construct kgData:
+
+```javascript
+// Reference data extracted from RDF - include all key entities
+const rdfEntities = {
+    classes: [
+        { id: "FootballTeam", label: "FootballTeam", desc: "Professional football club" },
+        { id: "FootballManager", label: "FootballManager", desc: "Manager of a football team" },
+        { id: "SeasonAnalysis", label: "SeasonAnalysis", desc: "Analysis of season performance" },
+        { id: "PlayerLoad", label: "PlayerLoad", desc: "Analysis of player workload" }
+    ],
+    instances: [
+        { id: "liverpoolFC", label: "Liverpool FC", desc: "Premier League football club", type: "team" },
+        { id: "arneSlot", label: "Arne Slot", desc: "Liverpool manager", type: "manager" },
+        { id: "seasonAnalysis", label: "Season Analysis", desc: "26-point regression", type: "analysis" },
+        { id: "playerLoad", label: "Player Load", desc: "70,166 total mins", type: "data" },
+        { id: "virgilVanDijk", label: "Van Dijk", desc: "5592 mins, 50x90s", type: "player" },
+        // ... all other entities from RDF
+    ],
+    relationships: [
+        { source: "liverpoolFC", target: "FootballTeam", label: "a" },
+        { source: "arneSlot", target: "FootballManager", label: "a" },
+        { source: "arneSlot", target: "liverpoolFC", label: "oversaw" },
+        { source: "virgilVanDijk", target: "liverpoolFC", label: "playsFor" },
+        { source: "virgilVanDijk", target: "playerLoad", label: "hasLoad" },
+        // ... all other relationships from RDF
+    ]
+};
+
+// Build kgData from reference data
+const kgData = {
+    nodes: [
+        ...rdfEntities.classes.map(c => ({ ...c, type: 'class' })),
+        ...rdfEntities.instances.map(i => ({ ...i, type: 'instance' }))
+    ],
+    links: rdfEntities.relationships
+};
+```
+
+### Key Requirements
+
+1. **All RDF entities MUST be represented** - Every subject/object in the RDF should appear as a node
+2. **All RDF triples MUST be links** - Every predicate creates a link between subject and object
+3. **No orphaned nodes** - Every node must have at least one incoming or outgoing link
+4. **Type classification** - Use `type: 'class'`, `type: 'property'`, or `type: 'instance'`
+5. **Bidirectional for relevant relationships** - Players connect to both club (`playsFor`) and load data (`hasLoad`)
+
+### Validation Checklist
+
+Before finalizing the HTML, verify:
+- [ ] All classes from RDF appear as class-type nodes
+- [ ] All instances from RDF appear as instance-type nodes  
+- [ ] All predicates from RDF appear as links
+- [ ] No nodes exist that are not in the RDF
+- [ ] No links exist that are not in the RDF
+- [ ] Every node has at least one connection (no orphans)
+- [ ] Player/Person entities connect to their organization AND relevant data entities
 
 ## Performance Considerations
 
@@ -661,7 +786,7 @@ Entities that have defined IRIs in the RDF knowledge graph (persons, concepts, o
 <!-- NO RESOLVER (user opted out): plain entity IRI, no hyperlink, or inline IRI display -->
 ```
 
-**Encoding rule:** `#` in entity IRIs must be encoded as `%23` exactly once in resolver `uri` parameter values. `%2523` (double-encoded) is invalid.
+**Encoding rule:** `#` in entity IRIs must be encoded as `%23` exactly once in resolver `url` parameter values. `%2523` (double-encoded) is invalid.
 
 The resolver is for entities defined **within the document's own knowledge graph** (hash-based IRIs under the document namespace) that need a describe service to expose their structured descriptions. Entities that already have dereferenceable RDF IRIs in the Linked Open Data Cloud — such as DBpedia (`http://dbpedia.org/resource/...`), Wikidata (`http://www.wikidata.org/entity/...`), and other LOD sources — are cross-reference links. They resolve natively and should be linked directly, not routed through a resolver.
 
@@ -691,6 +816,11 @@ Navigation state persistence **MUST** handle these edge cases:
 - [ ] Associated RDF document parses without errors and passes the `validate-kg-compliance.sh` audit.
 - [ ] Every resolver entity hyperlink in the HTML resolves to a valid `describe/?url=` URL (no double-encoding: `%2523` is invalid; `#` must encode to `%23` exactly once).
 - [ ] FAQ questions, FAQ answers, glossary terms, glossary definitions, HowTo section + steps, and other visible semantic entities are ALL hyperlinked to their KG entity IRIs via the resolver pattern.
+- [ ] If a KG Explorer is present, its graph data is derived from the companion RDF artifact; if embedded, it is explicitly derived at generation time and not manually invented.
+- [ ] KG Explorer includes resolver-backed node links and resolver-backed edge predicate links using `describe/?url=`.
+- [ ] KG Explorer includes Basic/Advanced modes by default, Core/Full density controls, multi-select Classes/Properties/Instances filters, clear selected/unselected filter states, visible node/link count feedback, and no blank graph when filters are enabled.
+- [ ] KG Explorer node dragging pins/sticks nodes at their drop destinations, and double-click unpins.
+- [ ] KG Explorer is visually readable: type-aware layout, collision spacing, curved or otherwise legible edges, restrained edge opacity, readable labels, and no unnecessary resolver launchpad/card grid below it.
 - [ ] If a Markdown companion was requested, it is saved in the same folder as the HTML file, uses the same filename stem with `.md`, links to the HTML file, links to the RDF file with a relative path, and has no non-resolver external semantic links.
 - [ ] If a Markdown companion was requested, the HTML POSH metadata includes `<link rel="alternate" type="text/markdown" href="{markdown-file}">`, and the embedded JSON-LD declares the Markdown file as an alternate encoding/representation using a relative `@id`.
 - [ ] If a Markdown companion was requested and RDF media entities exist, it embeds or references them: images with Markdown image syntax, videos with HTML `<video controls>`, audio with HTML `<audio controls>`, and captions/labels linked to the RDF media entity IRIs through the resolver.
