@@ -30,6 +30,31 @@ This skill enables you to:
 - Transforming ontologies into visual narratives
 - Building interactive data-driven narratives for stakeholder presentations
 
+## Strict Harness Mode
+
+Use **RDF Infographic Harness Mode** whenever the user asks for an RDF-backed HTML infographic, an HTML/MD/RDF artifact set, regeneration from RDF, a KG Explorer page, or a redo of a prior RDF infographic artifact.
+
+Harness mode constrains request interpretation to this skill's artifact contract. Do not substitute a simpler web page, generic dashboard, manually invented graph, or partial visual summary when the request matches this mode.
+
+### Harness Contract
+
+When active, every generated artifact set MUST include, unless the user explicitly opts out:
+
+1. **RDF source of truth** — parse or generate the companion RDF first; derive semantic entities, links, and KG Explorer graph data from that RDF.
+2. **Shared artifact stem** — save HTML, Markdown, and RDF with the same `{descriptive-slug}-{llm-id}-{n}` stem.
+3. **Resolver-backed entity links** — visible semantic entities in HTML, Markdown, KG nodes, and KG edge predicates route through `https://linkeddata.uriburner.com/describe/?url={encodedIRI}` unless the user explicitly supplies another resolver.
+4. **POSH and JSON-LD pairing** — HTML declares the companion RDF and Markdown files through `<link rel="related">`, `<link rel="alternate">`, and embedded JSON-LD.
+5. **Floating navigation control** — movable, resizable, collapsible, visible in a closed compact header-bar state by default, and recoverable after stale localStorage.
+6. **Page theme control** — one page-level light/dark toggle in the navigation panel, with equivalent `html[data-theme="dark"]` and `prefers-color-scheme: dark` variable values.
+7. **Knowledge Graph Explorer** — Basic and Advanced modes, resolver-backed node/edge links, directed subject-to-object arrowheads, Core/Full density, multi-select Classes/Properties/Instances filters, visible selected states, node/link counts, sticky drag, double-click unpin, and no resolver launchpad/card grid unless explicitly requested.
+8. **Advanced KG settings panel** — fullscreen, center, settings button, visible close (`X`), wired physics controls, predicate display, predicate filters, node filters, literal filter, resolver preference, arrow style, and clear state feedback.
+9. **Attribution footer** — source material, companion files, skills used, generation environment, server/platform items where known, resolver pattern, and hyperlinked generation-environment entities.
+10. **Markdown companion parity** — Markdown mirrors the HTML narrative structure and preserves resolver-backed links for FAQ, glossary, HowTo, People, Organizations, SoftwareApplication, source/document, and media entities.
+11. **SoftwareApplication denotation rule** — DBpedia IRI if confirmed, else Wikidata IRI if confirmed, else official homepage URL with `#this`; add `owl:sameAs` for confirmed DBpedia/Wikidata identities when using a homepage fallback.
+12. **Zero-failure delivery gate** — do not deliver until RDF parse, HTML/JS parse, resolver link audit, KG Explorer behavior checklist, nav behavior, dark mode, output path checks, and programmatic KG orphan-node checks all pass.
+
+If an input is insufficient to satisfy the harness contract, ask for the missing source, RDF, resolver, output folder, or artifact scope before generating. If an existing artifact is being repaired, preserve its RDF/HTML/MD pairing and retrofit the missing contract items rather than creating a separate one-off patch.
+
 ## Quick Workflow
 
 ### 1. Prepare Your RDF Data
@@ -85,7 +110,8 @@ When the user asks for Markdown, a Markdown variant, a `.md` companion, or a tex
 - Link back to the HTML file with a relative link.
 - Link to the associated RDF file with the same relative path used by the HTML `rel="related"` link.
 - Preserve the RDF entity-linking contract: FAQ questions/answers, glossary terms/definitions, HowTo section and step headings, article/person/organization/media entities, and other key entities must link through the configured resolver using their RDF IRIs.
-- Do not use raw source URLs for semantic entity links unless the entity is a Linked Open Data cross-reference intended to resolve directly.
+- Treat every visible HowTo step label exactly like a visible FAQ question: if the RDF contains `schema:HowToStep` entities, the step heading/label in HTML and Markdown MUST be an anchor to that step entity's RDF IRI through the configured resolver.
+- Do not use raw source URLs for semantic entity links. Visible semantic entity links, including DBpedia/Wikidata IRIs selected as RDF entity identifiers, should route through the configured resolver unless the user explicitly asks for direct LOD links.
 - Include media references when they exist in the RDF:
   - Images: embed with Markdown image syntax using the image content URL, and wrap or caption with a resolver link to the image object's RDF IRI.
   - Video: embed with an HTML `<video controls>` block because portable Markdown has no native video syntax. Use the video `contentUrl` as `<source src="..." type="video/mp4">` when available, include `poster="..."` from `schema:thumbnailUrl` when available, and provide a resolver link to the `schema:VideoObject` IRI.
@@ -143,6 +169,7 @@ The generated HTML follows this narrative flow:
 - Always visible, positioned fixed (top-left or top-right)
 - Contains a title/icon and a toggle button (− / +)
 - Draggable by the header bar on desktop
+- Default page-load state is collapsed unless the user explicitly requests otherwise. The first visible state should be the compact header bar, with the toggle showing `+` and an "Expand navigation" label.
 
 **Collapsed state**:
 - Only the header bar is shown
@@ -439,6 +466,7 @@ Basic mode provides a lightweight, functional D3.js force-directed graph:
 - Use URIBurner resolver pattern: `https://linkeddata.uriburner.com/describe/?url={encodedIRI}`
 - Node colors: Classes (orange #ea580c), Properties (blue #0ea5e9), Instances (green #059669)
 - Improve graph readability with type-aware layout/positioning, collision spacing, curved edges, pill-backed labels, and lower-priority edge labels suppressed or deemphasized in dense views
+- The graph SVG/canvas MUST fill the available graph pane width. For SVG, set `width: 100%`, `display: block`, an explicit height, and update `width`, `height`, and `viewBox` from the rendered container before starting or restarting the D3 simulation. Never rely on the browser's default SVG intrinsic size.
 - Edge label click behavior:
   - "a" (rdf:type) → rdf:type predicate IRI
   - "domain" (rdfs:domain) → rdfs:domain predicate IRI
@@ -468,6 +496,7 @@ Advanced mode provides a full-featured visualization with settings panel, inspir
 > **Note:** Do NOT include a theme toggle in the graph toolbar. The page already has a theme toggle in the navigation panel (top-left). Duplicate theme controls are redundant.
 
 **Settings panel (slides from right):**
+- Must include an obvious close control (`X`) in the panel header that hides the settings panel, updates the settings button `aria-expanded` state, and returns focus to the settings button.
 - **Physics Simulation**: Charge strength slider (-1200 to -50), Link distance slider (40-320px), Enable/disable physics toggle
   > **Critical:** These controls MUST be wired to update the D3 force simulation in real-time. Use event listeners on the input elements to call `simulation.force("charge").strength(value)` and `simulation.force("link").distance(value)`, then `simulation.alpha(0.3).restart()` to apply changes.
 - **Predicate Display**: Radio option for "Icons" vs "Labels"
@@ -514,7 +543,7 @@ The graph dataset MUST include:
 - Instance nodes for document entities and domain entities
 - Class nodes from `rdf:type`, schema.org, PROV, RDF, RDFS, or local ontology usage
 - Property nodes or predicate metadata for edge labels and filter/legend surfaces
-- Resolver-backed IRIs for every node and every edge predicate. Class/property nodes that use vocabulary IRIs such as `schema:Person`, `prov:wasGeneratedBy`, or `rdf:type` still open through the configured resolver unless a direct LOD cross-reference is intentionally used
+- Resolver-backed IRIs for every node and every edge predicate. Class/property nodes that use vocabulary IRIs such as `schema:Person`, `prov:wasGeneratedBy`, or `rdf:type` still open through the configured resolver unless the user explicitly asks for direct LOD links.
 
 ### Option 1: Automatic RDF-to-D3 Parser
 
@@ -633,6 +662,19 @@ Before finalizing the HTML, verify:
 - [ ] No links exist that are not in the RDF
 - [ ] Every node has at least one connection (no orphans)
 - [ ] Player/Person entities connect to their organization AND relevant data entities
+
+### Programmatic Orphan-Node Gate
+
+When the HTML embeds a `kgData` object or equivalent graph payload, the final validation MUST programmatically inspect it before delivery:
+
+1. Parse the embedded graph payload from the saved HTML.
+2. Build the set of node IDs.
+3. Build the incident set from every link whose `source` and `target` both exist in the node set.
+4. Fail delivery if any node is absent from the incident set.
+5. Emulate the default KG Explorer render state (default mode, default density, default Classes/Properties/Instances filters, default predicate filters, and default search/literal filters) and fail delivery if any rendered node has no rendered incoming or outgoing link.
+6. If the graph renderer prunes nodes after filter/density changes, ensure the pruning occurs after link filtering so no visible orphan nodes remain.
+
+Record the validation result in the work log or final answer, for example: `KG data check: 177 nodes / 312 links, global orphan nodes: 0, default rendered orphan nodes: 0`.
 
 ## Performance Considerations
 
@@ -757,6 +799,20 @@ Every generated HTML infographic footer sources/attribution section MUST also in
 
 The RDF and embedded JSON-LD provenance SHOULD mirror this visible attribution using named entities such as `:gpt5ChatInterface`, `:codexDesktopEnvironment`, `:sourceDeliveryServer`, `:uriBurnerResolver`, and `:virtuosoServer` where applicable. These entities MUST NOT use `file:` IRIs. If the server/provider cannot be determined, state `source delivery server not determined` in the human-visible attribution instead of omitting the field.
 
+### SoftwareApplication IRI Denotation Rule
+
+For every `schema:SoftwareApplication` entity introduced or normalized during RDF/HTML/Markdown generation, select the subject IRI using this priority order:
+
+1. **DBpedia first** — if a confident DBpedia resource exists, use the fully expanded DBpedia IRI as the software application's primary denotation IRI, for example `http://dbpedia.org/resource/Google_Docs`.
+2. **Wikidata second** — if no confident DBpedia resource exists but a confident Wikidata entity exists, use the fully expanded Wikidata IRI, for example `http://www.wikidata.org/entity/Q...`.
+3. **Homepage fallback** — if neither DBpedia nor Wikidata can be confirmed, use the official product/application home page URL with `#this` appended, for example `https://example.com/product/#this`.
+
+When the primary IRI is not DBpedia- or Wikidata-based, add `owl:sameAs` relations to any confirmed DBpedia or Wikidata IRIs for that application. Declare `owl:` as `http://www.w3.org/2002/07/owl#` whenever `owl:sameAs` appears. Do not use a local document hash IRI for a known software application when one of the three denotation options above is available.
+
+Visible software application names in HTML and Markdown MUST link through the configured resolver using the selected RDF IRI. The KG Explorer node for the software application MUST use the same selected IRI.
+
+Before delivery, record or verify the chosen denotation basis for every `schema:SoftwareApplication`: DBpedia, Wikidata, or homepage `#this`. Do not fabricate DBpedia or Wikidata IRIs; if no confident match is found, use the homepage fallback and omit `owl:sameAs` unless a confident external identity is later established.
+
 ---
 
 ## HTML/Markdown/RDF Pairing Requirements
@@ -788,7 +844,7 @@ Entities that have defined IRIs in the RDF knowledge graph (persons, concepts, o
 
 **Encoding rule:** `#` in entity IRIs must be encoded as `%23` exactly once in resolver `url` parameter values. `%2523` (double-encoded) is invalid.
 
-The resolver is for entities defined **within the document's own knowledge graph** (hash-based IRIs under the document namespace) that need a describe service to expose their structured descriptions. Entities that already have dereferenceable RDF IRIs in the Linked Open Data Cloud — such as DBpedia (`http://dbpedia.org/resource/...`), Wikidata (`http://www.wikidata.org/entity/...`), and other LOD sources — are cross-reference links. They resolve natively and should be linked directly, not routed through a resolver.
+The resolver is for entities defined **within the document's knowledge graph**, including hash-based document IRIs and external RDF IRIs selected as entity identifiers. Entities that already have dereferenceable RDF IRIs in the Linked Open Data Cloud — such as DBpedia (`http://dbpedia.org/resource/...`), Wikidata (`http://www.wikidata.org/entity/...`), and other LOD sources — still route through the configured resolver when they are visible semantic entities in the HTML/Markdown/KG Explorer. The resolver `url` parameter carries the selected RDF IRI.
 
 ### Navigation Panel Behavior
 
@@ -797,6 +853,7 @@ Every infographic **MUST** include a floating section navigation control that:
 - **Is movable** — draggable by pointer on desktop.
 - **Is resizable** — resizable by pointer drag on desktop.
 - **Is collapsible** — a toggle button collapses/expands the link list (collapse-to-header-bar pattern). The header bar remains always visible. Collapsed state shows a `+` / "Expand" control; expanded state shows `−` / "Collapse".
+- **Starts closed by default** — page load shows the compact collapsed header bar unless the user explicitly requested an expanded default for that artifact.
 - **Is visually minimal when closed** — the collapsed panel is a compact header bar only. Do NOT leave an empty link list area or separator lines visible in the collapsed state.
 - **Does not waste space** — avoid separate `#` column markers or redundant icon columns. The compact header bar already serves as the anchor affordance.
 
@@ -814,13 +871,19 @@ Navigation state persistence **MUST** handle these edge cases:
 - [ ] HTML parses without errors (no unclosed tags, valid attributes).
 - [ ] JavaScript syntax is valid (no missing brackets, undefined references, or silent failures in the nav IIFE).
 - [ ] Associated RDF document parses without errors and passes the `validate-kg-compliance.sh` audit.
+- [ ] Every `schema:SoftwareApplication` uses the denotation priority rule: DBpedia IRI if confirmed, else Wikidata IRI if confirmed, else official homepage URL with `#this`; non-DBpedia/non-Wikidata software IRIs include `owl:sameAs` to confirmed DBpedia/Wikidata identities when such identities exist.
 - [ ] Every resolver entity hyperlink in the HTML resolves to a valid `describe/?url=` URL (no double-encoding: `%2523` is invalid; `#` must encode to `%23` exactly once).
-- [ ] FAQ questions, FAQ answers, glossary terms, glossary definitions, HowTo section + steps, and other visible semantic entities are ALL hyperlinked to their KG entity IRIs via the resolver pattern.
+- [ ] FAQ questions, FAQ answers, glossary terms, glossary definitions, the HowTo section entity, every individual HowToStep heading/label, and other visible semantic entities are ALL hyperlinked to their KG entity IRIs via the resolver pattern.
 - [ ] If a KG Explorer is present, its graph data is derived from the companion RDF artifact; if embedded, it is explicitly derived at generation time and not manually invented.
 - [ ] KG Explorer includes resolver-backed node links and resolver-backed edge predicate links using `describe/?url=`.
+- [ ] KG Explorer renders RDF triple direction explicitly: every visible predicate edge has an arrowhead from subject to object, with the path endpoint offset so the arrowhead is visible outside the target node.
+- [ ] KG Explorer Advanced mode includes its required control surface: fullscreen button, center button, settings button, and a settings panel with wired physics sliders/toggle, predicate display, predicate filtering, node filtering, literal filtering, resolver preference, arrow style, and legend/filter state feedback.
+- [ ] KG Explorer settings panel includes a visible close (`X`) control that hides the panel and restores focus predictably.
 - [ ] KG Explorer includes Basic/Advanced modes by default, Core/Full density controls, multi-select Classes/Properties/Instances filters, clear selected/unselected filter states, visible node/link count feedback, and no blank graph when filters are enabled.
 - [ ] KG Explorer node dragging pins/sticks nodes at their drop destinations, and double-click unpins.
 - [ ] KG Explorer is visually readable: type-aware layout, collision spacing, curved or otherwise legible edges, restrained edge opacity, readable labels, and no unnecessary resolver launchpad/card grid below it.
+- [ ] KG Explorer render validation: the SVG/canvas fills the full graph pane width, the plotted nodes are not clipped into a narrow left strip, and the graph has visible nodes/edges distributed across the pane in the default view.
+- [ ] Programmatic KG orphan-node gate has passed: global embedded graph has zero orphan nodes and default rendered graph has zero orphan nodes.
 - [ ] If a Markdown companion was requested, it is saved in the same folder as the HTML file, uses the same filename stem with `.md`, links to the HTML file, links to the RDF file with a relative path, and has no non-resolver external semantic links.
 - [ ] If a Markdown companion was requested, the HTML POSH metadata includes `<link rel="alternate" type="text/markdown" href="{markdown-file}">`, and the embedded JSON-LD declares the Markdown file as an alternate encoding/representation using a relative `@id`.
 - [ ] If a Markdown companion was requested and RDF media entities exist, it embeds or references them: images with Markdown image syntax, videos with HTML `<video controls>`, audio with HTML `<audio controls>`, and captions/labels linked to the RDF media entity IRIs through the resolver.

@@ -20,6 +20,32 @@ Generate comprehensive, standards-compliant Knowledge Graphs from any `file:` or
 
 ---
 
+## Harness Alignment
+
+This skill is a Knowledge Graph generation entry point. For document/source-to-RDF requests, interpret the request through the `document-to-kg-skill` **Document-to-KG Harness Mode** contract when that skill is available. For requests that also ask for HTML, Markdown, an infographic, or a KG Explorer, hand off to the `rdf-infographic-skill` **RDF Infographic Harness Mode** after RDF generation.
+
+Do not let this skill drift into standalone HTML generation, source summarization, or manually invented graph visualization. RDF remains the source of truth, and companion HTML/Markdown artifacts must satisfy the RDF/HTML/MD pairing contract in `rdf-infographic-skill`.
+
+### SoftwareApplication IRI Alignment
+
+When generated RDF introduces or normalizes a `schema:SoftwareApplication`, use the denotation priority rule shared with `document-to-kg-skill` and `rdf-infographic-skill`:
+
+1. DBpedia IRI if a confident DBpedia resource exists.
+2. Wikidata IRI if no confident DBpedia resource exists but a confident Wikidata entity exists.
+3. Official product/application homepage URL with `#this` appended when neither can be confirmed.
+
+When using a homepage fallback and a confirmed DBpedia/Wikidata identity exists, add `owl:sameAs` and declare `owl:` as `http://www.w3.org/2002/07/owl#`. Do not fabricate DBpedia or Wikidata IRIs.
+
+### Collection and Service Detection
+
+When generating RDF from a documentation collection, manual, docs portal, sitemap-backed site, MkDocs/Docusaurus/VitePress collection, GitBook, or source mesh:
+
+1. Inspect available sitemap, search index, navigation, table of contents, and strongly linked child pages before finalizing the graph.
+2. Treat child pages about APIs, SPARQL, endpoints, query examples, services, reporting workflows, data models, server/runtime platforms, authentication, and integration instructions as high-signal sources that must be summarized into the RDF unless the user explicitly narrows scope.
+3. If source content mentions a SPARQL endpoint, REST API, query service, data service, server platform, or runtime infrastructure, model it explicitly using appropriate entities such as `schema:WebAPI`, `schema:DataCatalog`, `schema:DataFeed`, `schema:SoftwareApplication`, `schema:Service`, or `schema:SoftwareSourceCode`.
+4. For query-example pages, represent major query families or named queries as distinct resources when they are central to the document. Link each query to its target endpoint/service and to the concepts it reports on.
+5. Apply the SoftwareApplication denotation rule to server/software platforms such as Virtuoso, PostgreSQL, Databricks, Snowflake, GitLab Pages, MkDocs, or application connectors. Prefer confident DBpedia/Wikidata IRIs for known platforms; otherwise use the official homepage URL with `#this`.
+
 ## Template Selection
 
 | Content type | Template | Default output |
@@ -125,6 +151,8 @@ Using a code block, generate a comprehensive representation of this information 
 30. When you assert a directional relationship (e.g., schema:isPartOf), you MUST also assert its inverse on the target entity (e.g., schema:hasPart) — RDF does not infer inverses automatically, so both directions are needed for completeness.
 31. Every logical entity group beyond FAQ/glossary/HowTo (e.g., use cases, technologies, architectural layers, key concepts) MUST be wrapped in a schema:ArticleSection and linked to the main article via schema:hasPart. No entity should be orphaned — every entity must be reachable from the main article through some path.
 32. The main article MUST include prov:wasGeneratedBy linking to a schema:SoftwareApplication entity representing the skill that produced it. Declare @prefix prov: <http://www.w3.org/ns/prov#> . The skill entity MUST have schema:name (e.g., "kg-generator skill"), schema:url pointing to its GitHub source (e.g., https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator), and schema:description. If multiple skills were used, use multiple prov:wasGeneratedBy triples.
+33. For documentation/manual collections, inspect sitemap/search index/navigation for high-signal child pages. Pages covering APIs, SPARQL endpoints, query examples, services, data models, server/runtime platforms, and reporting workflows MUST be incorporated when they materially change the graph.
+34. When a SPARQL endpoint, API endpoint, query service, or server platform is present, model it explicitly. SPARQL endpoints SHOULD use `schema:WebAPI` or another appropriate service class with `schema:url`; query families MAY use `schema:SoftwareSourceCode` and SHOULD link to the endpoint with `schema:target` or an equivalent property.
 
 """
 {selected_text}
@@ -345,7 +373,7 @@ Always use **both** `schema:naics` and `schema:identifier` together on industry 
 
 ## HTML Infographic Companion Requirements
 
-When the user asks for an HTML infographic companion to a generated Knowledge Graph, apply these requirements. For the complete HTML/RDF pairing specification including resolver configuration, navigation panel behavior, localStorage correctness, and the full validation checklist, see the `rdf-infographic-skill` SKILL.md.
+When the user asks for an HTML infographic companion to a generated Knowledge Graph, invoke the `rdf-infographic-skill` **RDF Infographic Harness Mode** requirements. For the complete HTML/RDF/Markdown pairing specification including resolver configuration, KG Explorer behavior, navigation panel behavior, localStorage correctness, attribution, dark mode, and the full validation checklist, see the `rdf-infographic-skill` SKILL.md.
 
 ### Output Paths
 
@@ -355,11 +383,11 @@ When the user asks for an HTML infographic companion to a generated Knowledge Gr
 ### Entity IRIs and Resolver Links
 
 - Use `{page_url}` or `{post-url}` as the source-grounded namespace. Never use `file:` scheme IRIs when a canonical HTTPS URL exists.
-- Resolver priority: URIBurner (`https://linkeddata.uriburner.com/describe/?uri={entity-iri}`) by default; user-designated resolver if specified; or none if user explicitly opts out.
-- Encode `#` as `%23` exactly once in resolver `uri` parameters. `%2523` (double-encoded) is invalid.
+- Resolver priority: URIBurner (`https://linkeddata.uriburner.com/describe/?url={entity-iri}`) by default; user-designated resolver if specified; or none if user explicitly opts out.
+- Encode `#` as `%23` exactly once in resolver `url` parameters. `%2523` (double-encoded) is invalid.
 - Entity links open in new tabs: `target="_blank" rel="noopener noreferrer"`.
 - FAQ questions, FAQ answers, glossary terms, glossary definitions, HowTo section title, and every HowTo step heading are ALL hyperlinked to their KG entity IRIs.
-- Local KG entities (hash-based IRIs) route through resolver. LOD Cloud cross-references (DBpedia, Wikidata) link directly.
+- Visible semantic entities route through the configured resolver using their selected RDF IRIs, including DBpedia/Wikidata IRIs selected under the SoftwareApplication denotation rule.
 
 ### POSH and JSON-LD Metadata
 
@@ -445,7 +473,7 @@ When generating a Markdown document alongside RDF and HTML outputs, the MD **MUS
 Every entity reference in the MD (classes, properties, instances, concepts, persons, organizations) **MUST** be hyperlinked using the URIBurner resolver pattern:
 
 ```
-[Entity Label](https://linkeddata.uriburner.com/describe/?uri={URL-encoded-IRI})
+[Entity Label](https://linkeddata.uriburner.com/describe/?url={URL-encoded-IRI})
 ```
 
 This applies to:
