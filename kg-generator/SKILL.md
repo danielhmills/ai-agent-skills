@@ -565,4 +565,131 @@ Example output:
 - `azure-accelerate-databases-minimax_m2.5free-1.html`
 - `substack-deep-dive-openai_gpt4o-1.jsonld`
 
+---
+
+## Dual-Format RDF Generation (TTL + JSON-LD)
+
+When generating a Knowledge Graph collection, produce **both** RDF Turtle and JSON-LD formats by default. This enables the HTML infographic companion to provide a format toggle in the footer SPARQL button.
+
+### Generation Workflow
+
+1. **Generate Turtle first** — Use the selected template (Generic or Business & Market Analysis) to produce the primary `.ttl` file.
+2. **Convert to JSON-LD** — Use `rdflib` to parse the Turtle and serialize as JSON-LD:
+   ```python
+   import rdflib
+   g = rdflib.Graph()
+   g.parse('output.ttl', format='turtle')
+   g.serialize('output.jsonld', format='json-ld', indent=2)
+   ```
+3. **Verify both files** — Ensure syntactic validity for each format before delivering.
+
+### Output Files
+
+Both formats use the same slug and version:
+
+| Format | Filename | Purpose |
+|--------|----------|---------|
+| Turtle | `{slug}-{model-id}-{n}.ttl` | Primary RDF (schema.org-friendly) |
+| JSON-LD | `{slug}-{model-id}-{n}.jsonld` | Alternate RDF (JSON-native) |
+
+Both files share the same base namespace (`@prefix : <{source-url}#>`) and entity IRIs.
+
+---
+
+## HTML Infographic Footer — SPARQL Button with Format Toggle
+
+The footer of every HTML infographic **MUST** include a SPARQL button that lets users query the knowledge graph via URIBurner. Include format toggle tabs so users can select which RDF document to query.
+
+### Required HTML Structure
+
+```html
+<footer>
+    <div class="kg-format-tabs">
+        <button class="active" id="fmtTtl" onclick="setSparqlFormat('ttl')">RDF Turtle</button>
+        <button id="fmtJsonld" onclick="setSparqlFormat('jsonld')">JSON-LD</button>
+    </div>
+    <p style="margin-bottom:20px">
+        <a id="sparqlBtn" href="...">Explore Knowledge Graph using SPARQL</a>
+    </p>
+</footer>
+```
+
+### Required CSS
+
+```css
+.kg-format-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
+.kg-format-tabs button { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 6px 14px; cursor: pointer; font-size: 0.8rem; font-weight: 500; }
+.kg-format-tabs button.active { background: var(--accent); color: white; border-color: var(--accent); }
+```
+
+### Required JavaScript
+
+```javascript
+function setSparqlFormat(fmt) {
+    document.getElementById('fmtTtl').classList.toggle('active', fmt === 'ttl');
+    document.getElementById('fmtJsonld').classList.toggle('active', fmt === 'jsonld');
+    const ext = fmt === 'jsonld' ? 'jsonld' : 'ttl';
+    const slug = '{descriptive-slug}-{model-id}-{n}';
+    const graphIri = 'https://linkeddata.uriburner.com/DAV/demos/daas/' + slug + '.' + ext;
+    const query = 'PREFIX+rdf%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0A%0ASELECT%0A++++%3Ftype%0A++++%28SAMPLE%28%3Fs%29+AS+%3FsampleEntity%29%0A++++%28SAMPLE%28%3Flabel%29+AS+%3FsampleLabel%29%0A++++%28COUNT%28%3Fs%29+AS+%3FentityCount%29%0AWHERE+%7B%0A++++GRAPH+%3C' + encodeURIComponent(graphIri) + '%3E+%7B%0A++++++++%3Fs+rdf%3Atype+%3Ftype+.%0A%0A++++++++OPTIONAL+%7B%0A++++++++++++%3Fs+rdfs%3Alabel+%3Flabel%0A++++++++%7D%0A++++%7D%0A%7D%0AGROUP+BY+%3Ftype%0AORDER+BY+DESC%28%3FentityCount%29';
+    document.getElementById('sparqlBtn').href = 'https://linkeddata.uriburner.com/sparql?query=' + query;
+}
+```
+
+Substitute `{descriptive-slug}-{model-id}-{n}` with the actual output filename (without extension).
+
+---
+
+## Document IRI vs SPARQL GRAPH IRI
+
+**Critical distinction:**
+
+| IRI Type | Used For | Pattern |
+|----------|----------|---------|
+| **Document IRI** | Entity references in RDF, HTML, MD | `{source-url}#{entity}` |
+| **SPARQL GRAPH IRI** | Querying the named graph in URIBurner | `https://linkeddata.uriburner.com/DAV/demos/daas/{filename}` |
+
+### Document IRI (Entity References)
+
+Use the source URL with `#` suffix as the `@prefix :` base in Turtle files:
+
+```turtle
+@prefix : <https://pluralistic.net/2026/05/13/vibe-governance#> .
+```
+
+Entities become `:q1`, `:step1`, `:billionaireSolipsism`, etc., resolving to:
+- `https://pluralistic.net/2026/05/13/vibe-governance#q1`
+- `https://pluralistic.net/2026/05/13/vibe-governance#step1`
+
+HTML/MD resolver links use: `https://linkeddata.uriburner.com/describe/?url={entity-iri}`
+
+### SPARQL GRAPH IRI (Query Target)
+
+The GRAPH clause in SPARQL queries uses the **DAV path** to the generated RDF file:
+
+```
+GRAPH <https://linkeddata.uriburner.com/DAV/demos/daas/vibe-governance-minimax_m2.5free-1.ttl>
+```
+
+This is **different from** the document IRI. The GRAPH IRI points to the uploaded RDF file in URIBurner's DAV repository, not the original source URL.
+
+### Why the Distinction?
+
+- **Document IRIs** maintain the provenance of the original source — useful for linking back to original content.
+- **SPARQL GRAPH IRIs** reference the actual RDF quad store location in URIBurner, enabling queries against the uploaded graph.
+
+**Never confuse the two.** The HTML footer SPARQL button uses GRAPH IRIs; entity resolver links in HTML/MD use Document IRIs.
+
+---
+
+## IRI Patterns Quick Reference
+
+| Context | IRI Pattern | Example |
+|---------|------------|---------|
+| TTL `@prefix :` | `{source-url}#` | `https://pluralistic.net/2026/05/13/vibe-governance#` |
+| TTL entity | `:{name}` → `{source-url}#{name}` | `:q1` → `https://pluralistic.net/2026/05/13/vibe-governance#q1` |
+| HTML/MD resolver link | `https://linkeddata.uriburner.com/describe/?url={entity-iri}` | `https://linkeddata.uriburner.com/describe/?url=https://pluralistic.net/2026/05/13/vibe-governance#q1` |
+| SPARQL GRAPH clause | `https://linkeddata.uriburner.com/DAV/demos/daas/{filename}` | `https://linkeddata.uriburner.com/DAV/demos/daas/vibe-governance-minimax_m2.5free-1.ttl` |
+| JSON-LD `@base` | `{source-url}/` | `https://pluralistic.net/2026/05/13/vibe-governance/` |
+
 This convention allows tracking which AI model generated each artifact without requiring external metadata.
