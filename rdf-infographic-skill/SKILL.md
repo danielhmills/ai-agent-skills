@@ -46,8 +46,8 @@ When active, every generated artifact set MUST include, unless the user explicit
 4. **POSH and JSON-LD pairing** — HTML declares the companion RDF and Markdown files through `<link rel="related">`, `<link rel="alternate">`, and embedded JSON-LD.
 5. **Floating navigation control** — movable, resizable, collapsible, visible in a closed compact header-bar state by default, and recoverable after stale localStorage.
 6. **Page theme control** — one page-level light/dark toggle in the navigation panel, with equivalent `html[data-theme="dark"]` and `prefers-color-scheme: dark` variable values.
-7. **Knowledge Graph Explorer** — Basic and Advanced modes, resolver-backed node/edge links, directed subject-to-object arrowheads, Core/Full density, multi-select Classes/Properties/Instances filters, visible selected states, node/link counts, sticky drag, double-click unpin, and no resolver launchpad/card grid unless explicitly requested.
-8. **Advanced KG settings panel** — fullscreen, center, settings button, visible close (`X`), wired physics controls, predicate display, predicate filters, node filters, literal filter, resolver preference, arrow style, and clear state feedback.
+7. **Knowledge Graph Explorer** — Basic and Advanced modes, resolver-backed node/edge links, directed subject-to-object arrowheads, Core/Full density, multi-select Classes/Properties/Instances filters, visible selected states, node/link counts, sticky drag, double-click unpin, and no resolver launchpad/card grid unless explicitly requested. Its controls tray MUST be collapsed/closed by default on page load; the first visible KG state is the graph plus a compact Controls button and node/link count badge.
+8. **Advanced KG settings panel** — fullscreen, center, settings button, visible close (`X`), wired physics controls, predicate display, predicate filters with Select All/Deselect All, node filters, literal filter, resolver preference, arrow style, and clear state feedback. The panel MUST use a structured compact layout that prevents form controls or action buttons from stretching into oversized cards/circles.
 9. **Attribution footer** — source material, companion files, skills used, generation environment, server/platform items where known, resolver pattern, and hyperlinked generation-environment entities.
 10. **Markdown companion parity** — Markdown mirrors the HTML narrative structure and preserves resolver-backed links for FAQ, glossary, HowTo, People, Organizations, SoftwareApplication, source/document, and media entities.
 11. **Authority denotation rules** — SoftwareApplication and Country entities use DBpedia/Wikidata-centered IRIs where confidently available; add `owl:sameAs` for confirmed DBpedia/Wikidata equivalents.
@@ -490,6 +490,8 @@ Basic mode provides a lightweight, functional D3.js force-directed graph:
 
 #### Advanced Mode
 
+⛔ **PRE-BUILD CHECK**: Before writing Advanced mode, re-read the full Advanced Mode section. Confirm: KG controls tray closed by default, fullscreen toggle, center graph button, settings gear button (no theme toggle in graph toolbar), settings panel with visible close (X), wired physics sliders (charge, link distance, enable/disable), predicate display (Icons/Labels), edge filtering with Select All/None, node filtering with chips, literal text filter, resolver preference (URIBurner/None/Custom), arrow style (Dual/Single), color-coded legend with toggle chips, and compact settings-panel layout that cannot stretch controls into oversized cards/circles. Every slider and toggle MUST update the D3 simulation via wired event listeners.
+
 Advanced mode provides a full-featured visualization with settings panel, inspired by OSDS_extension/graph_gen.js:
 
 **Visual features:**
@@ -506,16 +508,18 @@ Advanced mode provides a full-featured visualization with settings panel, inspir
 - Fullscreen toggle button
 - Center graph button  
 - Settings gear button (opens settings panel)
+- Controls tray is closed by default on page load. The KG header shows only a compact Controls button and node/link badge until the user opens the tray. Do not render the filter/search/settings toolbar open by default.
 
 > **Note:** Do NOT include a theme toggle in the graph toolbar. The page already has a theme toggle in the navigation panel (top-left). Duplicate theme controls are redundant.
 
 **Settings panel (slides from right):**
 - Must include an obvious close control (`X`) in the panel header that hides the settings panel, updates the settings button `aria-expanded` state, and returns focus to the settings button.
+- Must use a compact, bounded layout: scalar controls (charge, distance, search, display mode, resolver, arrow style, literal toggle) occupy a dense top control area; predicate and node filters occupy separate lower cards/rows; Clear filters and close actions stay in a compact footer/header action area. Do not use unconstrained `auto-fit` grids that allow buttons, selects, or action controls to stretch into oversized circular or card-like elements.
 - **Physics Simulation**: Charge strength slider (-1200 to -50), Link distance slider (40-320px), Enable/disable physics toggle
   > **Critical:** These controls MUST be wired to update the D3 force simulation in real-time. Use event listeners on the input elements to call `simulation.force("charge").strength(value)` and `simulation.force("link").distance(value)`, then `simulation.alpha(0.3).restart()` to apply changes.
 - **Predicate Display**: Radio option for "Icons" vs "Labels"
-- **Edge Filtering**: Checkbox list of all predicates, Select All/Deselect All buttons
-- **Node Filtering**: Chips for each node type (person, organization, place, concept, event, literal, resource), Select All/Deselect All
+- **Edge Filtering**: Checkbox list of all predicates plus Select All/Deselect All controls. These controls MUST mutate the same active predicate set used by graph rendering, update checkbox state, update count/state feedback, and re-render immediately.
+- **Node Filtering**: Chips for each node type (person, organization, place, concept, event, literal, resource), Select All/Deselect All where the node-type set is broad enough to need bulk actions. Chips must have clear selected/unselected visuals and matching `aria-pressed` values.
 - **Literal Text Filtering**: Text input to show only literal relationships containing specified text
 - **Resolver Preference**: Options for "None", "URIBurner" (https://linkeddata.uriburner.com/describe/?url={uri}), or "Custom" with pattern input
 - **Arrow Style**: "Dual arrows" (render every triple) vs "Single arrow" (merge mutual predicates)
@@ -987,7 +991,9 @@ Navigation state persistence **MUST** handle these edge cases:
 - [ ] KG Explorer includes resolver-backed node links and resolver-backed edge predicate links using `describe/?url=`.
 - [ ] KG Explorer renders RDF triple direction explicitly: every visible predicate edge has an arrowhead from subject to object, with the path endpoint offset so the arrowhead is visible outside the target node.
 - [ ] KG Explorer Advanced mode includes its required control surface: fullscreen button, center button, settings button, and a settings panel with wired physics sliders/toggle, predicate display, predicate filtering, node filtering, literal filtering, resolver preference, arrow style, and legend/filter state feedback.
+- [ ] KG Explorer controls tray is closed by default on page load; the default visible state is the graph surface plus compact Controls button and node/link count badge. Opening the tray reveals Basic/Advanced, Core/Full, node-type filters, search, and only Advanced-gated settings controls.
 - [ ] KG Explorer settings panel includes a visible close (`X`) control that hides the panel and restores focus predictably.
+- [ ] KG Explorer Advanced settings panel passes the compact-layout gate: scalar controls are bounded, predicate/node filters are grouped in separate cards/rows, Select All/Deselect All predicate controls are present and wired, and no button/select/action stretches into an oversized circular or card-like element at desktop, tablet, or mobile widths.
 - [ ] KG Explorer includes Basic/Advanced modes by default, Core/Full density controls, multi-select Classes/Properties/Instances filters, clear selected/unselected filter states, visible node/link count feedback, and no blank graph when filters are enabled.
 - [ ] KG Explorer node dragging pins/sticks nodes at their drop destinations, and double-click unpins.
 - [ ] KG Explorer is visually readable: type-aware layout, collision spacing, curved or otherwise legible edges, restrained edge opacity, readable labels, and no unnecessary resolver launchpad/card grid below it.
