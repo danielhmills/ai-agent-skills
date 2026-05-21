@@ -50,9 +50,10 @@ When active, every generated artifact set MUST include, unless the user explicit
 8. **Advanced KG settings panel** — fullscreen, center, settings button, visible close (`X`), wired physics controls, predicate display, predicate filters with Select All/Deselect All, node filters, literal filter, resolver preference, arrow style, and clear state feedback. The panel MUST use a structured compact layout that prevents form controls or action buttons from stretching into oversized cards/circles.
 9. **Attribution footer** — source material, companion files, skills used, generation environment, server/platform items where known, resolver pattern, and hyperlinked generation-environment entities.
 10. **Markdown companion parity** — Markdown mirrors the HTML narrative structure and preserves resolver-backed links for FAQ, glossary, HowTo, People, Organizations, SoftwareApplication, source/document, and media entities.
-11. **Authority denotation rules** — SoftwareApplication and Country entities use DBpedia/Wikidata-centered IRIs where confidently available; add `owl:sameAs` for confirmed DBpedia/Wikidata equivalents.
+11. **Authority denotation rules** — Person entities use profile URL `#this` IRIs using the same priority as `kg-generator`; SoftwareApplication and Country entities use DBpedia/Wikidata-centered IRIs where confidently available; add `owl:sameAs` for confirmed DBpedia/Wikidata equivalents.
 12. **Zero-failure delivery gate** — do not deliver until RDF parse, HTML/JS parse, resolver link audit, KG Explorer behavior checklist, nav behavior, dark mode, output path checks, and programmatic KG orphan-node checks all pass.
 13. **SPARQL query presentation** — when the RDF or source content contains `schema:SoftwareSourceCode` SPARQL examples, endpoint demos, or query recipes, render them as readable accordions with resolver-backed query-entity links, fenced/preformatted query text, a visible endpoint/service link, and a correctly URL-encoded live query link when an endpoint is known. Markdown companions must include the same query headings, resolver links, live links, and fenced `sparql` code blocks.
+14. **Open-tab HTML link behavior** — every generated HTML `<a>` whose `href` is not a same-page fragment (`#section`) MUST include `target="_blank" rel="noopener noreferrer"`. This applies to resolver links, companion RDF/Markdown/JSON-LD links, SPARQL links, media/source links, attribution links, DBpedia/Wikidata/W3C links, and footer platform/tool links. Same-page navigation links MUST remain same-tab and MUST NOT carry `target="_blank"`.
 
 If an input is insufficient to satisfy the harness contract, ask for the missing source, RDF, resolver, output folder, or artifact scope before generating. If an existing artifact is being repaired, preserve its RDF/HTML/MD pairing and retrofit the missing contract items rather than creating a separate one-off patch.
 
@@ -88,6 +89,8 @@ Provide or derive the following from your RDF data:
 
 ### 3. Generate the HTML Infographic
 
+⛔ **PRE-BUILD CHECK**: Before writing HTML, re-read the "Harness Contract" (14-point checklist at the top of this skill) and the "Validation Checklist" in the "Quality Checklist" section. Confirm every clause: RDF source of truth, shared stem, resolver-backed links, POSH + JSON-LD, floating nav (collapsed default), theme toggle, KG Explorer (Basic + Advanced), attribution footer, MD parity, open-tab link behavior, 0-failure delivery gate. Build to pass — do not retro-fit.
+
 Pass the RDF data and parameters to generate a complete, single-file HTML document with:
 
 - Modern, responsive design with glassmorphism effects
@@ -100,6 +103,8 @@ Pass the RDF data and parameters to generate a complete, single-file HTML docume
 - Professional typography and color schemes
 
 ### 4. Generate a Markdown Companion (Optional)
+
+⛔ **PRE-BUILD CHECK**: Before writing Markdown, re-read the full MD companion requirements in this section and the "Markdown companion parity" clause in the Harness Contract. Confirm: same filename stem as HTML with `.md` extension, saved in same folder, resolver-backed links for FAQ/glossary/HowTo/People/Organizations/SoftwareApplication entities, related link block pointing to companion RDF and HTML, fenced `sparql` code blocks with live query links, structural parity with HTML narrative.
 
 When the user asks for Markdown, a Markdown variant, a `.md` companion, or a text-first companion output:
 
@@ -122,12 +127,14 @@ When the user asks for Markdown, a Markdown variant, a `.md` companion, or a tex
 
 ### SPARQL Query Sections
 
+⛔ **PRE-BUILD CHECK**: Before writing SPARQL accordions, re-read this section. Confirm: each query rendered as `<details>`/`<summary>` accordion, summary title linked to query entity via resolver, "Run live query" link with URIBurner default endpoint, query body preserved verbatim (no summarization), `encodeURIComponent` for live links, no `http://example.org/` live links. Markdown mirrors with resolver-backed headings, live links, and fenced `sparql` blocks.
+
 When RDF or source content includes SPARQL examples, query families, endpoint demos, or reporting recipes:
 
 - Preserve the query body verbatim apart from safe HTML escaping. Do not replace it with a summary.
 - Render each query in HTML as a `<details>`/`<summary>` accordion so long queries do not dominate the page.
 - The summary title MUST link to the query entity through the configured resolver pattern.
-- Include a visible "Run live query" link when the endpoint supports GET query URLs. Construct the URL with `encodeURIComponent(query)` and endpoint-specific parameters, defaulting to `?query={encoded}&format=text%2Fhtml` when no endpoint-specific pattern is known.
+- Include a visible "Run live query" link for every SPARQL query. **URIBurner (`https://linkeddata.uriburner.com/sparql`) is the default endpoint** when the source document does not specify one. Construct the URL with `encodeURIComponent(query)` using `?default-graph-uri=&query={encoded}&format={format-param}&timeout=0&debug=on&run=+Run+Query+`. The `format` parameter MUST be query-type-specific: `text%2Fx-html-tr` for SELECT queries; `text%2Fx-html-nice-turtle` for DESCRIBE and CONSTRUCT queries. If the query uses a placeholder namespace (e.g., `PREFIX ex: <http://example.org/>`), remap it to a resolver-backed namespace in the generated RDF so the query targets the knowledge graph loaded into the URIBurner named graph. Do NOT ship live links with `http://example.org/` — it is a non-resolvable placeholder.
 - If the query contains placeholders, preserve them visibly and add nearby copy indicating the live link opens with placeholders retained for editing.
 - Link the query card/chips to the endpoint/service entity and the main concept being queried when those IRIs exist in RDF.
 - In Markdown, mirror the same structure with a resolver-backed heading, a live query link, and a fenced `sparql` code block.
@@ -176,6 +183,8 @@ The generated HTML follows this narrative flow:
 - Nav Toggle: Expand/collapse button in the header bar with draggable behavior
 
 ### Navigation Control Best Practices
+
+⛔ **PRE-BUILD CHECK**: Before writing the nav panel HTML/CSS/JS, re-read the full "Navigation Control Best Practices" section and the "Navigation Control" and "localStorage Correctness" items in the Validation Checklist. Confirm: collapse-to-header-bar pattern, always-visible header, toggle button (+/−) with aria-label, links hidden when collapsed (`max-height:0`), draggable by header bar, resizable, starts collapsed by default, no pin marker, no inactivity timer, no separate close/restore elements. JS: single IIFE with drag + toggle, no timers, localStorage write only when expanded, stale-state recovery, page-specific key.
 
 **Pattern**: Collapse-to-header-bar — the panel is always visible as a compact header. A toggle button collapses/expands the link list. No pin marker, no inactivity fade, no separate close/restore buttons.
 
@@ -460,6 +469,8 @@ When generating an RDF infographic that includes a knowledge graph visualization
 
 #### Basic Mode (Default)
 
+⛔ **PRE-BUILD CHECK**: Before writing the D3.js KG Explorer code, re-read every bullet in this Basic Mode section and the "Validation Checklist" below. Confirm: multi-select filter buttons with aria-pressed, Core/Full density, search, legend, node click → resolver, drag-pin + dblclick-unpin, zoom isolation (no `svg.call(zoom)` on init, click-to-activate, click-outside-to-release), hover tooltip, edge labels with clickable hyperlinks to predicate IRIs, edge hover highlighting, predicate description mapping. Use the Programmatic Orphan-Node Gate checklist as a pre-build verification script.
+
 Basic mode provides a lightweight, functional D3.js force-directed graph:
 - Multi-select filter buttons: toggle visibility by node type (Classes, Properties, Instances) with visually obvious selected/unselected states and matching `aria-pressed` values
 - Density buttons: Core and Full graph views. Default to Core + Instances when the full graph is visually busy; keep Full available for complete RDF inspection
@@ -469,6 +480,13 @@ Basic mode provides a lightweight, functional D3.js force-directed graph:
 - Click any node to open its IRI in the configured resolver (URIBurner describe service)
 - Drag nodes to reposition; dragged nodes MUST pin/stick at the drop destination. Double-click unpins
 - Mouse wheel zoom and drag-to-pan
+- **Zoom isolation (REQUIRED):** D3 zoom MUST NOT be attached to the SVG on init (`svg.call(zoom)` is forbidden at render time). Zoom activates only when the user clicks into the KG Explorer SVG, and deactivates when clicking anywhere outside `#kg-explorer`. This prevents the graph from capturing page scroll events when the user is simply scrolling the document.
+  - Store zoom as `window._kgZoom`, SVG as `window._kgSvg`, and group as `window._kgG` in `renderKG`
+  - On SVG click: `svg.call(window._kgZoom)` + add CSS class `kg-active` to `#kg-explorer`
+  - On document click outside `#kg-explorer`: `svg.on('.zoom', null)` (removes D3 listeners) + remove `kg-active` class
+  - Visual indicator: `#kg-explorer.kg-active` gets a colored border glow (accent color + box-shadow) and a brief fading hint "Click outside to release zoom"
+  - In `setMode`: re-attach zoom if `kg-active` class is present after re-rendering
+  - SVG cursor: `grab` by default, `grabbing` when `.kg-active` and `:active`
 - Hover tooltip showing entity description
 - Edge/connector labels that are clickable hyperlinks to property/type IRIs
 - **Edge hover tooltip** showing predicate description with semantic meaning (e.g., "rdf:type - Indicates that a node is an instance of a class", "rdfs:subClassOf - Node is a subclass of the target class")
@@ -526,7 +544,7 @@ Advanced mode provides a full-featured visualization with settings panel, inspir
 - **Color-coded Legend**: Dynamic legend showing node type colors with toggle chips
 
 **Interaction:**
-- Mouse wheel zoom (0.2x to 4x scale extent)
+- Mouse wheel zoom (0.2x to 4x scale extent) — follows the same zoom isolation rules as Basic mode: click-to-activate, click-outside-to-release
 - Drag background to pan
 - Click node to open IRI in resolver
 - **Click edge label to open predicate IRI in resolver** — the click handler MUST resolve edge labels using this mapping:
@@ -552,6 +570,8 @@ When the user requests an RDF infographic with graph visualization:
 4. Do not include a graph-specific theme toggle in any mode.
 
 ## Constructing kgData from RDF (CRITICAL)
+
+⛔ **PRE-BUILD CHECK**: Before embedding kgData in HTML, re-read the "Validation Checklist" and "Programmatic Orphan-Node Gate" below. Confirm: all RDF entities represented as nodes, all triples as links, 0 orphan nodes in both full and core datasets, 0 orphan nodes in default rendered state. Build the extraction script (Python/rdflib) first, run it, verify 0 orphans, THEN embed in HTML. Never manually type kgData.
 
 When generating an HTML infographic with a D3.js knowledge graph visualization, you MUST derive the `kgData` object from the RDF data - do NOT manually type out nodes and links. This ensures the graph accurately represents the RDF.
 
@@ -819,7 +839,7 @@ The RDF and embedded JSON-LD provenance SHOULD mirror this visible attribution u
 
 #### Provenance Card Canonical Link Rule
 
-**CRITICAL**: The provenance/attribution section exists to credit real products and tools. Items in provenance cards that represent known products, platforms, or tools with stable URLs MUST link to their **canonical homepage or repository URL** — NOT to session-generated URIBurner resolver URLs built from document-local fragment IRIs. Use `🔗 Visit` as the link label for canonical product links (vs `🔗 Explore` for resolver-based entity links elsewhere in the document).
+**CRITICAL**: The provenance/attribution section exists to credit real products and tools. Items in provenance cards that represent known products, platforms, or tools with stable URLs MUST link the **visible item label itself** to the canonical homepage or repository URL — NOT to session-generated URIBurner resolver URLs built from document-local fragment IRIs. Do not use generic labels such as `Visit`, `Learn more`, or `Explore` for attribution links. For example, link `URIBurner`, `OpenLink Virtuoso`, `D3.js`, `Python`, and skill names directly.
 
 Canonical URLs for standard provenance items:
 
@@ -837,6 +857,15 @@ For products or tools not in this table, use their official homepage. If no cano
 
 The resolver (`https://linkeddata.uriburner.com/describe/?url=...`) is for **semantic entities** defined in the document's knowledge graph (persons, concepts, organizations, FAQ items, glossary terms, etc.) — not for product attribution.
 
+#### Skill SoftwareApplication Denotation
+
+When modeling a skill used to generate the artifact as `schema:SoftwareApplication`, the RDF subject IRI MUST be the canonical skill repository URL with `#this` appended, for example:
+
+- `https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator#this`
+- `https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/rdf-infographic-skill#this`
+
+Use `schema:url` for the bare repository page without `#this`. Do not mint document-local hash IRIs such as `{source-url}#rdf-infographic-skill` for these skill software entities.
+
 ### SoftwareApplication IRI Denotation Rule
 
 For every `schema:SoftwareApplication` entity introduced or normalized during RDF/HTML/Markdown generation, select the subject IRI using this priority order:
@@ -850,6 +879,20 @@ When the primary IRI is not DBpedia- or Wikidata-based, add `owl:sameAs` relatio
 Visible software application names in HTML and Markdown MUST link through the configured resolver using the selected RDF IRI. The KG Explorer node for the software application MUST use the same selected IRI.
 
 Before delivery, record or verify the chosen denotation basis for every `schema:SoftwareApplication`: DBpedia, Wikidata, or homepage `#this`. Do not fabricate DBpedia or Wikidata IRIs; if no confident match is found, use the homepage fallback and omit `owl:sameAs` unless a confident external identity is later established.
+
+---
+
+### Person IRI Denotation Rule
+
+For every `schema:Person` entity introduced or normalized during RDF/HTML/Markdown generation, use the person denotation priority rule from `kg-generator`:
+
+1. **LinkedIn profile first** — if a LinkedIn profile URL appears in the source or can be confidently matched, use `{linkedin-profile-url}#this`.
+2. **X/Twitter second** — if no LinkedIn profile is found but an X/Twitter profile is confidently matched, use `{x-profile-url}#this`.
+3. **Substack third** — if no LinkedIn or X/Twitter profile is found but a Substack author profile is confidently matched, use `{substack-profile-url}#this`.
+4. **Other platform profile next** — use another social, author, blog, or professional profile URL with `#this` when confidently matched.
+5. **Document-local fallback last** — only when no platform/profile URL can be confirmed, derive a source-grounded document hash IRI.
+
+Add `schema:url` pointing to the bare profile URL and `schema:identifier` with the canonical profile URL. Link all confirmed platform, DBpedia, or Wikidata equivalents via `owl:sameAs`. Visible person names in HTML and Markdown MUST link through the configured resolver using the selected person RDF IRI, and KG Explorer person nodes MUST use the same selected IRI. Do not leave a visible person link on `{source-url}#person-name` when a profile URL is known.
 
 ---
 
@@ -986,6 +1029,7 @@ Navigation state persistence **MUST** handle these edge cases:
 - [ ] Every `schema:SoftwareApplication` uses the denotation priority rule: DBpedia IRI if confirmed, else Wikidata IRI if confirmed, else official homepage URL with `#this`; non-DBpedia/non-Wikidata software IRIs include `owl:sameAs` to confirmed DBpedia/Wikidata identities when such identities exist.
 - [ ] Every `schema:Country` uses the denotation priority rule: DBpedia IRI if confirmed, else Wikidata IRI if confirmed, else source-grounded document IRI; confirmed DBpedia/Wikidata equivalents are connected with `owl:sameAs`.
 - [ ] Every resolver entity hyperlink in the HTML resolves to a valid `describe/?url=` URL (no double-encoding: `%2523` is invalid; `#` must encode to `%23` exactly once).
+- [ ] Every non-fragment HTML anchor (`href` not starting with `#`) has `target="_blank" rel="noopener noreferrer"`; same-page fragment navigation links do not have `target="_blank"`.
 - [ ] FAQ questions, FAQ answers, glossary terms, glossary definitions, the HowTo section entity, every individual HowToStep heading/label, and other visible semantic entities are ALL hyperlinked to their KG entity IRIs via the resolver pattern.
 - [ ] If a KG Explorer is present, its graph data is derived from the companion RDF artifact; if embedded, it is explicitly derived at generation time and not manually invented.
 - [ ] KG Explorer includes resolver-backed node links and resolver-backed edge predicate links using `describe/?url=`.
@@ -996,18 +1040,21 @@ Navigation state persistence **MUST** handle these edge cases:
 - [ ] KG Explorer Advanced settings panel passes the compact-layout gate: scalar controls are bounded, predicate/node filters are grouped in separate cards/rows, Select All/Deselect All predicate controls are present and wired, and no button/select/action stretches into an oversized circular or card-like element at desktop, tablet, or mobile widths.
 - [ ] KG Explorer includes Basic/Advanced modes by default, Core/Full density controls, multi-select Classes/Properties/Instances filters, clear selected/unselected filter states, visible node/link count feedback, and no blank graph when filters are enabled.
 - [ ] KG Explorer node dragging pins/sticks nodes at their drop destinations, and double-click unpins.
-- [ ] KG Explorer is visually readable: type-aware layout, collision spacing, curved or otherwise legible edges, restrained edge opacity, readable labels, and no unnecessary resolver launchpad/card grid below it.
+- [ ] KG Explorer D3 zoom is focus-activated, not attached on init: no `svg.call(zoom)` at render time; zoom attaches on SVG click and detaches on outside click via `svg.on('.zoom', null)`; `#kg-explorer` shows `kg-active` visual indicator when zoom is armed
 - [ ] KG Explorer render validation: the SVG/canvas fills the full graph pane width, the plotted nodes are not clipped into a narrow left strip, and the graph has visible nodes/edges distributed across the pane in the default view.
 - [ ] Programmatic KG orphan-node gate has passed: global embedded graph has zero orphan nodes and default rendered graph has zero orphan nodes.
 - [ ] If a Markdown companion was requested, it is saved in the same folder as the HTML file, uses the same filename stem with `.md`, links to the HTML file, links to the RDF file with a relative path, and has no non-resolver external semantic links.
 - [ ] If a Markdown companion was requested, the HTML POSH metadata includes `<link rel="alternate" type="text/markdown" href="{markdown-file}">`, and the embedded JSON-LD declares the Markdown file as an alternate encoding/representation using a relative `@id`.
 - [ ] If a Markdown companion was requested and RDF media entities exist, it embeds or references them: images with Markdown image syntax, videos with HTML `<video controls>`, audio with HTML `<audio controls>`, and captions/labels linked to the RDF media entity IRIs through the resolver.
-- [ ] If RDF contains SPARQL `schema:SoftwareSourceCode` examples, HTML renders them as accordions with resolver-backed query headings, escaped preformatted query text, endpoint/service links, and correctly URL-encoded live query links where an endpoint is known; Markdown mirrors them with fenced `sparql` code blocks.
+- [ ] If RDF contains SPARQL `schema:SoftwareSourceCode` examples, HTML renders them as accordions with resolver-backed query headings, escaped preformatted query text, endpoint/service links, and correctly URL-encoded live query links defaulting to URIBurner; Markdown mirrors them with fenced `sparql` code blocks. No `http://example.org/` live links.
 - [ ] The local RDF link (`rel="related"`) uses a relative path and the target file exists.
 - [ ] Navigation panel: drag works, resize works, collapse/expand toggles correctly, localStorage read/write does not throw, stale values are recovered from gracefully.
 - [ ] Skills attribution line present in footer with correct GitHub URL(s).
+- [ ] Provenance/attribution links use the attributed labels themselves as anchors (for example `URIBurner`, `OpenLink Virtuoso`, `D3.js`, `rdf-infographic-skill`); no generic `Visit`/`Learn more` labels.
 - [ ] Footer SPARQL button present with Turtle/JSON-LD format toggle; GRAPH clause uses `DAV/demos/daas/{filename}` path (not source URL).
 - [ ] Dark mode: both `html[data-theme="dark"]` and `@media (prefers-color-scheme: dark)` produce equivalent rendering; no hardcoded colors outside CSS variables.
+- [ ] Dark mode CSS blocks are **not** comma-combined: `html[data-theme="dark"] { … }` and `@media (prefers-color-scheme:dark) { … }` must be two entirely separate blocks. A trailing comma after a selector followed by an `@media` rule is invalid CSS and silently fails in most browsers.
+- [ ] Light/dark theme toggle is present in the **nav panel header bar** (`#fnav-header`) — not inside the collapsible `#fnav-links` section — so it is accessible whether the nav is collapsed or expanded. The button must carry `title` and `aria-label` attributes and update its icon/label to reflect the current theme state on each click.
 
 ---
 
