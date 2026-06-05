@@ -128,20 +128,49 @@ def main() -> int:
     if bad_fragment:
         fail(f"{len(bad_fragment)} fragment links incorrectly open in new tab", failures)
 
-    kg_payload = re.search(r"const kgData = (\{.*?\});\s*\(\(\)=>", html, re.S)
+    # Match any of the common kgData variable patterns: kgData, _kgDataFull, kgFull
+    kg_payload = re.search(
+        r"const (?:kgData|_kgDataFull|kgFull)\s*=\s*(\{.*?\});",
+        html, re.S
+    )
     if kg_payload:
         import json
 
-        data = json.loads(kg_payload.group(1))
-        ids = {node["id"] for node in data.get("nodes", [])}
+        try:
+            data = json.loads(kg_payload.group(1))
+        except json.JSONDecodeError:
+            fail("Embedded kgData payload is not valid JSON", failures)
+            data = {"nodes": [], "links": []}
+
+        nodes = data.get("nodes", [])
+        links = data.get("links", [])
+        ids = {node["id"] for node in nodes}
+
+        if len(nodes) == 0:
+            fail("Embedded kgData payload is empty (0 nodes) — likely a bypass stub", failures)
+        if len(links) == 0:
+            fail("Embedded kgData payload has 0 links — likely a bypass stub", failures)
+
         orphans = [
-            link for link in data.get("links", [])
+            link for link in links
             if link.get("source") not in ids or link.get("target") not in ids
         ]
         if orphans:
             fail(f"KG payload has {len(orphans)} orphan links", failures)
     else:
-        fail("Embedded kgData payload missing", failures)
+        fail("Embedded kgData payload missing (no kgData, _kgDataFull, or kgFull variable found)", failures)
+
+    # KG interactivity contract: edge labels and nodes must be hyperlinked via openInResolver
+    if "openInResolver" not in html:
+        fail("openInResolver function missing — edge labels and nodes must be hyperlinked", failures)
+    # Edge lines and/or labels must wire openInResolver(resolvePredicateIRI(...))
+    if not re.search(r"openInResolver\s*\(\s*resolvePredicateIRI", html):
+        fail("Edge click handlers missing — edge lines and labels must call openInResolver(resolvePredicateIRI(...))", failures)
+    # Edge label text must have cursor:pointer (proves it's interactive, not pointer-events:none)
+    if not re.search(r"linkGs\.append\('text'\).*?\.style\('cursor','pointer'\)", html, re.S):
+        fail("Edge label text missing cursor:pointer — edge labels must be interactive and clickable", failures)
+    if not re.search(r"nodesG\s*\.\s*on\s*\(\s*['\"]click['\"]", html):
+        fail("nodesG missing click handler — nodes must call openInResolver(d.id) on click", failures)
 
     validate_rdf(args.ttl, "turtle", failures)
     validate_rdf(args.jsonld, "json-ld", failures)

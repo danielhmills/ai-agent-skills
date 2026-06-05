@@ -564,23 +564,64 @@ a:focus {
 }
 ```
 
-## Dark Mode Support (Optional)
+## Dark Mode Support (Required)
+
+### General `a` Rule
+Without a general `a { color }` rule, inline `<a>` tags in body text (paragraphs, notes, cards, lists) fall through to browser-default blue (`#0000ee`), which is nearly invisible on dark backgrounds. **Always include:**
 
 ```css
+a { color: var(--primary); text-decoration: underline; }
+a:visited { color: var(--primary); }
+```
+
+Container-specific overrides (nav, header, blockquote attributions, resource lists, footer cards) set `text-decoration: none` via higher-specificity selectors, so the general rule only affects body-content links — exactly where needed.
+
+### Dark Mode Accent Color
+The dark mode link/accent color must be bright and high-contrast on the dark background. Muted colors like `#60a5fa` (light blue) or `#4F46E5` (indigo) produce only 4-5:1 contrast on `#0F172A` — technically WCAG AA but feel washed out and hard to distinguish. **Use a saturated bright blue** like `#7dd3fc` (sky-300) which achieves 7.2:1 contrast on `#0F172A` — vivid and unmistakably clickable.
+
+```css
+html[data-theme="dark"] {
+  --primary: #7dd3fc;   /* bright sky blue — high contrast on dark backgrounds */
+  --accent: #7dd3fc;    /* match accent to primary for consistent link colors */
+  --bg-primary: #0F172A;
+  --bg-secondary: #1E293B;
+  --text-primary: #F1F5F9;
+  --text-secondary: #CBD5E1;
+}
+```
+
+Test any candidate dark-mode accent color against both `--bg-primary` and `--bg-secondary` backgrounds using a WCAG contrast checker (e.g., https://webaim.org/resources/contrastchecker/). Aim for 7:1 minimum on text backgrounds, never below 5:1 on cards.
+
+### CSS Variable Architecture
+Always use CSS variables for all colors — never hardcode hex values in dark mode blocks. This keeps the theme switch consistent and maintainable:
+
+```css
+:root {
+  --bg: #ffffff;
+  --text: #1E293B;
+  --primary: #4F46E5;     /* indigo — good on white */
+  --accent: #06B6D4;      /* cyan — accent elements */
+}
+
+html[data-theme="dark"] {
+  --bg: #0F172A;
+  --text: #E2E8F0;
+  --primary: #7dd3fc;     /* bright blue — good on dark */
+  --accent: #7dd3fc;      /* match primary in dark mode */
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-primary: #0F172A;
-    --bg-secondary: #1E293B;
-    --text-primary: #F1F5F9;
-    --text-secondary: #CBD5E1;
-  }
-  
-  body {
-    background: var(--bg-primary);
-    color: var(--text-primary);
+    --bg: #0F172A;
+    --text: #E2E8F0;
+    --primary: #7dd3fc;
+    --accent: #7dd3fc;
   }
 }
 ```
+
+### Block Structure Requirements
+Dark mode CSS MUST use two separate blocks: (1) `html[data-theme="dark"] { ... }` for the explicit toggle, (2) `@media (prefers-color-scheme: dark) { :root { ... } }` for system preference. Never comma-combine these selectors — a trailing comma before `@media` silently fails in most browsers.
 
 ## Best Practices
 
