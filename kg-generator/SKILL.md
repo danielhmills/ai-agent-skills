@@ -48,6 +48,16 @@ When generated RDF introduces or normalizes a `schema:Country`, use the denotati
 
 When using DBpedia as the primary country IRI and a confirmed Wikidata equivalent exists, add `owl:sameAs` to the Wikidata entity. When using Wikidata as a fallback and a DBpedia equivalent later becomes available, normalize to DBpedia or add `owl:sameAs` if preserving an existing artifact is necessary. Do not use local document hash IRIs for known countries when DBpedia or Wikidata authority IRIs are available. Visible country names in HTML/Markdown companions and KG Explorer nodes must use the selected country IRI via the resolver pattern.
 
+### DefinedTerm / Glossary IRI Alignment
+
+When generated RDF introduces `schema:DefinedTerm` or `skos:Concept` glossary entries, cross-reference to DBpedia and Wikidata when confidence is high:
+
+1. DBpedia IRI via `owl:sameAs` if a confident DBpedia resource exists for the term.
+2. Wikidata IRI if no confident DBpedia resource exists but a confident Wikidata entity exists.
+3. No cross-reference when neither can be confirmed — do not fabricate.
+
+This applies to any defined term or glossary concept that has a confidently identifiable DBpedia or Wikidata entry. The glossary concept IRI remains the document-local hash IRI; `owl:sameAs` provides the authority link. Do not hardcode a fixed list of cross-referenceable terms — evaluate each term against DBpedia/Wikidata at generation time.
+
 ### Collection and Service Detection
 
 When generating RDF from a documentation collection, manual, docs portal, sitemap-backed site, MkDocs/Docusaurus/VitePress collection, GitBook, or source mesh:
@@ -157,7 +167,7 @@ If the user explicitly names a protocol, follow that preference instead.
 
 Use for general web pages, articles, blog posts, and documentation.
 
-⛔ **PRE-BUILD CHECK**: Before producing JSON-LD, re-read the "Post-Generation Checklist" below and the "Compliance Self-Audit" in the prompt. Confirm: `@base` = `{page_url}`, `schema:` = `http://schema.org/` (HTTP), FAQ → `schema:FAQPage` + `schema:mainEntity`, glossary → `schema:DefinedTermSet` + `schema:hasDefinedTerm`, person IRI priority (LinkedIn → X → Substack → hash fallback), no `file:` IRIs, `owl:sameAs` not `schema:sameAs`, no blank nodes for `schema:Answer`. Build to pass every item — do not retro-fit.
+⛔ **PRE-BUILD CHECK**: Before producing JSON-LD, re-read the "Post-Generation Checklist" below and the "Compliance Self-Audit" in the prompt. Confirm: `@base` = `{page_url}`, `schema:` = `http://schema.org/` (HTTP), `"@language": "en"` in `@context`, FAQ → `schema:FAQPage` + `schema:mainEntity`, glossary → `schema:DefinedTermSet` + `schema:hasDefinedTerm`, person IRI priority (LinkedIn → X → Substack → hash fallback), organization IRI priority (DBpedia → Wikidata → LinkedIn → X → homepage → hash fallback), no `file:` IRIs, `owl:sameAs` not `schema:sameAs`, no blank nodes for `schema:Answer`. Build to pass every item — do not retro-fit.
 
 ### Placeholders
 
@@ -188,8 +198,11 @@ Using a code block, generate a comprehensive representation of this information 
 16. For every person entity (authors, commentators, or explicitly mentioned individuals): use the highest-priority platform profile URL found in the source as the primary person IRI with `#this` appended, in this order: (a) LinkedIn profile URL → `{linkedin-url}#this`; (b) X/Twitter profile URL → `{x-url}#this`; (c) Substack author profile URL → `{substack-url}#this`; (d) Reddit user profile URL → `{reddit-url}#this`; (e) other social media or blog platform author/profile URL → `{platform-url}#this`; (f) otherwise derive a hash-based IRI from {page_url}. Add `schema:url` pointing to the bare profile URL and `schema:identifier` with the canonical profile URL. In every case, ALL discovered platform identities MUST be linked via owl:sameAs — e.g., owl:sameAs <https://www.linkedin.com/in/name/#this>, <https://x.com/handle/#this>, <https://substack.com/@handle/#this> — ensuring the person is resolvable from any direction. For JSON-LD, use @id for all owl:sameAs values.
     16a. **NEVER fabricate person names.** Use names exactly as they appear in the source document — character for character. Never guess, infer, or complete a partial name. If the source says only "Mr. Lutkus", the person's name is "Lutkus" (or whatever exact form appears). Do not add a first name unless the source explicitly provides it. If only a handle or username is given (e.g., "@jdoe"), use that handle as the name. Fabricating names produces wrong IRIs, wrong search results, and wrong attribution.
     16b. **Actively search for LinkedIn profiles.** When no platform profile URL is found in the source for a named person, attempt to find their LinkedIn profile via web search before falling back to a hash-based IRI. Search for the person's exact name as it appears in the source plus their organizational context (company, role, publication). Use the highest-confidence LinkedIn URL found. If no LinkedIn profile can be confidently matched, proceed to search for X/Twitter, then Substack, then other platforms. Only use the hash-based fallback after search attempts are exhausted.
+     16c. **Actively resolve organization identities.** For every named organization, use the highest-priority identity in this order: (a) DBpedia resource IRI → `http://dbpedia.org/resource/{name}`; (b) Wikidata entity IRI → `http://www.wikidata.org/entity/Q{...}`; (c) LinkedIn company page URL → `{linkedin-company-url}#this`; (d) X/Twitter org account URL → `{x-org-url}#this`; (e) official homepage URL → `{homepage-url}#this`; (f) otherwise derive a hash-based IRI from {page_url}. ALL discovered platform identities MUST be linked via owl:sameAs — e.g., owl:sameAs <http://dbpedia.org/resource/OpenAI>, <https://www.linkedin.com/company/openai/> — ensuring the organization is resolvable from any direction. For JSON-LD, use @id for all owl:sameAs values.
+     16d. **NEVER fabricate organization names.** Use names exactly as they appear in the source document. If the source says "Google", use "Google" — not "Google LLC" or "Alphabet Inc." unless the source explicitly states the full legal name.
+     16e. **Reconcile LinkedIn www and non-www forms.** When a person's primary LinkedIn IRI uses `linkedin.com/in/` (no www), add `owl:sameAs` to the `www.linkedin.com/in/` form, and vice versa. Both `https://linkedin.com/in/username#this` and `https://www.linkedin.com/in/username#this` denote the same profile and MUST be linked via `owl:sameAs` to ensure the person is resolvable from both forms.
 17. Where relevant, include additional entity types when discovered e.g., Product, Offer, and Service etc.
-18. Language-tag the values of annotation attributes; apply properly according to JSON-LD syntax rules.
+18. Language-tag all annotation attribute values. In Turtle, every string literal MUST carry an `@en` language tag (e.g., `"text"@en`). In JSON-LD, the `@context` MUST include `"@language": "en"` so all string values inherit the tag implicitly. Both serializations MUST be semantically equivalent — untagged JSON-LD strings are a contract violation.
 19. Describe article authors and publishers in detail.
 20. Use a relatedLink attribute to comprehensively handle all inline URLs. Unless told otherwise, it should be a maximum of 20 relevant links.
 21. You MUST ensure smart quotes are replaced with single quotes.
@@ -204,7 +217,7 @@ Using a code block, generate a comprehensive representation of this information 
 30. You MUST NOT use blank nodes for schema:Answer instances. Every schema:Answer MUST be a named entity with its own hash-based IRI (e.g., :a1, :a2) connected via schema:acceptedAnswer :aN — never schema:acceptedAnswer [ a schema:Answer ; ... ].
 31. When you assert a directional relationship (e.g., schema:isPartOf), you MUST also assert its inverse on the target entity (e.g., schema:hasPart) — RDF does not infer inverses automatically, so both directions are needed for completeness.
 32. Every logical entity group beyond FAQ/glossary/HowTo (e.g., use cases, technologies, architectural layers, key concepts) MUST be wrapped in a schema:ArticleSection and linked to the main article via schema:hasPart. No entity should be orphaned — every entity must be reachable from the main article through some path.
-33. The main article MUST include prov:wasGeneratedBy linking to a schema:SoftwareApplication entity representing the skill that produced it. Declare @prefix prov: <http://www.w3.org/ns/prov#> . The skill entity MUST have schema:name (e.g., "kg-generator skill"), schema:url pointing to its GitHub source (e.g., https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator), and schema:description. If multiple skills were used, use multiple prov:wasGeneratedBy triples.
+33. The main article MUST include prov:wasGeneratedBy linking to a schema:SoftwareApplication entity representing the skill that produced it. Declare @prefix prov: <http://www.w3.org/ns/prov#> . The skill entity IRI MUST use the canonical GitHub repository URL with #this appended: <https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator#this> for kg-generator, and <https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/rdf-infographic-skill#this> for rdf-infographic-skill. The skill entity MUST have schema:name (e.g., "kg-generator skill"), schema:url pointing to its GitHub source without #this (e.g., <https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator>), and schema:description. If multiple skills were used, use multiple prov:wasGeneratedBy triples. Do not mint document-local hash IRIs such as {source-url}#kgGeneratorSkill or {source-url}#rdfInfographicSkill for these skill entities.
 33. For documentation/manual collections, inspect sitemap/search index/navigation for high-signal child pages. Pages covering APIs, SPARQL endpoints, query examples, services, data models, server/runtime platforms, and reporting workflows MUST be incorporated when they materially change the graph.
 34. When a SPARQL endpoint, API endpoint, query service, or server platform is present, model it explicitly. SPARQL endpoints SHOULD use `schema:WebAPI` or another appropriate service class with `schema:url`; query families MAY use `schema:SoftwareSourceCode` and SHOULD link to the endpoint with `schema:target` or an equivalent property.
 35. When SPARQL query examples or recipes are present, the query body MUST be preserved as `schema:text` on a `schema:SoftwareSourceCode` resource with `schema:programmingLanguage "SPARQL"`, linked to its endpoint via `schema:target`, and linked to a URL-encoded live query action via `schema:potentialAction` where the endpoint supports a GET query URL.
@@ -227,12 +240,14 @@ CRITICAL — Before presenting the final output, you MUST perform a compliance s
 5. All DBpedia/Wikidata/Wikipedia IRIs are fully expanded (not CURIEs)
 6. No file: scheme IRIs exist anywhere in the output
 7. owl:sameAs is used for DBpedia cross-references (never schema:sameAs)
+7a. All organization entities have owl:sameAs linking all discovered platform identities (DBpedia, Wikidata, LinkedIn, X, homepage)
+7b. Organization names match source document exactly — no fabricated legal names or suffixes
 8. @base or @prefix : is the canonical https: source URL with # suffix
 9. If an ontology is present: (a) it has schema:name and schema:description, (b) schema:identifier with canonical URL, (c) all classes and properties have rdfs:isDefinedBy :
 10. No blank nodes used for schema:Answer — every answer is a named entity (:a1, :a2, ...) with schema:acceptedAnswer :aN
 11. Inverse relationships are explicit: for every schema:isPartOf there is a corresponding schema:hasPart, etc.
-12. prov:wasGeneratedBy links the main article to a skill entity with schema:name, schema:url (GitHub), and schema:description
-Report: "COMPLIANCE SELF-AUDIT: X/12 passed. [list any FAIL items with the specific fix applied]. Final output follows."
+12. prov:wasGeneratedBy links the main article to a skill entity using the canonical IRI with #this (e.g., <https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator#this>), with schema:name, schema:url (GitHub without #this), and schema:description
+Report: "COMPLIANCE SELF-AUDIT: X/14 passed. [list any FAIL items with the specific fix applied]. Final output follows."
 
 GATE: 0 FAIL required before delivery. Every numbered rule in this prompt has a corresponding check in this audit. No rule without verification — unchecked rules are aspirational, not enforceable.```
 
@@ -242,6 +257,7 @@ GATE: 0 FAIL required before delivery. Every numbered rule in this prompt has a 
 - [ ] `schema:` namespace uses `http://schema.org/` (HTTP, not HTTPS)
 - [ ] All subject/object IRIs are hash-based relative IRIs (except known authority entities)
 - [ ] FAQ questions wrapped in `schema:FAQPage` with `schema:mainEntity`
+- [ ] Each FAQ question has `schema:isPartOf :faqSection` linking back to the FAQ section
 - [ ] Glossary terms wrapped in `schema:DefinedTermSet` with `schema:hasDefinedTerm`
 - [ ] Main article has `schema:hasPart` linking FAQPage, DefinedTermSet, HowTo, the ontology (:), and all entity group sections
 - [ ] At least 10 `schema:Question` + `schema:Answer` pairs present
@@ -253,22 +269,25 @@ GATE: 0 FAIL required before delivery. Every numbered rule in this prompt has a 
 - [ ] Inline double quotes within literals converted to single quotes
 - [ ] Smart/curly quotes replaced with straight single quotes
 - [ ] `relatedLink` includes up to 20 relevant inline URLs
-- [ ] Language tags applied to annotation literals where applicable
+- [ ] `@context` includes `"@language": "en"` so all string literals inherit the English language tag
 - [ ] JSON-LD is syntactically valid
 - [ ] No guessed media URLs (thumbnailUrl, contentUrl, embedUrl)
 - [ ] Images from source content described using `schema:image` with `schema:ImageObject` where distinct
 - [ ] Person names used exactly as they appear in source — no fabrication, no guessing first names from surnames
 - [ ] LinkedIn profile actively searched for each named person without a platform URL in source before hash-based fallback
 - [ ] Person IRIs derived from LinkedIn/X/Substack/Reddit/other-platform profile URLs where found; all platform identities linked via `owl:sameAs`
+- [ ] Organization IRIs follow priority: DBpedia → Wikidata → LinkedIn → X → homepage → hash fallback
+- [ ] All organizations have owl:sameAs linking all discovered platform identities
+- [ ] Organization names match source exactly — no fabricated legal names
 - [ ] If ontology present: `schema:name` + `schema:description`, `schema:identifier`, all classes/properties have `rdfs:isDefinedBy :`
-- [ ] `prov:wasGeneratedBy` links article to a skill entity with `schema:name`, `schema:url` (GitHub), `schema:description`
+- [ ] `prov:wasGeneratedBy` links article to a skill entity using the canonical IRI with `#this` (e.g., `<https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator#this>`), with `schema:name`, `schema:url` (GitHub without `#this`), `schema:description`
 - [ ] SPARQL query examples are preserved as `schema:SoftwareSourceCode` with query text, target endpoint/service, and correctly encoded live query actions when applicable
 
 ## Template 2 — Business & Market Analysis (RDF-Turtle)
 
 Use for business strategy posts, X/social threads, market analyses, and industry deep-dives.
 
-⛔ **PRE-BUILD CHECK**: Before producing RDF-Turtle, re-read the "Post-Generation Checklist" below and the "Compliance Self-Audit" in the prompt. Confirm: `@prefix :` = `{post-url}#`, `schema:` = `http://schema.org/` (HTTP), ontology with `schema:name` + `schema:description` + `schema:identifier`, all custom classes/properties have `rdfs:isDefinedBy :`, 12 FAQ + 10 glossary + 7 HowTo present, NAICS codes with `?input=&year=2022&details=` pattern, no blank nodes for `schema:Answer`, `prov:wasGeneratedBy` on `:analysis`, no `file:` IRIs. Build to pass every item — do not retro-fit.
+⛔ **PRE-BUILD CHECK**: Before producing RDF-Turtle, re-read the "Post-Generation Checklist" below and the "Compliance Self-Audit" in the prompt. Confirm: `@prefix :` = `{post-url}#`, `schema:` = `http://schema.org/` (HTTP), ontology with `schema:name` + `schema:description` + `schema:identifier`, all custom classes/properties have `rdfs:isDefinedBy :`, 12 FAQ + 10 glossary + 7 HowTo present, organization IRI priority (DBpedia → Wikidata → LinkedIn → X → homepage → hash fallback), NAICS codes with `?input=&year=2022&details=` pattern, no blank nodes for `schema:Answer`, `prov:wasGeneratedBy` on `:analysis`, no `file:` IRIs, all string literals carry `@en` language tags. Build to pass every item — do not retro-fit.
 
 ### Placeholders
 
@@ -351,10 +370,13 @@ Follow ALL of these final design requirements exactly:
 13. For every person entity: use the highest-priority platform profile URL found in the source as the primary person IRI with `#this` appended, in this order: (a) LinkedIn profile URL → `{linkedin-url}#this`; (b) X/Twitter profile URL → `{x-url}#this`; (c) Substack author profile URL → `{substack-url}#this`; (d) Reddit user profile URL → `{reddit-url}#this`; (e) other social media or blog platform author/profile URL → `{platform-url}#this`; (f) otherwise derive a hash-based IRI from {post-url}. Add `schema:url` pointing to the bare profile URL and `schema:identifier` with the canonical profile URL. In every case, ALL discovered platform identities MUST be linked via owl:sameAs — e.g., owl:sameAs <https://www.linkedin.com/in/name/#this>, <https://x.com/handle/#this>, <https://substack.com/@handle/#this>.
     13a. **NEVER fabricate person names.** Use names exactly as they appear in the source — character for character. Never guess, infer, or complete a partial name. If the source says "Mr. Lutkus", the person's name is "Lutkus" — do not add a first name. If only a handle is given, use that handle.
     13b. **Actively search for LinkedIn profiles.** When no platform profile URL is in the source for a named person, search for their LinkedIn via web search using their exact name and organizational context before falling back to a hash-based IRI. Only use the hash fallback after search attempts are exhausted.
+     13c. **Actively resolve organization identities.** For every named organization, use the highest-priority identity in this order: (a) DBpedia resource IRI → `http://dbpedia.org/resource/{name}`; (b) Wikidata entity IRI → `http://www.wikidata.org/entity/Q{...}`; (c) LinkedIn company page URL → `{linkedin-company-url}#this`; (d) X/Twitter org account URL → `{x-org-url}#this`; (e) official homepage URL → `{homepage-url}#this`; (f) otherwise derive a hash-based IRI from {page_url}. ALL discovered platform identities MUST be linked via owl:sameAs. For JSON-LD, use @id for all owl:sameAs values.
+     13d. **NEVER fabricate organization names.** Use names exactly as they appear in the source document. If the source says "Google", use "Google" — not "Google LLC" or "Alphabet Inc." unless the source explicitly states the full legal name.
+     13e. **Reconcile LinkedIn www and non-www forms.** When a person's primary LinkedIn IRI uses `linkedin.com/in/` (no www), add `owl:sameAs` to the `www.linkedin.com/in/` form, and vice versa. Both denote the same profile and MUST be linked via `owl:sameAs` to ensure resolvability from both forms.
 14. The lightweight ontology MUST be named and described using schema:name and schema:description alongside rdfs:label/rdfs:comment, with schema:identifier carrying the canonical source URL. Every class and property MUST have rdfs:isDefinedBy : linking it to the ontology.
 15. You MUST NOT use blank nodes for schema:Answer instances. Every schema:Answer MUST be a named entity with its own hash-based IRI (e.g., :a1, :a2) connected via schema:acceptedAnswer :aN — never schema:acceptedAnswer [ a schema:Answer ; ... ].
 16. For every directional relationship you assert (e.g., schema:isPartOf), you MUST also assert its inverse on the target entity (e.g., schema:hasPart) — RDF does not infer inverses, so both directions are necessary.
-17. The main analysis (:analysis) MUST include prov:wasGeneratedBy linking to a schema:SoftwareApplication entity representing the kg-generator skill. Declare @prefix prov: <http://www.w3.org/ns/prov#> . The skill entity MUST have schema:name "kg-generator skill", schema:url <https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator>, and schema:description.
+17. The main analysis (:analysis) MUST include prov:wasGeneratedBy linking to a schema:SoftwareApplication entity representing the kg-generator skill. Declare @prefix prov: <http://www.w3.org/ns/prov#> . The skill entity IRI MUST be <https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator#this>. The skill entity MUST have schema:name "kg-generator skill", schema:url <https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator>, and schema:description. Do not mint document-local hash IRIs such as {source-url}#kgGeneratorSkill for skill entities.
 Current date for metadata: {current date}.
 
 CRITICAL — Before outputting the Turtle, you MUST perform a compliance self-audit. Verify each item and report PASS or FAIL (with the violation fixed):
@@ -364,13 +386,15 @@ CRITICAL — Before outputting the Turtle, you MUST perform a compliance self-au
 4. :glossarySection is a schema:DefinedTermSet with schema:hasDefinedTerm listing all 10 terms
 5. :howtoSection is a schema:HowTo with schema:step listing all :step1–:step7
 6. All DBpedia/Wikidata IRIs are fully expanded (not CURIEs)
+6a. All organization entities have owl:sameAs linking all discovered platform identities (DBpedia, Wikidata, LinkedIn, X, homepage)
+6b. Organization names match source document exactly — no fabricated legal names or suffixes
 7. NAICS codes use ?input=&year=2022&details= pattern (not ?code=)
 8. No file: scheme IRIs exist anywhere
 9. Ontology has schema:name + schema:description + schema:identifier; all custom classes/properties have rdfs:isDefinedBy :
 10. No blank nodes for schema:Answer — every answer is a named entity (:aN) with schema:acceptedAnswer :aN
 11. Inverse relationships explicit: every schema:isPartOf has a corresponding schema:hasPart, etc.
-12. prov:wasGeneratedBy links :analysis to a skill entity with schema:name, schema:url (GitHub), and schema:description
-Report: "COMPLIANCE SELF-AUDIT: X/12 passed. [list any FAIL items, already fixed]. Output follows."
+12. prov:wasGeneratedBy links :analysis to a skill entity using the canonical IRI <https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator#this>, with schema:name, schema:url (GitHub without #this), and schema:description
+Report: "COMPLIANCE SELF-AUDIT: X/14 passed. [list any FAIL items, already fixed]. Output follows."
 
 GATE: 0 FAIL required before delivery. Every numbered rule in this prompt has a corresponding check in this audit. No rule without verification — unchecked rules are aspirational, not enforceable.```
 
@@ -420,15 +444,22 @@ Always use **both** `schema:naics` and `schema:identifier` together on industry 
 - [ ] Instance data on instances only — not on class definitions
 - [ ] Both `schema:naics` and `schema:identifier` (Census URL) on each vertical instance
 - [ ] Exactly 12 FAQ questions (`:q1`–`:q12`) wrapped in `schema:FAQPage` with `schema:mainEntity`
+- [ ] Each FAQ question has `schema:isPartOf :faqSection` linking back to the FAQ section
 - [ ] Exactly 10 glossary terms wrapped in `schema:DefinedTermSet` with `schema:hasDefinedTerm`
 - [ ] Exactly 7 HowTo steps (`:step1`–`:step7`) wrapped in `schema:HowTo` with `schema:step`
+- [ ] Each HowTo step has `schema:isPartOf :howtoSection` linking back to the HowTo section
+- [ ] Each HowTo step has `schema:isPartOf :howtoSection` linking back to the HowTo section
 - [ ] All DBpedia/Wikidata IRIs fully expanded (not CURIEs)
+- [ ] Organization IRIs follow priority: DBpedia → Wikidata → LinkedIn → X → homepage → hash fallback
+- [ ] All organizations have owl:sameAs linking all discovered platform identities
+- [ ] Organization names match source exactly — no fabricated legal names
 - [ ] TAM values exact: `"$140-200B"` and `"$50-80B"`
 - [ ] `schema:isbn "9780060521998"` on `:innovatorsDilemma`
 - [ ] `schema:identifier "US"` on `:unitedStates`
 - [ ] NAICS URLs use `?input=&year=2022&details=` pattern (not `?code=`)
+- [ ] All string literals carry `@en` language tags (e.g., `"text"@en`)
 - [ ] No `file:` scheme IRIs anywhere
-- [ ] `prov:wasGeneratedBy` links :analysis to a skill entity with `schema:name`, `schema:url` (GitHub), `schema:description`
+- [ ] `prov:wasGeneratedBy` links :analysis to a skill entity using the canonical IRI `<https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator#this>`, with `schema:name`, `schema:url` (GitHub without `#this`), `schema:description`
 - [ ] Ontology has `schema:name` + `schema:description` + `schema:identifier`; all classes/properties have `rdfs:isDefinedBy :`
 - [ ] Output is the Turtle code block only — no surrounding text
 
