@@ -1,0 +1,54 @@
+<!-- KG Explorer Reference Template -- contract-compliant implementation -->
+<div class="kg-shell" id="kg-explorer">
+  <div class="kg-header">
+    <div>
+      <h3>RDF Graph Workbench</h3>
+      <p>Explore ontology terms, instances, and relationships. Drag nodes to reposition; double-click to unpin. Scroll to zoom.</p>
+    </div>
+    <div class="kg-header-actions">
+      <button class="kg-control-toggle" id="kgControlsToggle" type="button" aria-expanded="false" aria-controls="kgToolbar">Controls</button>
+      <span class="kg-count-badge" id="counts">0 nodes / 0 links</span>
+    </div>
+  </div>
+  <div class="kg-toolbar" id="kgToolbar" hidden>
+    <div class="kg-toolbar-main">
+      <div class="kg-segment" role="group" aria-label="Mode">
+        <button class="active" type="button" data-mode="Basic" aria-pressed="true">Basic</button>
+        <button type="button" data-mode="Advanced" aria-pressed="false">Advanced</button>
+      </div>
+      <div class="kg-segment" role="group" aria-label="Density">
+        <button class="active" type="button" data-density="Core" aria-pressed="true">Core</button>
+        <button type="button" data-density="Full" aria-pressed="false">Full</button>
+      </div>
+      <div class="kg-segment" role="group" aria-label="Node type filters">
+        <button class="kg-modality active" type="button" data-modality="instances" aria-pressed="true">Instances</button>
+        <button class="kg-modality active" type="button" data-modality="classes" aria-pressed="true">Classes</button>
+        <button class="kg-modality active" type="button" data-modality="properties" aria-pressed="true">Properties</button>
+      </div>
+      <input id="nodeFilter" class="kg-search" placeholder="Search nodes" aria-label="Search graph nodes">
+      <button class="kg-tool-button" id="kgCenter" type="button" data-advanced-control hidden>Center</button>
+      <button id="kgFullscreen" type="button" data-advanced-control hidden>Fullscreen</button>
+      <button id="kgSettings" type="button" data-advanced-control hidden aria-expanded="false" aria-controls="settingsPanel">Settings</button>
+      <span class="kg-meta" id="kgState" role="status" aria-live="polite">Basic / Core</span>
+    </div>
+    <div class="settings" id="settingsPanel" hidden>
+      <label class="settings-field">Charge <input id="charge" type="range" min="-600" max="-20" value="-180"></label>
+      <label class="settings-field">Distance <input id="distance" type="range" min="20" max="220" value="72"></label>
+      <label class="settings-wide">Predicate search <input id="predicateFilter" placeholder="author, about, mentions"></label>
+      <label class="settings-field">Predicate labels <select id="labelMode"><option selected>Predicates</option><option>Hidden</option></select></label>
+      <label class="settings-wide">Resolver <select id="resolverPreference"><option value="describe">URIBurner describe</option><option value="direct">Direct IRI</option></select></label>
+      <label class="settings-field">Arrows <select id="arrowStyle"><option value="directed">Directed</option><option value="none">Hidden</option></select></label>
+      <label class="literal-control settings-field"><input id="literalToggle" type="checkbox" checked> Literals</label>
+      <div class="settings-card predicate-card">
+        <div class="settings-heading"><span class="settings-title">Predicate filter</span><div class="settings-actions-inline"><button id="predicateSelectAll" type="button">Select All</button><button id="predicateDeselectAll" type="button">None</button></div></div>
+        <div class="filter-list" id="pred-filters" role="group" aria-label="Predicate filters"></div>
+      </div>
+      <div class="settings-card node-card"><span class="settings-title">Node filters</span><div class="chip-list" id="nodeFilterList" role="group" aria-label="Node filters"></div></div>
+      <div class="settings-actions"><button id="clearGraphFilters" type="button">Clear filters</button><button id="closeSettings" type="button" aria-label="Close advanced settings">✕</button></div>
+    </div>
+  </div>
+  <div class="kg-stage">
+    <svg id="kg-svg" role="img" aria-label="Knowledge graph visualization"></svg>
+    <p class="kg-note">Graph data embedded from companion RDF at generation time. The controls tray is closed by default; Advanced exposes settings and predicate filters.</p>
+  </div>
+</div>

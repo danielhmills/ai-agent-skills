@@ -128,20 +128,51 @@ def main() -> int:
     if bad_fragment:
         fail(f"{len(bad_fragment)} fragment links incorrectly open in new tab", failures)
 
-    kg_payload = re.search(r"const kgData = (\{.*?\});\s*\(\(\)=>", html, re.S)
+    # Match any of the common kgData variable patterns: kgData, _kgDataFull, kgFull
+    kg_payload = re.search(
+        r"const (?:kgData|_kgDataFull|kgFull)\s*=\s*(\{.*?\});",
+        html, re.S
+    )
     if kg_payload:
         import json
 
-        data = json.loads(kg_payload.group(1))
-        ids = {node["id"] for node in data.get("nodes", [])}
+        try:
+            data = json.loads(kg_payload.group(1))
+        except json.JSONDecodeError:
+            fail("Embedded kgData payload is not valid JSON", failures)
+            data = {"nodes": [], "links": []}
+
+        nodes = data.get("nodes", [])
+        links = data.get("links", [])
+        ids = {node["id"] for node in nodes}
+
+        if len(nodes) == 0:
+            fail("Embedded kgData payload is empty (0 nodes) — likely a bypass stub", failures)
+        if len(links) == 0:
+            fail("Embedded kgData payload has 0 links — likely a bypass stub", failures)
+
         orphans = [
-            link for link in data.get("links", [])
+            link for link in links
             if link.get("source") not in ids or link.get("target") not in ids
         ]
         if orphans:
             fail(f"KG payload has {len(orphans)} orphan links", failures)
     else:
-        fail("Embedded kgData payload missing", failures)
+        fail("Embedded kgData payload missing (no kgData, _kgDataFull, or kgFull variable found)", failures)
+
+    # KG interactivity contract — implementation-agnostic outcome checks
+    # Edge labels must be resolver-backed SVG <a> anchors with data-resolver-href
+    if not re.search(r'\.append\(["\']a["\']\)[\s\S]{0,400}data-resolver-href', html):
+        fail("Edge labels not resolver-backed SVG anchors — predAnchor must use .append('a') with data-resolver-href attribute", failures)
+    # .pred-anchor g must contain an <a> element (CSS or JS pattern)
+    if not re.search(r'pred-anchor\s+a|predAnchor[\s\S]{0,200}\.append\(["\']a["\']\)', html):
+        fail("Edge label SVG anchors missing — .pred-anchor a pattern not found in CSS or JS", failures)
+    # SPARQL explore button must be present
+    if 'id="sparqlBtn"' not in html:
+        fail('SPARQL explore button id="sparqlBtn" missing', failures)
+    # Node click handlers must invoke any resolver function (resolver-agnostic)
+    if not re.search(r'\.on\(["\']click["\'][\s\S]{0,200}resolv', html, re.S):
+        fail("Node click handler missing resolver call — nodes must open resolver on click", failures)
 
     validate_rdf(args.ttl, "turtle", failures)
     validate_rdf(args.jsonld, "json-ld", failures)
