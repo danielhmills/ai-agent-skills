@@ -10,7 +10,7 @@
 <> a schema:CreativeWork ;
     schema:name "preferences.ttl"@en ;
     schema:description "Configuration for agent RDF memory management and semantic memory skill usage." ;
-    schema:dateModified "2026-06-15T13:10:00Z"^^xsd:dateTime ;
+    schema:dateModified "2026-06-16T00:00:00Z"^^xsd:dateTime ;
     schema:dateCreated "2026-05-29T17:22:00Z"^^xsd:dateTime ;
     schema:author <https://linkedin.com/in/kidehen#this> ;
     schema:about :agentBehaviorGuide .
@@ -44,7 +44,8 @@
         :topicRemoteWebdavUpload, :topicMemoryProtocolGate,
         :topicTokenOptimizedSessionHandoff, :topicOntologyCrossReference,
         :topicNoUnauthorizedDeletion,
-        :topicNoMemoryMdWrite ;
+        :topicNoMemoryMdWrite,
+        :topicEntityLookupDisambiguation ;
     schema:step :step-approval, :step-outputDirs, :step-gpt5ChatCodexOutputDirs, :step-mashupVsMeshup, :step-modelIdentityPreflight, :step-skillChain,
         :step-kgQueryMode,
         :step-entityDenotation, :step-memoryProtocol,
@@ -65,7 +66,8 @@
         :step-remoteWebdavUpload, :step-memoryProtocolGate,
         :step-tokenOptimizedSessionHandoff, :step-ontologyCrossReference,
         :step-noUnauthorizedDeletion,
-        :step-noMemoryMdWrite .
+        :step-noMemoryMdWrite,
+        :step-entityLookupDisambiguation .
 
 # ── Step 1: Seek Approval ────────────────────────────────────────────────────
 
@@ -1393,3 +1395,78 @@ as the LOD resource, or merely *describes or relates to* it.
 :topicOwlSameAsVsSkosRelated a schema:Thing ;
     schema:name "owl:sameAs vs skos:related predicate selection"@en ;
     schema:description "Algorithm for choosing between owl:sameAs and skos:related when cross-referencing KG entities with DBpedia/Wikidata LOD resources."@en .
+
+# ── Step 54: Entity Lookup Disambiguation Script ─────────────────────────────
+
+:step-entityLookupDisambiguation a schema:HowToStep ;
+    schema:position 54 ;
+    schema:name "Use entity_lookup.py for Jaro-Winkler disambiguation of DBpedia/Wikidata IDs"@en ;
+    schema:text """**Rule:** When a KG entity needs a Wikidata Q-ID or DBpedia IRI, use
+agent-rdf-memory/scripts/entity_lookup.py — an importable Python module that searches
+Wikidata and DBpedia by name, computes Jaro-Winkler similarity scores via jellyfish,
+scopes results by entity type, and returns matched IRIs with appropriate relationship
+types based on confidence thresholds.
+
+**How to use in a workflow:**
+  from entity_lookup import lookup, best
+
+  # Full search across both sources
+  results = lookup("Snowflake Inc.", entity_type="Organization")
+  for m in results:
+      ttl.write(m.to_turtle_triple(entity_iri))
+
+  # Single best match
+  top = best("Tim Berners-Lee", entity_type="Person")
+
+**Relationship thresholds (Jaro-Winkler score):**
+  - >= 0.97  →  owl:sameAs      (near-certain identity)
+  - >= 0.88  →  skos:related    (strong confidence)
+  - >= 0.78  →  rdfs:seeAlso    (plausible, flag for review)
+  - <  0.78  →  discarded
+
+**Entity type scoping:**
+Always provide entity_type when known — it filters Wikidata by P31/P279 instance-of and
+DBpedia by ontology class. 20+ types mapped (Organization, Person, Software, City, etc.).
+Expand TYPE_WIKIDATA_SCOPE / TYPE_DBPEDIA_SCOPE in the script for new types.
+
+**Dependencies:** pip install jellyfish (accurate Jaro-Winkler); without it, a less accurate
+SequenceMatcher fallback is used. Internet access to wikidata.org and dbpedia.org required.
+
+**CLI:** python entity_lookup.py --name "OpenAI" --type Organization -s both
+       python entity_lookup.py --name "Snowflake Inc." -t Company --subject "<#MyEntity>"
+
+**Verification gate:** Never insert an external IRI from this script without confirming the
+score is appropriate for the relationship you are asserting. owl:sameAs at score 0.85 is
+a contract violation — raise the threshold or use skos:related instead."""@en ;
+    schema:url <howto/entity-lookup-disambiguation.ttl> .
+
+:topicEntityLookupDisambiguation a schema:Thing ;
+    schema:name "Entity lookup disambiguation via Jaro-Winkler"@en ;
+    schema:description "Use entity_lookup.py to search Wikidata/DBpedia by name with Jaro-Winkler fuzzy matching, scoped by entity type, returning scored IRIs with owl:sameAs/skos:related/rdfs:seeAlso relationships."@en .
+
+:topicDelegationLocalFiles a schema:Thing ;
+    schema:name "YouID Delegation — Local File Modification Pattern"@en ;
+    schema:description "WebID delegation triples must be applied to LOCAL profile files (TTL, JSON-LD, RDFa HTML, index.html) in the user's credentials folder, then uploaded manually. Never deploy via server-side SPARQL PATCH — the user controls when to sync."@en .
+
+# ── Step 55: YouID Delegation — Local File Modification ──────────────────────
+
+:step-delegationLocalFiles a schema:HowToStep ;
+    schema:position 55 ;
+    schema:name "Apply delegation triples to local profile files, not server-side PATCH"@en ;
+    schema:text """**Rule:** WebID On-Behalf-Of delegation is always applied to local copies of the delegator's profile documents, then uploaded by the user. Never use HTTP PATCH or SPARQL UPDATE against the live server resource.
+
+**Workflow:**
+1. **Elicit the delegator's local directory** at workflow start — the user's local credentials folder containing the YouID profile files (`profile.ttl`, `profile.jsonld`, `profile_rdfa.html`, `index.html`).
+2. **Elicit the delegate's local directory** — ask if the delegate also has local profile files; if so, `oplcert:onBehalfOf` is added there too.
+3. **For each profile document**, add the delegation triple at the appropriate insertion point:
+   - `profile.ttl` — add `oplcert:hasIdentityDelegate <delegate-webid> .` to the `#netid` entity
+   - `profile.jsonld` — add `"oplcert:hasIdentityDelegate": { "@id": "<delegate-webid>" }` to the `#netid` graph entry
+   - `profile_rdfa.html` — add both RDFa and embedded JSON-LD delegation annotations
+   - `index.html` — add embedded JSON-LD and hidden RDFa delegation annotations
+4. If delegate directory was provided, repeat step 3 with `oplcert:onBehalfOf <delegator-webid>` in the delegate's files.
+5. **Generate `declarativeNetRequest` rule** for the delegate's browser (injects `On-Behalf-Of` header).
+6. **Present modified files** to the user for manual upload.
+7. **Never** issue HTTP PATCH or SPARQL UPDATE against the live server resource — the user controls deployment.
+
+**Rationale:** The user's local credentials folder is the canonical workspace. Applying triples there gives the user full control over what gets uploaded and when. Server-side patching bypasses this control and risks inconsistent state between local and deployed profiles."""@en ;
+    schema:url <howto/youid-delegation.ttl> .
