@@ -1,0 +1,3343 @@
+[
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#actionsparqlTopRatedFranchises",
+    "@type": [
+      "http://schema.org/SearchAction"
+    ],
+    "http://schema.org/target": [
+      {
+        "@value": "https://demo.openlinksw.com/sparql?default-graph-uri=&query=PREFIX+%3A+%3Chttp%3A%2F%2Fwww.databricks.com%2Fbakehouse%23%3E%0ASELECT%0A%3FfranchiseName%0A%3Fcity%0A(COUNT(%3Freview)+AS+%3FreviewCount)%0A(ROUND(AVG(%3Frating))*10%2F10+AS+%3FavgRating)%0AFROM+%3Chttp%3A%2F%2Fdemo.openlinksw.com%2Fdatabricks-bakehouse-r2rml%23%3E%0AWHERE+%7B%0A++%3Freview+a+%3AReview%3B%0A+++%3Afranchise+%3Ffranchise%3B%0A+++%3Arating+%3Frating.%0A++%3Ffranchise+%3Acity+%3Fcity.%0A++OPTIONAL+%7B+%3Ffranchise+%3AfranchiseName+%3FfranchiseName.+%7D%0A%7D%0AGROUP+BY+%3FfranchiseName+%3Fcity%0AHAVING+(COUNT(%3Freview)+%3E%3D+3)%0AORDER+BY+DESC(%3FavgRating)%0ALIMIT+10&format=text%2Fx-html%2Btr&timeout=0&debug=on&run=+Run+Query+"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#link",
+    "@type": [
+      "http://schema.org/WebSite"
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "SPARQLWorks Visualizer"
+      },
+      {
+        "@language": "en",
+        "@value": "Virtuoso R2RML Documentation"
+      },
+      {
+        "@language": "en",
+        "@value": "OpenLink Virtuoso Homepage"
+      },
+      {
+        "@language": "en",
+        "@value": "W3C R2RML Specification"
+      },
+      {
+        "@language": "en",
+        "@value": "W3C SPARQL 1.1 Query Language"
+      },
+      {
+        "@language": "en",
+        "@value": "W3C RDF Standard"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://github.com/danielhmills/sparqlworks/"
+      },
+      {
+        "@value": "http://docs.openlinksw.com/virtuoso/rdb2rdfviewsrdb2rdf/"
+      },
+      {
+        "@value": "https://virtuoso.openlinksw.com/"
+      },
+      {
+        "@value": "https://www.w3.org/TR/r2rml/"
+      },
+      {
+        "@value": "https://www.w3.org/TR/sparql11-query/"
+      },
+      {
+        "@value": "https://www.w3.org/RDF/"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#stdLinkedData",
+    "@type": [
+      "http://schema.org/DefinedTerm"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A method of publishing structured data using HTTP URIs and RDF so that it can be interlinked and become more useful through semantic queries."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Linked Data"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#seeAlso": [
+      {
+        "@id": "http://dbpedia.org/resource/Linked_data"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#actionsparqlSupplierProductFlow",
+    "@type": [
+      "http://schema.org/SearchAction"
+    ],
+    "http://schema.org/target": [
+      {
+        "@value": "https://demo.openlinksw.com/sparql?default-graph-uri=&query=PREFIX+%3A+%3Chttp%3A%2F%2Fwww.databricks.com%2Fbakehouse%23%3E%0ASELECT%0A%3FsupplierName%0A%3FingredientName%0A(COUNT(DISTINCT+%3Ffranchise)+AS+%3FfranchisesServed)%0AFROM+%3Chttp%3A%2F%2Fdemo.openlinksw.com%2Fdatabricks-bakehouse-r2rml%23%3E%0AWHERE+%7B%0A++%3Fsupply+a+%3ASupplyContract%3B%0A+++%3Asupplier+%3Fsupplier%3B%0A+++%3Aingredient+%3Fingredient%3B%0A+++%3Afranchise+%3Ffranchise.%0A++%3Fsupplier+%3AsupplierName+%3FsupplierName.%0A++%3Fingredient+%3AingredientName+%3FingredientName.%0A%7D%0AGROUP+BY+%3FsupplierName+%3FingredientName%0AORDER+BY+DESC(%3FfranchisesServed)%0ALIMIT+15&format=text%2Fx-html%2Btr&timeout=0&debug=on&run=+Run+Query+"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#QuadMapGeneration",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "The conversion of R2RML mappings into Virtuoso's internal Quad Map format for efficient SPARQL-to-SQL translation."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Quad Map Generation"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termSPARQL",
+    "@type": [
+      "http://schema.org/DefinedTerm"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "SPARQL Protocol and RDF Query Language — the W3C standard query language for RDF graphs. In the virtual knowledge graph, SPARQL queries are translated to SQL and executed against the live Databricks warehouse."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "SPARQL"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q8",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a8"
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#faqSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Is this approach suitable for real-time or high-frequency workloads?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Is this approach suitable for real-time or high-frequency workloads?"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termSemanticWeb",
+    "@type": [
+      "http://schema.org/DefinedTerm"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "An extension of the World Wide Web where data is given well-defined meaning through standards like RDF, SPARQL, and OWL — enabling machines and AI agents to reason about interconnected data across system boundaries."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Semantic Web"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q2",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a2"
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#faqSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Why use Virtuoso with Databricks instead of Databricks' built-in graph features?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Why use Virtuoso with Databricks instead of Databricks' built-in graph features?"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#faqSection",
+    "@type": [
+      "http://schema.org/FAQPage"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#analysis"
+      }
+    ],
+    "http://schema.org/mainEntity": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q1"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q2"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q3"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q4"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q5"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q6"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q7"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q8"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q9"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q10"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q11"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q12"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Databricks-Virtuoso Virtual Knowledge Graph FAQ"
+      }
+    ]
+  },
+  {
+    "@id": "https://github.com/danielhmills#this",
+    "@type": [
+      "http://schema.org/Person"
+    ],
+    "http://schema.org/alternateName": [
+      {
+        "@language": "en",
+        "@value": "danielhmills"
+      }
+    ],
+    "http://schema.org/identifier": [
+      {
+        "@value": "https://github.com/danielhmills"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "danielhm"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://github.com/danielhmills"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#sparqlEntityTypes",
+    "@type": [
+      "http://schema.org/SoftwareSourceCode"
+    ],
+    "http://schema.org/codeSampleType": [
+      {
+        "@value": "text/x-html+tr"
+      }
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "SPARQL SELECT rdf:type FROM <https://linkeddata.uriburner.com/DAV/demos/daas/databricks-virtuoso-kg-deepseek_v4pro-1.ttl> WHERE { ?s a ?o } LIMIT 10"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Entity Type Discovery"
+      }
+    ],
+    "http://schema.org/potentialAction": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#actionsparqlEntityTypes"
+      }
+    ],
+    "http://schema.org/programmingLanguage": [
+      {
+        "@value": "SPARQL"
+      }
+    ],
+    "http://schema.org/target": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#demoSparqlEndpoint"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "SELECT *\nWHERE {\n  GRAPH <https://linkeddata.uriburner.com/DAV/demos/daas/databricks-virtuoso-kg-deepseek_v4pro-1.ttl> {\n  \n    ?s a ?o\n  \n  }\n}\nLIMIT 10"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#step4",
+    "@type": [
+      "http://schema.org/HowToStep"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#howtoSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Clone the Demo Repository"
+      }
+    ],
+    "http://schema.org/position": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#integer",
+        "@value": 4
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Clone the companion GitHub repository containing ODBC templates, R2RML mapping files, ontology, and setup scripts: git clone https://github.com/danielhmills/databricks-sample-kg.git."
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#capSemanticEnrichment",
+    "@type": [
+      "http://schema.org/ActionAccessSpecification"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "R2RML mappings add ontology-defined classes, properties, and inferred relationships — transforming implicit foreign keys into navigable semantic links."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Semantic enrichment"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#sparqlSupplierProductFlow",
+    "@type": [
+      "http://schema.org/SoftwareSourceCode"
+    ],
+    "http://schema.org/codeSampleType": [
+      {
+        "@value": "text/x-html+tr"
+      }
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Supply chain visibility — traces supplier ingredients to the franchises that use them for a supply chain dashboard."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Dashboard: Supplier-Ingredient-Franchise Product Flow"
+      }
+    ],
+    "http://schema.org/potentialAction": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#actionsparqlSupplierProductFlow"
+      }
+    ],
+    "http://schema.org/programmingLanguage": [
+      {
+        "@value": "SPARQL"
+      }
+    ],
+    "http://schema.org/target": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#demoSparqlEndpoint"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "PREFIX : <http://www.databricks.com/bakehouse#>\n\nSELECT\n?supplierName\n?ingredientName\n(COUNT(DISTINCT ?franchise) AS ?franchisesServed)\nWHERE {\n  GRAPH <https://linkeddata.uriburner.com/DAV/demos/daas/databricks-virtuoso-kg-deepseek_v4pro-1.ttl> {\n  \n    ?supply a :SupplyContract;\n     :supplier ?supplier;\n     :ingredient ?ingredient;\n     :franchise ?franchise.\n    ?supplier :supplierName ?supplierName.\n    ?ingredient :ingredientName ?ingredientName.\n  \n  }\n}\nGROUP BY ?supplierName ?ingredientName\nORDER BY DESC(?franchisesServed)\nLIMIT 15"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#hyperlinkBasedEntityIdentity",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "The use of IRIs (Internationalized Resource Identifiers) as globally unique, dereferenceable entity identifiers — enabling entities from different systems (Databricks tables, external reference data, other knowledge graphs) to be linked and reasoned over as a single connected graph."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Hyperlink-Based Entity Identity"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q6",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a6"
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#faqSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "What are Quad Maps in Virtuoso?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "What are Quad Maps in Virtuoso?"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293",
+    "@type": [
+      "http://schema.org/CreativeWork"
+    ],
+    "http://schema.org/dateCreated": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#date",
+        "@value": "2026-06-17"
+      }
+    ],
+    "http://schema.org/dateModified": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#date",
+        "@value": "2026-06-17"
+      }
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Comprehensive RDF knowledge graph covering the value proposition of generating AI Agent-friendly Knowledge Graphs from Databricks-hosted data using Virtuoso, R2RML, SPARQL, and Linked Data principles."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Databricks-Virtuoso Virtual Knowledge Graph — RDF Knowledge Graph"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termVirtualKnowledgeGraph",
+    "@type": [
+      "http://schema.org/DefinedTerm"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A knowledge graph constructed over existing relational data without physical data movement — using virtual database attachment to expose tables, R2RML to define semantic mappings, and SPARQL for graph querying."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Virtual Knowledge Graph (VKG)"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q5",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a5"
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#faqSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "How do AI agents consume this knowledge graph?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "How do AI agents consume this knowledge graph?"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termVirtualDatabase",
+    "@type": [
+      "http://schema.org/DefinedTerm"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Virtuoso's capability to attach remote tables from ODBC/JDBC data sources — tables appear in the local catalog as virtual references without copying data."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Virtual Database (VDB)"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a11",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Answer: Can I use this approach with data sources other than Databri..."
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Yes. Virtuoso's Virtual Database supports any ODBC or JDBC data source — PostgreSQL, MySQL, Oracle, SQL Server, Snowflake, BigQuery, and many others. The same pattern applies: attach tables via ODBC, define R2RML mappings, load the ontology, generate quad maps, and query via SPARQL. The knowledge graph becomes a unified semantic layer spanning multiple heterogeneous data platforms."
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#SemanticEnrichment",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "The process of augmenting relational data with ontology-defined classes, properties, and inferred relationships to produce a knowledge graph."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Semantic Enrichment"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a8",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Answer: Is this approach suitable for real-time or high-frequency wo..."
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "The virtual knowledge graph approach using ODBC attachment is best suited for batch reasoning, GraphRAG over reference data, or exploratory graph analytics. For millisecond-latency graph traversals or high-frequency transactional writes, a native graph store may be more appropriate. However, for the majority of enterprise AI agent use cases — where agents need to discover entity relationships, traverse connections, and retrieve structured context — the performance characteristics are more than adequate."
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q11",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a11"
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#faqSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Can I use this approach with data sources other than Databricks?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Can I use this approach with data sources other than Databricks?"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a4",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Answer: What is R2RML and why is it important?..."
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "R2RML (RDB to RDF Mapping Language) is a W3C recommendation that defines how relational database tables, columns, and foreign keys map to RDF classes, properties, and relationships. It provides a declarative, standards-based bridge between the SQL world and the semantic graph world — no custom code needed. The mapping is a Turtle file that can be version-controlled, reviewed, and reused across projects."
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#uriburnerSparqlEndpoint",
+    "@type": [
+      "http://schema.org/WebAPI"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Public SPARQL endpoint for querying knowledge graphs hosted in Virtuoso-backed URIBurner."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "URIBurner SPARQL Endpoint"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://linkeddata.uriburner.com/sparql"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#capabilitiesSection",
+    "@type": [
+      "http://schema.org/CreativeWork"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#analysis"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Capabilities Enabled"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a7",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Answer: What is content negotiation and why does it matter for AI ag..."
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Content negotiation is an HTTP mechanism where the server inspects the client's Accept header to determine the response format. For the bakehouse knowledge graph: browsers requesting text/html receive a human-readable HTML description page with navigable links; AI agents and RDF clients requesting application/ld+json or text/turtle receive machine-readable RDF. This single-URI, multi-format approach means the same entity identifier works for both human exploration and automated agent consumption — a cornerstone of Linked Data and the Semantic Web."
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#actionsparqlOrderSizeDistribution",
+    "@type": [
+      "http://schema.org/SearchAction"
+    ],
+    "http://schema.org/target": [
+      {
+        "@value": "https://demo.openlinksw.com/sparql?default-graph-uri=&query=PREFIX+%3A+%3Chttp%3A%2F%2Fwww.databricks.com%2Fbakehouse%23%3E%0ASELECT%0A%3ForderSizeBucket%0A(COUNT(%3Ftransaction)+AS+%3FtransactionCount)%0A(SUM(%3FtotalPrice)+AS+%3FtotalRevenue)%0A(ROUND(AVG(%3FtotalPrice))+AS+%3FavgValue)%0AFROM+%3Chttp%3A%2F%2Fdemo.openlinksw.com%2Fdatabricks-bakehouse-r2rml%23%3E%0AWHERE+%7B%0A++%3Ftransaction+a+%3ATransaction%3B%0A+++%3AtotalPrice+%3FtotalPrice.%0A++BIND(%0A++++IF(%3FtotalPrice+%3C+10%2C+%22Small+(%3C%2410)%22%2C%0A++++IF(%3FtotalPrice+%3C+30%2C+%22Medium+(%2410-%2430)%22%2C%0A++++IF(%3FtotalPrice+%3C+60%2C+%22Large+(%2430-%2460)%22%2C%0A++++%22Enterprise+(%3E%2460)%22)))%0A++++AS+%3ForderSizeBucket)%0A%7D%0AGROUP+BY+%3ForderSizeBucket%0AORDER+BY+DESC(%3FtotalRevenue)&format=text%2Fx-html%2Btr&timeout=0&debug=on&run=+Run+Query+"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#linkjdbc-odbc-bi_html",
+    "@type": [
+      "http://schema.org/WebSite"
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Databricks ODBC/JDBC Documentation"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://docs.databricks.com/integrations/bi/jdbc-odbc-bi.html"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#R2RMLMapping",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A W3C R2RML declarative mapping that defines how relational tables and columns map to RDF classes and properties."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "R2RML Mapping"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#tableReviews",
+    "@type": [
+      "http://schema.org/Dataset",
+      "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#DataPlatform"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Customer reviews and ratings for franchises."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "sales_reviews"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#linksparql",
+    "@type": [
+      "http://schema.org/WebSite"
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "URIBurner SPARQL Endpoint"
+      },
+      {
+        "@language": "en",
+        "@value": "OpenLink Demo SPARQL Endpoint"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://linkeddata.uriburner.com/sparql"
+      },
+      {
+        "@value": "http://demo.openlinksw.com/sparql"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#tableSuppliers",
+    "@type": [
+      "http://schema.org/Dataset",
+      "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#DataPlatform"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Supplier records for ingredients and materials."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "sales_suppliers"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#requiresComponent",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A software component or driver required for the pipeline."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#VirtualKnowledgeGraph"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "requires component"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termOntology",
+    "@type": [
+      "http://schema.org/DefinedTerm"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A formal vocabulary defining classes, properties, and relationships within a domain. The bakehouse ontology defines Transaction, Franchise, Customer classes and franchise, totalPrice, city properties."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Ontology"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a5",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Answer: How do AI agents consume this knowledge graph?..."
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "AI agents consume the virtual knowledge graph through three standard interfaces: (1) SPARQL endpoint — structured graph queries returning typed results with entity IRIs; (2) Linked Data entity URIs — dereferenceable HTTP URIs that return RDF (Turtle, JSON-LD, RDF/XML) when requested with the appropriate Accept header; (3) HTML entity descriptions — human-readable pages with navigable hyperlinks for agentic browsing. No custom API, SDK, or platform-specific integration is required — any standards-compliant SPARQL client or HTTP agent can interact with the graph."
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#actionsparqlRevenueByCity",
+    "@type": [
+      "http://schema.org/SearchAction"
+    ],
+    "http://schema.org/target": [
+      {
+        "@value": "https://demo.openlinksw.com/sparql?default-graph-uri=&query=PREFIX+%3A+%3Chttp%3A%2F%2Fwww.databricks.com%2Fbakehouse%23%3E%0ASELECT%0A%3Fcity%0A(COUNT(DISTINCT+%3Ftransaction)+AS+%3ForderCount)%0A(SUM(%3FtotalPrice)+AS+%3Frevenue)%0A(ROUND(AVG(%3FtotalPrice))+AS+%3FavgOrderValue)%0AFROM+%3Chttp%3A%2F%2Fdemo.openlinksw.com%2Fdatabricks-bakehouse-r2rml%23%3E%0AWHERE+%7B%0A++%3Ftransaction+a+%3ATransaction%3B%0A+++%3Afranchise+%3Ffranchise%3B%0A+++%3AtotalPrice+%3FtotalPrice.%0A++%3Ffranchise+%3Acity+%3Fcity.%0A%7D%0AGROUP+BY+%3Fcity%0AORDER+BY+DESC(%3Frevenue)&format=text%2Fx-html%2Btr&timeout=0&debug=on&run=+Run+Query+"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#capProductionGrade",
+    "@type": [
+      "http://schema.org/ActionAccessSpecification"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "ACID compliance through the underlying Databricks warehouse, federated SPARQL for cross-graph queries, and Virtuoso's proven SPARQL-to-SQL query federation."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Production-grade infrastructure"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#ontology",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Ontology"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Lightweight ontology for modelling the Databricks-to-Virtuoso virtual knowledge graph pipeline: ODBC attachment, R2RML mapping, SPARQL querying, Linked Data entity dereferencing, and AI Agent consumption patterns."
+      }
+    ],
+    "http://schema.org/identifier": [
+      {
+        "@value": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Databricks-Virtuoso Knowledge Graph Ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Databricks-Virtuoso KG Ontology"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#LinkedDataEntityNavigation",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "The ability to dereference entity URIs via HTTP content negotiation, receiving HTML for browsers or RDF for machines."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Linked Data Entity Navigation"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#VirtualKnowledgeGraph",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A knowledge graph constructed over existing relational data without physical data movement, using virtual database attachment and R2RML declarative mappings."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Virtual Knowledge Graph"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#virtuosoPlatform",
+    "@type": [
+      "http://schema.org/SoftwareApplication"
+    ],
+    "http://schema.org/alternateName": [
+      {
+        "@language": "en",
+        "@value": "OpenLink Virtuoso"
+      }
+    ],
+    "http://schema.org/applicationCategory": [
+      {
+        "@language": "en",
+        "@value": "Database Management System"
+      },
+      {
+        "@language": "en",
+        "@value": "Knowledge Graph Platform"
+      },
+      {
+        "@language": "en",
+        "@value": "SPARQL Endpoint"
+      }
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A secure, high-performance, cross-platform relational and graph database server with virtual database, SPARQL, RDF, SQL, and R2RML support."
+      }
+    ],
+    "http://schema.org/manufacturer": [
+      {
+        "@id": "http://dbpedia.org/resource/OpenLink_Software"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Virtuoso Universal Server"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://virtuoso.openlinksw.com/"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#sameAs": [
+      {
+        "@id": "http://dbpedia.org/resource/Virtuoso_Universal_Server"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#conceptsSection",
+    "@type": [
+      "http://schema.org/CreativeWork"
+    ],
+    "http://schema.org/hasPart": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#virtualKnowledgeGraphConcept"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#graphReasoningConcept"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#semanticEnrichmentConcept"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#zeroDataMovementConcept"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#looselyCoupledSemanticLayer"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#hyperlinkBasedEntityIdentity"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#aiAgentFriendlyKG"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#contentNegotiationConcept"
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#analysis"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Key Concepts"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#looselyCoupledSemanticLayer",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A semantic enrichment layer that sits atop existing data platforms without tight coupling — replacing ETL-driven data copying with standards-based virtualization. The knowledge graph is an overlay, not a replacement or another silo."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Loosely Coupled Semantic Layer"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#analysis",
+    "@type": [
+      "http://schema.org/CreativeWork",
+      "http://schema.org/TechArticle"
+    ],
+    "http://schema.org/about": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#virtualKnowledgeGraphConcept"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#databricksPlatform"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#virtuosoPlatform"
+      },
+      {
+        "@id": "http://dbpedia.org/resource/Semantic_Web"
+      },
+      {
+        "@id": "http://dbpedia.org/resource/Knowledge_graph"
+      }
+    ],
+    "http://schema.org/abstract": [
+      {
+        "@language": "en",
+        "@value": "A step-by-step guide demonstrating how to unlock machine-computable entity relationships across existing Databricks data without migration, duplication, or platform lock-in — using RDF, SPARQL, R2RML, and Virtuoso's Virtual Database to create an AI Agent-friendly Knowledge Graph deployed on the Semantic Web."
+      }
+    ],
+    "http://schema.org/articleBody": [
+      {
+        "@language": "en",
+        "@value": "Modern AI and analytics need graph reasoning capabilities — the ability to traverse relationships and discover patterns across connected data — but most enterprise data sits in relational warehouses where relationships rely on implicit foreign keys. This guide shows how to bridge that gap using open W3C standards: RDF for entity relationships, SPARQL for graph querying, and R2RML for exposing relational data as graphs. Hyperlinks (IRIs) serve as globally unique identifiers enabling disparate systems to be connected and reasoned over as a whole. The result is a Knowledge Graph that extends beyond the boundaries of any single database, platform, or application."
+      }
+    ],
+    "http://schema.org/author": [
+      {
+        "@id": "https://github.com/danielhmills#this"
+      }
+    ],
+    "http://schema.org/dateModified": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#date",
+        "@value": "2026-06-17"
+      }
+    ],
+    "http://schema.org/datePublished": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#date",
+        "@value": "2026-06-09"
+      }
+    ],
+    "http://schema.org/hasPart": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#howtoSection"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#conceptsSection"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#capabilitiesSection"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#standardsSection"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#softwareSection"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#datasetSection"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#faqSection"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#glossarySection"
+      }
+    ],
+    "http://schema.org/headline": [
+      {
+        "@language": "en",
+        "@value": "From Databricks Tables to a Virtual Knowledge Graph with Virtuoso"
+      }
+    ],
+    "http://schema.org/inLanguage": [
+      {
+        "@value": "en"
+      }
+    ],
+    "http://schema.org/mentions": [
+      {
+        "@id": "http://dbpedia.org/resource/OpenLink_Software"
+      },
+      {
+        "@id": "http://dbpedia.org/resource/Databricks"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "From Databricks Tables to a Virtual Knowledge Graph with Virtuoso"
+      }
+    ],
+    "http://schema.org/relatedLink": [
+      {
+        "@value": "https://github.com/danielhmills/databricks-sample-kg"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#linkdatabricks-sample-kg"
+      },
+      {
+        "@value": "https://github.com/danielhmills/databricks-sample-kg/blob/main/README.md"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#linkREADME_md"
+      },
+      {
+        "@value": "https://github.com/danielhmills/databricks-sample-kg/blob/main/bakehouse/r2rml.ttl"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#linkr2rml_ttl"
+      },
+      {
+        "@value": "https://github.com/danielhmills/databricks-sample-kg/blob/main/bakehouse/ontology.ttl"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#linkontology_ttl"
+      },
+      {
+        "@value": "https://github.com/danielhmills/sparqlworks/"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#link"
+      },
+      {
+        "@value": "https://www.databricks.com/spark/odbc-driver-download"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#linkodbc-driver-download"
+      },
+      {
+        "@value": "https://docs.databricks.com/integrations/bi/jdbc-odbc-bi.html"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#linkjdbc-odbc-bi_html"
+      },
+      {
+        "@value": "http://docs.openlinksw.com/virtuoso/rdb2rdfviewsrdb2rdf/"
+      },
+      {
+        "@value": "https://virtuoso.openlinksw.com/"
+      },
+      {
+        "@value": "https://linkeddata.uriburner.com/sparql"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#linksparql"
+      },
+      {
+        "@value": "http://demo.openlinksw.com/sparql"
+      },
+      {
+        "@value": "https://www.w3.org/TR/r2rml/"
+      },
+      {
+        "@value": "https://www.w3.org/TR/sparql11-query/"
+      },
+      {
+        "@value": "https://www.w3.org/RDF/"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293"
+      }
+    ],
+    "http://www.w3.org/ns/prov#wasGeneratedBy": [
+      {
+        "@id": "https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator#this"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#graphOntology",
+    "@type": [
+      "http://schema.org/DataFeed"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Ontology graph — defines the bakehouse vocabulary: classes (Transaction, Franchise, Customer) and properties (franchise, totalPrice, city)."
+      }
+    ],
+    "http://schema.org/identifier": [
+      {
+        "@value": "http://www.databricks.com/bakehouse#"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "http://www.databricks.com/bakehouse#"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#datasetSection",
+    "@type": [
+      "http://schema.org/CreativeWork"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#analysis"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Bakehouse Sample Dataset"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a12",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Answer: What skills or expertise are needed to implement this?..."
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "SQL knowledge for table attachment and testing; basic understanding of RDF and SPARQL for query writing; familiarity with R2RML for mapping design (the Turtle syntax is straightforward for anyone comfortable with data modelling); and Virtuoso administration basics (Conductor UI or isql command-line). The companion GitHub repository provides templates and working examples — most practitioners can have a working virtual knowledge graph running within an hour."
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#semanticEnrichmentConcept",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "The process of augmenting relational data with ontology-defined classes (e.g., :Transaction, :Franchise), properties (e.g., :franchise, :totalPrice), and inferred relationships to produce a machine-readable knowledge graph. R2RML mappings are the declarative bridge between SQL schemas and RDF vocabularies."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Semantic Enrichment"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#stdODBC",
+    "@type": [
+      "http://schema.org/DefinedTerm"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Open Database Connectivity — standard API for accessing database management systems."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "ODBC"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#seeAlso": [
+      {
+        "@id": "http://dbpedia.org/resource/Open_Database_Connectivity"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#sparqlTopCustomers",
+    "@type": [
+      "http://schema.org/SoftwareSourceCode"
+    ],
+    "http://schema.org/codeSampleType": [
+      {
+        "@value": "text/x-html+tr"
+      }
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Customer value analysis — ranks customers by total spend across all their transactions for a CRM dashboard."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Dashboard: Top 10 Customers by Total Spend"
+      }
+    ],
+    "http://schema.org/potentialAction": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#actionsparqlTopCustomers"
+      }
+    ],
+    "http://schema.org/programmingLanguage": [
+      {
+        "@value": "SPARQL"
+      }
+    ],
+    "http://schema.org/target": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#demoSparqlEndpoint"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "PREFIX : <http://www.databricks.com/bakehouse#>\n\nSELECT\n?customerName\n(COUNT(DISTINCT ?transaction) AS ?purchaseCount)\n(SUM(?totalPrice) AS ?lifetimeValue)\n(ROUND(SUM(?totalPrice)/COUNT(DISTINCT ?transaction)) AS ?avgPurchaseValue)\nWHERE {\n  GRAPH <https://linkeddata.uriburner.com/DAV/demos/daas/databricks-virtuoso-kg-deepseek_v4pro-1.ttl> {\n  \n    ?transaction a :Transaction;\n     :customer ?customer;\n     :totalPrice ?totalPrice.\n    ?customer :customerName ?customerName.\n  \n  }\n}\nGROUP BY ?customerName\nORDER BY DESC(?lifetimeValue)\nLIMIT 10"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#contentNegotiationConcept",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "An HTTP mechanism where the server inspects the client's Accept header to determine the response format — returning an HTML description page for browsers and RDF (Turtle, JSON-LD, RDF/XML) for semantic agents and RDF clients."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Content Negotiation"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q12",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a12"
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#faqSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "What skills or expertise are needed to implement this?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "What skills or expertise are needed to implement this?"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#glossarySection",
+    "@type": [
+      "http://schema.org/DefinedTermSet"
+    ],
+    "http://schema.org/hasDefinedTerm": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termVirtualKnowledgeGraph"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termR2RML"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termQuadMap"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termVirtualDatabase"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termSPARQL"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termLinkedData"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termContentNegotiation"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termOntology"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termODBC"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termAIKGAgent"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termEntityURI"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termSemanticWeb"
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#analysis"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Databricks-Virtuoso Knowledge Graph Glossary"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#type": [
+      {
+        "@id": "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#stdSPARQL",
+    "@type": [
+      "http://schema.org/DefinedTerm"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "SPARQL Protocol and RDF Query Language — W3C standard for querying and manipulating RDF graphs."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "SPARQL"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#seeAlso": [
+      {
+        "@id": "http://dbpedia.org/resource/SPARQL"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#linkdatabricks-sample-kg",
+    "@type": [
+      "http://schema.org/WebSite"
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Companion GitHub Repository"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://github.com/danielhmills/databricks-sample-kg"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#linkr2rml_ttl",
+    "@type": [
+      "http://schema.org/WebSite"
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "R2RML Mappings (Turtle)"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://github.com/danielhmills/databricks-sample-kg/blob/main/bakehouse/r2rml.ttl"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#tableCustomers",
+    "@type": [
+      "http://schema.org/Dataset",
+      "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#DataPlatform"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Customer records with names, contact details, and loyalty status."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "sales_customers"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q7",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a7"
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#faqSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "What is content negotiation and why does it matter for AI agents?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "What is content negotiation and why does it matter for AI agents?"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#aiAgentFriendlyKG",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A knowledge graph designed for consumption by AI agents — featuring dereferenceable entity URIs, machine-readable RDF representations, SPARQL endpoints for structured querying, and navigable entity relationships. The Databricks-Virtuoso pipeline produces such a graph: an AI agent can follow entity links, execute SPARQL queries, and retrieve structured context without custom API integration."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "AI Agent-Friendly Knowledge Graph"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#sparqlConstructVisualization",
+    "@type": [
+      "http://schema.org/SoftwareSourceCode"
+    ],
+    "http://schema.org/codeSampleType": [
+      {
+        "@value": "text/x-html-nice-turtle"
+      }
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "SPARQL CONSTRUCT extracting the Transaction-Franchise-City subgraph for interactive node-link visualization in SPARQLWorks."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "CONSTRUCT for Graph Visualization (SPARQLWorks)"
+      }
+    ],
+    "http://schema.org/potentialAction": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#actionsparqlConstructVisualization"
+      }
+    ],
+    "http://schema.org/programmingLanguage": [
+      {
+        "@value": "SPARQL"
+      }
+    ],
+    "http://schema.org/target": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#demoSparqlEndpoint"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "PREFIX : <http://www.databricks.com/bakehouse#>\n\nCONSTRUCT\n{\n  ?transaction a :Transaction;\n   :franchise ?franchise;\n   :totalPrice ?totalPrice.\n\n  ?franchise :city ?franchiseCity.\n}\nWHERE\n{\n  GRAPH <https://linkeddata.uriburner.com/DAV/demos/daas/databricks-virtuoso-kg-deepseek_v4pro-1.ttl>\n  {\n    ?transaction a :Transaction;\n     :franchise ?franchise;\n     :totalPrice ?totalPrice.\n\n    ?franchise :city ?franchiseCity.\n  }\n}\nLIMIT 100"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#linkREADME_md",
+    "@type": [
+      "http://schema.org/WebSite"
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Full README"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://github.com/danielhmills/databricks-sample-kg/blob/main/README.md"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#actionsparqlTopCustomers",
+    "@type": [
+      "http://schema.org/SearchAction"
+    ],
+    "http://schema.org/target": [
+      {
+        "@value": "https://demo.openlinksw.com/sparql?default-graph-uri=&query=PREFIX+%3A+%3Chttp%3A%2F%2Fwww.databricks.com%2Fbakehouse%23%3E%0ASELECT%0A%3FcustomerName%0A(COUNT(DISTINCT+%3Ftransaction)+AS+%3FpurchaseCount)%0A(SUM(%3FtotalPrice)+AS+%3FlifetimeValue)%0A(ROUND(SUM(%3FtotalPrice)%2FCOUNT(DISTINCT+%3Ftransaction))+AS+%3FavgPurchaseValue)%0AFROM+%3Chttp%3A%2F%2Fdemo.openlinksw.com%2Fdatabricks-bakehouse-r2rml%23%3E%0AWHERE+%7B%0A++%3Ftransaction+a+%3ATransaction%3B%0A+++%3Acustomer+%3Fcustomer%3B%0A+++%3AtotalPrice+%3FtotalPrice.%0A++%3Fcustomer+%3AcustomerName+%3FcustomerName.%0A%7D%0AGROUP+BY+%3FcustomerName%0AORDER+BY+DESC(%3FlifetimeValue)%0ALIMIT+10&format=text%2Fx-html%2Btr&timeout=0&debug=on&run=+Run+Query+"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#enablesCapability",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A capability unlocked by the virtual knowledge graph approach."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#VirtualKnowledgeGraph"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "enables capability"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#tableTransactions",
+    "@type": [
+      "http://schema.org/Dataset",
+      "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#DataPlatform"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Transaction records linking customers to franchises with line items and pricing."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "sales_transactions"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#zeroDataMovementConcept",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A defining characteristic of the virtual knowledge graph approach — Databricks tables are attached via ODBC as virtual references, not copied. SPARQL queries are translated to SQL and executed remotely against the Databricks warehouse at query time."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Zero Data Movement"
+      }
+    ]
+  },
+  {
+    "@id": "http://dbpedia.org/resource/OpenLink_Software",
+    "@type": [
+      "http://schema.org/Organization"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Creator of Virtuoso Universal Server, URIBurner, and enterprise knowledge graph infrastructure."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "OpenLink Software"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://www.openlinksw.com/"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#sameAs": [
+      {
+        "@id": "http://www.wikidata.org/entity/Q7096326"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#sparqlOrderSizeDistribution",
+    "@type": [
+      "http://schema.org/SoftwareSourceCode"
+    ],
+    "http://schema.org/codeSampleType": [
+      {
+        "@value": "text/x-html+tr"
+      }
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Revenue segmentation analysis — buckets transactions by value range for a financial performance dashboard."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Dashboard: Order Size Distribution (Revenue Segmentation)"
+      }
+    ],
+    "http://schema.org/potentialAction": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#actionsparqlOrderSizeDistribution"
+      }
+    ],
+    "http://schema.org/programmingLanguage": [
+      {
+        "@value": "SPARQL"
+      }
+    ],
+    "http://schema.org/target": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#demoSparqlEndpoint"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "PREFIX : <http://www.databricks.com/bakehouse#>\n\nSELECT\n?orderSizeBucket\n(COUNT(?transaction) AS ?transactionCount)\n(SUM(?totalPrice) AS ?totalRevenue)\n(ROUND(AVG(?totalPrice)) AS ?avgValue)\nWHERE {\n  GRAPH <https://linkeddata.uriburner.com/DAV/demos/daas/databricks-virtuoso-kg-deepseek_v4pro-1.ttl> {\n  \n    ?transaction a :Transaction;\n     :totalPrice ?totalPrice.\n    BIND(\n      IF(?totalPrice < 10, \"Small (<$10)\",\n      IF(?totalPrice < 30, \"Medium ($10-$30)\",\n      IF(?totalPrice < 60, \"Large ($30-$60)\",\n      \"Enterprise (>$60)\")))\n      AS ?orderSizeBucket)\n  \n  }\n}\nGROUP BY ?orderSizeBucket\nORDER BY DESC(?totalRevenue)"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#step7",
+    "@type": [
+      "http://schema.org/HowToStep"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#howtoSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Verify the Knowledge Graph with SPARQL"
+      }
+    ],
+    "http://schema.org/position": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#integer",
+        "@value": 7
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Run SPARQL queries against the virtual knowledge graph — test entity type discovery (SELECT * FROM <...> WHERE { ?s a ?o }), cross-table joins (Revenue by Franchise), and CONSTRUCT queries for graph visualization in SPARQLWorks. Confirm dereferenceable entity URIs respond to both browsers and RDF clients via content negotiation."
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#bakehouseDataset",
+    "@type": [
+      "http://schema.org/Dataset"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A fictional bakery chain dataset provided by Databricks as a public sample — includes customers, franchises, suppliers, transactions, and reviews tables."
+      }
+    ],
+    "http://schema.org/hasPart": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#tableCustomers"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#tableFranchises"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#tableTransactions"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#tableSuppliers"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#tableReviews"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "samples.bakehouse"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#databricksOdbcDriver",
+    "@type": [
+      "http://schema.org/SoftwareApplication"
+    ],
+    "http://schema.org/applicationCategory": [
+      {
+        "@language": "en",
+        "@value": "Database Driver"
+      }
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "ODBC driver enabling SQL connectivity between Virtuoso and Databricks SQL warehouses for virtual database attachment."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Databricks ODBC Driver"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://www.databricks.com/spark/odbc-driver-download"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a2",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Answer: Why use Virtuoso with Databricks instead of Databricks' buil..."
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Databricks provides graph capabilities within its platform, but Virtuoso adds: (1) standards-based interoperability via W3C RDF/SPARQL/R2RML — no vendor lock-in; (2) Linked Data entity URIs enabling cross-system entity navigation; (3) federated SPARQL across multiple data sources; (4) AI Agent-friendly machine-readable RDF with content negotiation; and (5) a loosely coupled architecture where the knowledge graph is an overlay, not yet another silo."
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#capStandardsInterop",
+    "@type": [
+      "http://schema.org/ActionAccessSpecification"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "W3C standards (RDF, SPARQL, R2RML) prevent vendor lock-in — the knowledge graph is portable and queryable by any standards-compliant SPARQL client or AI agent."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Standards-based interoperability"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#DataPlatform",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A cloud or on-premises platform hosting structured data (warehouses, lakes, lakehouses)."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Data Platform"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#sparqlRevenueByCity",
+    "@type": [
+      "http://schema.org/SoftwareSourceCode"
+    ],
+    "http://schema.org/codeSampleType": [
+      {
+        "@value": "text/x-html+tr"
+      }
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Geographic revenue breakdown — aggregates totalPrice by franchise city for a regional performance dashboard."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Dashboard: Revenue by City (Geographic Distribution)"
+      }
+    ],
+    "http://schema.org/potentialAction": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#actionsparqlRevenueByCity"
+      }
+    ],
+    "http://schema.org/programmingLanguage": [
+      {
+        "@value": "SPARQL"
+      }
+    ],
+    "http://schema.org/target": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#demoSparqlEndpoint"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "PREFIX : <http://www.databricks.com/bakehouse#>\n\nSELECT\n?city\n(COUNT(DISTINCT ?transaction) AS ?orderCount)\n(SUM(?totalPrice) AS ?revenue)\n(ROUND(AVG(?totalPrice)) AS ?avgOrderValue)\nWHERE {\n  GRAPH <https://linkeddata.uriburner.com/DAV/demos/daas/databricks-virtuoso-kg-deepseek_v4pro-1.ttl> {\n  \n    ?transaction a :Transaction;\n     :franchise ?franchise;\n     :totalPrice ?totalPrice.\n    ?franchise :city ?city.\n  \n  }\n}\nGROUP BY ?city\nORDER BY DESC(?revenue)"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q9",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a9"
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#faqSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "What Databricks components are required?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "What Databricks components are required?"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#sparqlworks",
+    "@type": [
+      "http://schema.org/SoftwareApplication"
+    ],
+    "http://schema.org/applicationCategory": [
+      {
+        "@language": "en",
+        "@value": "Graph Visualization"
+      }
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A SPARQL query visualisation tool that renders CONSTRUCT query results as interactive node-link diagrams for exploring knowledge graph relationships."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "SPARQLWorks"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://github.com/danielhmills/sparqlworks/"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a1",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Answer: What is a Virtual Knowledge Graph?..."
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "A Virtual Knowledge Graph (VKG) is a semantic layer constructed over existing relational data without physical data movement. It uses virtual database attachment (ODBC/JDBC) to connect to source systems, R2RML mappings to declare how tables and columns map to RDF classes and properties, and SPARQL-to-SQL query translation to execute graph queries against the live relational data at query time. The data stays in place; the semantics are layered on top."
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a3",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Answer: Does data get copied from Databricks to Virtuoso?..."
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "No. The virtual knowledge graph approach achieves zero data movement. Databricks tables are attached via ODBC as virtual references — they appear in Virtuoso's local catalog but no data is copied. SPARQL queries are translated to SQL at query time and executed remotely against the live Databricks SQL warehouse. This means the knowledge graph always reflects current data without ETL pipelines or stale copies."
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#step6",
+    "@type": [
+      "http://schema.org/HowToStep"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#howtoSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Test the Attached Tables"
+      }
+    ],
+    "http://schema.org/position": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#integer",
+        "@value": 6
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Verify the virtual attachment by running a SQL SELECT query against the virtual tables (e.g., SELECT TOP 10 * FROM databricks.bakehouse.sales_customers) via isql or the Conductor iSQL UI."
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#step3",
+    "@type": [
+      "http://schema.org/HowToStep"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#howtoSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Connect to the Data Source"
+      }
+    ],
+    "http://schema.org/position": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#integer",
+        "@value": 3
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Find databricks_odbc in the External Data Sources list, click Connect, supply the username (token) and password (personal access token), and establish the ODBC connection from Virtuoso to the Databricks SQL warehouse."
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#howtoSection",
+    "@type": [
+      "http://schema.org/HowTo"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Seven-step guide to creating an AI Agent-friendly knowledge graph from Databricks-hosted data without migration, duplication, or platform lock-in."
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#analysis"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "How to Build a Virtual Knowledge Graph from Databricks Tables using Virtuoso"
+      }
+    ],
+    "http://schema.org/step": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#step1"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#step2"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#step3"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#step4"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#step5"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#step6"
+      },
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#step7"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#graphR2RML",
+    "@type": [
+      "http://schema.org/DataFeed"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "R2RML mapping graph — defines the SQL-to-RDF mapping rules for the bakehouse schema."
+      }
+    ],
+    "http://schema.org/identifier": [
+      {
+        "@value": "urn:databricks:bakehouse:r2rml"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "urn:databricks:bakehouse:r2rml"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q1",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a1"
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#faqSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "What is a Virtual Knowledge Graph?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "What is a Virtual Knowledge Graph?"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termEntityURI",
+    "@type": [
+      "http://schema.org/DefinedTerm"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A globally unique, dereferenceable HTTP identifier for a knowledge graph entity (e.g., http://demo.openlinksw.com/databricks/bakehouse/franchise-3000046#this). When dereferenced, returns either human-readable HTML or machine-readable RDF depending on the client."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Entity URI"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#demoSparqlEndpoint",
+    "@type": [
+      "http://schema.org/WebAPI"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Demo SPARQL endpoint hosting the bakehouse virtual knowledge graph for live query testing."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "OpenLink Demo SPARQL Endpoint"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://demo.openlinksw.com/sparql"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termContentNegotiation",
+    "@type": [
+      "http://schema.org/DefinedTerm"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "An HTTP mechanism where a server returns different representations of the same resource based on the client's Accept header — HTML for browsers, RDF for semantic agents."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Content Negotiation"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#standardsSection",
+    "@type": [
+      "http://schema.org/CreativeWork"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#analysis"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "W3C Standards"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#quickSetupScript",
+    "@type": [
+      "http://schema.org/SoftwareSourceCode"
+    ],
+    "http://schema.org/codeRepository": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#demoRepo"
+      }
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "SQL script that attaches Databricks tables to Virtuoso's local catalog, grants SPARQL access, loads R2RML mappings and ontology, generates quad maps, and configures URL rewrite rules for Linked Data."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "quick_setup.sql"
+      }
+    ],
+    "http://schema.org/programmingLanguage": [
+      {
+        "@value": "SQL"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q4",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a4"
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#faqSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "What is R2RML and why is it important?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "What is R2RML and why is it important?"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a6",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Answer: What are Quad Maps in Virtuoso?..."
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Quad Maps are Virtuoso's internal representation of R2RML mappings — they define how SPARQL graph patterns translate to SQL queries against virtual tables. The R2RML_MAKE_QM_FROM_G function converts declarative R2RML Turtle mappings into optimized Quad Maps that Virtuoso's SPARQL engine uses at query time. This is what makes SPARQL queries executable against remote relational tables without data movement."
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#linkodbc-driver-download",
+    "@type": [
+      "http://schema.org/WebSite"
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Databricks ODBC Driver Download"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://www.databricks.com/spark/odbc-driver-download"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termQuadMap",
+    "@type": [
+      "http://schema.org/DefinedTerm"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Virtuoso's internal compiled representation of R2RML mapping rules — the SPARQL engine uses quad maps at query time to translate SPARQL graph patterns into SQL queries against virtual tables."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Quad Map"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#actionsparqlConstructVisualization",
+    "@type": [
+      "http://schema.org/SearchAction"
+    ],
+    "http://schema.org/target": [
+      {
+        "@value": "https://demo.openlinksw.com/sparql?default-graph-uri=&query=PREFIX+%3A+%3Chttp%3A%2F%2Fwww.databricks.com%2Fbakehouse%23%3E%0A%0ACONSTRUCT%0A%7B%0A++%3Ftransaction+a+%3ATransaction%3B%0A+++%3Afranchise+%3Ffranchise%3B%0A+++%3AtotalPrice+%3FtotalPrice.%0A%0A++%3Ffranchise+%3Acity+%3FfranchiseCity.%0A%7D%0AWHERE%0A%7B%0A++GRAPH+%3Chttp%3A%2F%2Fdemo.openlinksw.com%2Fdatabricks-bakehouse-r2rml%23%3E%0A++%7B%0A++++%3Ftransaction+a+%3ATransaction%3B%0A+++++%3Afranchise+%3Ffranchise%3B%0A+++++%3AtotalPrice+%3FtotalPrice.%0A%0A++++%3Ffranchise+%3Acity+%3FfranchiseCity.%0A++%7D%0A%7D%0ALIMIT+100"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termAIKGAgent",
+    "@type": [
+      "http://schema.org/DefinedTerm"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A knowledge graph designed for AI agent consumption — featuring dereferenceable entity URIs, machine-readable RDF, SPARQL endpoints, and navigable entity relationships without custom API integration."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "AI Agent-Friendly Knowledge Graph"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termLinkedData",
+    "@type": [
+      "http://schema.org/DefinedTerm"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A method of publishing structured data on the web using HTTP URIs, RDF, and content negotiation — enabling entities to be interlinked across systems and consumed by both humans and machines."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Linked Data"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#capZeroMovement",
+    "@type": [
+      "http://schema.org/ActionAccessSpecification"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Virtuoso's Virtual Database attaches Databricks tables via ODBC as virtual references — no ETL, no duplication, no stale copies."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Zero data movement"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a10",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Answer: How does this compare to traditional ETL-based knowledge gra..."
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Traditional ETL-based approaches: extract data from source, transform to RDF, load into a triplestore — creating a copy that must be kept in sync. The virtual approach: no extraction, no transformation pipeline, no load step, no stale copies. R2RML mappings define the semantic model declaratively; SPARQL queries execute against live data. Changes in Databricks tables are immediately visible in SPARQL results. The trade-off is query latency versus data freshness — the virtual approach prioritizes freshness and simplicity over raw graph traversal speed."
+      }
+    ]
+  },
+  {
+    "@id": "http://dbpedia.org/resource/Databricks",
+    "@type": [
+      "http://schema.org/Organization"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Cloud data platform provider offering data lakehouse architecture combining data lakes and data warehouses."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Databricks"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://www.databricks.com/"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#sameAs": [
+      {
+        "@id": "http://www.wikidata.org/entity/Q52014331"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#tableFranchises",
+    "@type": [
+      "http://schema.org/Dataset",
+      "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#DataPlatform"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Franchise locations with city, country, and coordinate data."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "sales_franchises"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#step2",
+    "@type": [
+      "http://schema.org/HowToStep"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#howtoSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Register the DSN in Virtuoso"
+      }
+    ],
+    "http://schema.org/position": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#integer",
+        "@value": 2
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Access the External Data Sources Manager in Virtuoso Conductor at /conductor/vdb_conn_dsn.vspx to register the databricks_odbc DSN for use by Virtuoso's Virtual Database engine."
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#capLinkedDataNavigation",
+    "@type": [
+      "http://schema.org/ActionAccessSpecification"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Every entity (customer, franchise, transaction) receives a dereferenceable HTTP URI with content negotiation — browsers see HTML descriptions, AI agents retrieve machine-readable RDF."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Linked Data entity navigation"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#sparqlRevenueByFranchise",
+    "@type": [
+      "http://schema.org/SoftwareSourceCode"
+    ],
+    "http://schema.org/codeSampleType": [
+      {
+        "@value": "text/x-html+tr"
+      }
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "SPARQL SELECT with SUM aggregation joining Transaction and Franchise tables via the :franchise property, grouped by franchise and city."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Revenue by Franchise (Cross-Table SPARQL Join)"
+      }
+    ],
+    "http://schema.org/potentialAction": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#actionsparqlRevenueByFranchise"
+      }
+    ],
+    "http://schema.org/programmingLanguage": [
+      {
+        "@value": "SPARQL"
+      }
+    ],
+    "http://schema.org/target": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#demoSparqlEndpoint"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "PREFIX : <http://www.databricks.com/bakehouse#>\n\nSELECT\n?franchise\n?franchiseCity\nSUM(?totalPrice) as ?revenue\nWHERE {\n  GRAPH <https://linkeddata.uriburner.com/DAV/demos/daas/databricks-virtuoso-kg-deepseek_v4pro-1.ttl> {\n  \n    ?transaction a :Transaction;\n     :franchise ?franchise;\n     :totalPrice ?totalPrice.\n  \n    ?franchise :city ?franchiseCity.\n  \n  }\n}\nGROUP BY ?franchise ?franchiseCity\nORDER BY DESC(?revenue)\nLIMIT 10"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#demoRepo",
+    "@type": [
+      "http://schema.org/SoftwareSourceCode"
+    ],
+    "http://schema.org/codeRepository": [
+      {
+        "@value": "https://github.com/danielhmills/databricks-sample-kg"
+      }
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Companion repository containing ODBC configuration templates, R2RML mappings, ontology, and setup scripts for the Databricks-to-Virtuoso virtual knowledge graph pipeline."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "databricks-sample-kg"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://github.com/danielhmills/databricks-sample-kg"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#virtualKnowledgeGraphConcept",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A knowledge graph constructed over existing relational data without physical data movement — using virtual database attachment to expose tables, R2RML to define semantic mappings, and SPARQL for graph querying. The data stays in Databricks; the semantics are layered on top via Virtuoso."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Virtual Knowledge Graph"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#graphReasoningConcept",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "The ability to traverse relationships and discover patterns across connected data using ontology-defined semantics rather than implicit foreign keys. In the bakehouse example, foreign keys become navigable hyperlinks connecting Transaction→Franchise→City through named relationships."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Graph Reasoning"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#graphInstance",
+    "@type": [
+      "http://schema.org/DataFeed"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Instance data graph — the runtime virtual knowledge graph containing entity triples generated by applying R2RML mappings to the live Databricks tables."
+      }
+    ],
+    "http://schema.org/identifier": [
+      {
+        "@value": "https://linkeddata.uriburner.com/DAV/demos/daas/databricks-virtuoso-kg-deepseek_v4pro-1.ttl"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "https://linkeddata.uriburner.com/DAV/demos/daas/databricks-virtuoso-kg-deepseek_v4pro-1.ttl"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#softwareSection",
+    "@type": [
+      "http://schema.org/CreativeWork"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#analysis"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Software Stack"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#step5",
+    "@type": [
+      "http://schema.org/HowToStep"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#howtoSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Run the Quick Setup Script"
+      }
+    ],
+    "http://schema.org/position": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#integer",
+        "@value": 5
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Execute quick_setup.sql via isql — this script attaches each Databricks table (ATTACH TABLE ... FROM 'databricks_odbc'), grants SPARQL_SELECT privileges, loads the R2RML mapping and ontology via SPARQL LOAD, generates quad maps via R2RML_MAKE_QM_FROM_G, and configures URL rewrite rules for Linked Data content negotiation."
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#step1",
+    "@type": [
+      "http://schema.org/HowToStep"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#howtoSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Create the ODBC DSN"
+      }
+    ],
+    "http://schema.org/position": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#integer",
+        "@value": 1
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Configure a Databricks ODBC Data Source Name (DSN) — install the Databricks ODBC Driver, obtain workspace Host/HTTP Path/Personal Access Token, and populate odbcinst.ini and odbc.ini with the driver and connection details."
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#GraphReasoningCapability",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "The ability to traverse relationships and discover patterns across connected data using ontology-defined semantics rather than implicit foreign keys."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Graph Reasoning Capability"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q10",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a10"
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#faqSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "How does this compare to traditional ETL-based knowledge graph construction?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "How does this compare to traditional ETL-based knowledge graph construction?"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#implementsStandard",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A W3C or industry standard employed in the solution."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#VirtualKnowledgeGraph"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "implements standard"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#actionsparqlRevenueByFranchise",
+    "@type": [
+      "http://schema.org/SearchAction"
+    ],
+    "http://schema.org/target": [
+      {
+        "@value": "https://demo.openlinksw.com/sparql?default-graph-uri=&qtxt=PREFIX+%3A+%3Chttp%3A%2F%2Fwww.databricks.com%2Fbakehouse%23%3E%0A%0ASELECT%0A%3Ffranchise%0A%3FfranchiseCity%0ASUM(%3FtotalPrice)+as+%3Frevenue%0AFROM+%3Chttp%3A%2F%2Fdemo.openlinksw.com%2Fdatabricks-bakehouse-r2rml%23%3E%0AWHERE%0A%7B%0A++%3Ftransaction+a+%3ATransaction%3B%0A+++%3Afranchise+%3Ffranchise%3B%0A+++%3AtotalPrice+%3FtotalPrice.%0A%0A++%3Ffranchise+%3Acity+%3FfranchiseCity.%0A%7D%0AGROUP+BY+%3Ffranchise+%3FfranchiseCity%0AORDER+BY+DESC(%3Frevenue)%0ALIMIT+10"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#stdRDF",
+    "@type": [
+      "http://schema.org/DefinedTerm"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Resource Description Framework — W3C standard for representing entity relationships as subject-predicate-object triples."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "RDF"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#seeAlso": [
+      {
+        "@id": "http://dbpedia.org/resource/Resource_Description_Framework"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#sparqlTopRatedFranchises",
+    "@type": [
+      "http://schema.org/SoftwareSourceCode"
+    ],
+    "http://schema.org/codeSampleType": [
+      {
+        "@value": "text/x-html+tr"
+      }
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Customer satisfaction metrics — averages review ratings per franchise for a quality monitoring dashboard."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Dashboard: Top Rated Franchises (Customer Satisfaction)"
+      }
+    ],
+    "http://schema.org/potentialAction": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#actionsparqlTopRatedFranchises"
+      }
+    ],
+    "http://schema.org/programmingLanguage": [
+      {
+        "@value": "SPARQL"
+      }
+    ],
+    "http://schema.org/target": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#demoSparqlEndpoint"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "PREFIX : <http://www.databricks.com/bakehouse#>\n\nSELECT\n?franchiseName\n?city\n(COUNT(?review) AS ?reviewCount)\n(ROUND(AVG(?rating))*10/10 AS ?avgRating)\nWHERE {\n  GRAPH <https://linkeddata.uriburner.com/DAV/demos/daas/databricks-virtuoso-kg-deepseek_v4pro-1.ttl> {\n  \n    ?review a :Review;\n     :franchise ?franchise;\n     :rating ?rating.\n    ?franchise :city ?city.\n    OPTIONAL { ?franchise :franchiseName ?franchiseName. }\n  \n  }\n}\nGROUP BY ?franchiseName ?city\nHAVING (COUNT(?review) >= 3)\nORDER BY DESC(?avgRating)\nLIMIT 10"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#actionsparqlEntityTypes",
+    "@type": [
+      "http://schema.org/SearchAction"
+    ],
+    "http://schema.org/target": [
+      {
+        "@value": "http://demo.openlinksw.com/sparql?default-graph-uri=&qtxt=SELECT+*%0D%0AFROM+%3Chttp%3A%2F%2Fdemo.openlinksw.com%2Fdatabricks-bakehouse-r2rml%23%3E%0D%0AWHERE%0D%0A%7B%0D%0A++%3Fs+a+%3Fo%0D%0A%7D%0D%0ALIMIT+10"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a9",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Answer: What Databricks components are required?..."
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "You need: (1) a Databricks SQL warehouse (Serverless, Pro, or Classic) to provide the ODBC endpoint; (2) the Databricks ODBC Driver installed on the Virtuoso host; (3) a Personal Access Token for authentication; and (4) the workspace Host and HTTP Path for the SQL warehouse. The public samples.bakehouse dataset provides the example tables — your own Databricks catalogs and schemas work the same way."
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#mapsTo",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "The RDF class or property a relational construct maps to."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#R2RMLMapping"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "maps to"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termODBC",
+    "@type": [
+      "http://schema.org/DefinedTerm"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A standard API for accessing database management systems — used by Virtuoso to connect to Databricks SQL warehouses for virtual table attachment."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "ODBC (Open Database Connectivity)"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#VirtualDatabaseAttachment",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "Connecting to a remote database via ODBC/JDBC without copying data — tables appear in the local catalog as virtual references."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Virtual Database Attachment"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#termR2RML",
+    "@type": [
+      "http://schema.org/DefinedTerm"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A W3C recommendation that declaratively defines how relational database tables, columns, primary keys, and foreign keys map to RDF classes, properties, and object relationships."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "R2RML (RDB to RDF Mapping Language)"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#capGraphReasoning",
+    "@type": [
+      "http://schema.org/ActionAccessSpecification"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "SPARQL queries over Databricks tables without data movement — SQL is generated and executed at query time against the live Databricks warehouse."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Graph reasoning on existing data"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#linkontology_ttl",
+    "@type": [
+      "http://schema.org/WebSite"
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Bakehouse Ontology (Turtle)"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://github.com/danielhmills/databricks-sample-kg/blob/main/bakehouse/ontology.ttl"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#stdR2RML",
+    "@type": [
+      "http://schema.org/DefinedTerm"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "RDB to RDF Mapping Language — W3C recommendation for exposing relational data as RDF graphs using declarative mappings."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "R2RML"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#seeAlso": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#stdR2RML-ext"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#usesDataPlatform",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "The data platform whose tables are being virtualized into the knowledge graph."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#VirtualKnowledgeGraph"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "uses data platform"
+      }
+    ]
+  },
+  {
+    "@id": "https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator#this",
+    "@type": [
+      "http://schema.org/SoftwareApplication",
+      "http://www.w3.org/ns/prov#SoftwareAgent"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Knowledge graph generation skill for AI agents — transforms documents and web content into structured RDF."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "kg-generator skill"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#q3",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#a3"
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#faqSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Does data get copied from Databricks to Virtuoso?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Does data get copied from Databricks to Virtuoso?"
+      }
+    ]
+  },
+  {
+    "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#producesArtifact",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "An artifact (named graph, entity URI, SPARQL result) produced by the pipeline."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#VirtualKnowledgeGraph"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "produces artifact"
+      }
+    ]
+  }
+]

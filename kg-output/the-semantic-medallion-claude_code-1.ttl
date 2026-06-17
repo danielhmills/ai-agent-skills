@@ -1,0 +1,823 @@
+@prefix : <https://moderndata101.substack.com/p/the-semantic-medallion#> .
+@prefix schema: <http://schema.org/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dbpedia: <http://dbpedia.org/resource/> .
+@prefix wikidata: <http://www.wikidata.org/entity/> .
+
+# ============================================================================
+# ONTOLOGY: Semantic Medallion Ontology
+# ============================================================================
+
+:semanticMedallionOntology a owl:Ontology ;
+    rdfs:label "Semantic Medallion Ontology" ;
+    rdfs:comment "A lightweight ontology for modeling medallion architecture layers augmented with knowledge graphs, DCAT catalog metadata, data lineage provenance, and customer-domain entities as described in 'The Semantic Medallion' article by Veronika Heimsbakk."@en ;
+    schema:name "Semantic Medallion Ontology" ;
+    schema:description "Ontology modeling the Semantic Medallion architecture: Bronze (raw harvest), Silver (IRI minting), and Gold (RDF knowledge graph) layers, augmented with DCAT catalog vocabulary, PROV-O provenance, and sample customer-domain entities that make SPARQL query examples executable."@en ;
+    schema:identifier "https://moderndata101.substack.com/p/the-semantic-medallion" ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+# --- Ontology Classes ---
+
+:MedallionLayer a rdfs:Class ;
+    rdfs:label "Medallion Layer"@en ;
+    rdfs:comment "A layer in the medallion data architecture representing a stage of semantic enrichment: Bronze (raw data), Silver (IRI-minted entities), or Gold (RDF knowledge graph with global semantics)."@en ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+:BronzeLayer a rdfs:Class ;
+    rdfs:label "Bronze Layer"@en ;
+    rdfs:comment "The Bronze layer of the Semantic Medallion where raw data is harvested from source systems — no semantics, just raw material."@en ;
+    rdfs:subClassOf :MedallionLayer ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+:SilverLayer a rdfs:Class ;
+    rdfs:label "Silver Layer"@en ;
+    rdfs:comment "The Silver layer of the Semantic Medallion where every entity is assigned a stable, globally unique IRI — local semantics with minted identifiers."@en ;
+    rdfs:subClassOf :MedallionLayer ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+:GoldLayer a rdfs:Class ;
+    rdfs:label "Gold Layer"@en ;
+    rdfs:comment "The Gold layer of the Semantic Medallion where DataFrames are mapped to RDF via a shared ontology (e.g., using OTTR templates and maplib) — global semantics with linked data."@en ;
+    rdfs:subClassOf :MedallionLayer ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+:Customer a rdfs:Class ;
+    rdfs:label "Customer"@en ;
+    rdfs:comment "A customer entity identified by a stable IRI, with relationships to data sources, contracts, and billing records."@en ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+:DataSource a rdfs:Class ;
+    rdfs:label "Data Source"@en ;
+    rdfs:comment "A system or application that contributes data to the medallion pipeline. Modeled alongside DCAT Dataset for catalog integration."@en ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+:Contract a rdfs:Class ;
+    rdfs:label "Contract"@en ;
+    rdfs:comment "A customer contract with status and terms."@en ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+:BillingIssue a rdfs:Class ;
+    rdfs:label "Billing Issue"@en ;
+    rdfs:comment "A billing problem or dispute associated with a customer."@en ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+# --- Ontology Properties ---
+
+:layerName a rdf:Property ;
+    rdfs:label "layer name"@en ;
+    rdfs:comment "The name of a medallion architecture layer."@en ;
+    rdfs:domain :MedallionLayer ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+:layerOrder a rdf:Property ;
+    rdfs:label "layer order"@en ;
+    rdfs:comment "The ordinal position of a medallion layer in the pipeline (1=Bronze, 2=Silver, 3=Gold)."@en ;
+    rdfs:domain :MedallionLayer ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+:mintsIRI a rdf:Property ;
+    rdfs:label "mints IRI"@en ;
+    rdfs:comment "Indicates that a layer or process creates stable globally unique IRIs for entities."@en ;
+    rdfs:domain :SilverLayer ;
+    rdfs:range xsd:boolean ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+:transformsTo a rdf:Property ;
+    rdfs:label "transforms to"@en ;
+    rdfs:comment "Indicates the target layer or format that a medallion layer transforms data into."@en ;
+    rdfs:domain :MedallionLayer ;
+    rdfs:range :MedallionLayer ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+:hasName a rdf:Property ;
+    rdfs:label "has name"@en ;
+    rdfs:comment "The name of an entity."@en ;
+    rdfs:domain :Customer ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+:hasDataSource a rdf:Property ;
+    rdfs:label "has data source"@en ;
+    rdfs:comment "Links a customer record to its contributing data source."@en ;
+    rdfs:domain :Customer ;
+    rdfs:range :DataSource ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+:hasContract a rdf:Property ;
+    rdfs:label "has contract"@en ;
+    rdfs:comment "Links a customer to their active or historical contract."@en ;
+    rdfs:domain :Customer ;
+    rdfs:range :Contract ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+:hasBillingIssue a rdf:Property ;
+    rdfs:label "has billing issue"@en ;
+    rdfs:comment "Links a customer to a billing problem or dispute."@en ;
+    rdfs:domain :Customer ;
+    rdfs:range :BillingIssue ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+:contractStatus a rdf:Property ;
+    rdfs:label "contract status"@en ;
+    rdfs:comment "The current status of a contract (Active, Expired, Pending)."@en ;
+    rdfs:domain :Contract ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+:hasBillingStatus a rdf:Property ;
+    rdfs:label "has billing status"@en ;
+    rdfs:comment "The description or severity of a billing issue."@en ;
+    rdfs:domain :BillingIssue ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+:sourceName a rdf:Property ;
+    rdfs:label "source name"@en ;
+    rdfs:comment "The display name of a data source system."@en ;
+    rdfs:domain :DataSource ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+:sourceType a rdf:Property ;
+    rdfs:label "source type"@en ;
+    rdfs:comment "The category of a data source (CRM, ERP, Billing, etc.)."@en ;
+    rdfs:domain :DataSource ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+:hasEmail a rdf:Property ;
+    rdfs:label "has email"@en ;
+    rdfs:comment "The email address of a customer."@en ;
+    rdfs:domain :Customer ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+:issueDescription a rdf:Property ;
+    rdfs:label "issue description"@en ;
+    rdfs:comment "A human-readable description of a billing issue."@en ;
+    rdfs:domain :BillingIssue ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+:semanticEnrichment a rdf:Property ;
+    rdfs:label "semantic enrichment"@en ;
+    rdfs:comment "Describes the level of semantic enrichment applied at a medallion layer (none, local, global)."@en ;
+    rdfs:domain :MedallionLayer ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy :semanticMedallionOntology .
+
+# ============================================================================
+# SCHEMA.ORG: Main Article
+# ============================================================================
+
+:analysis a schema:Article ;
+    schema:name "The Semantic Medallion: Building a Knowledge Graph-Powered Data Catalog"@en ;
+    schema:headline "The Semantic Medallion: Building a Knowledge Graph-Powered Data Catalog"@en ;
+    schema:abstract "Augmenting the traditional medallion architecture by making the Gold layer an RDF knowledge graph instead of clean tabular data, then using DCAT to weave catalog metadata into the same graph."@en ;
+    schema:articleBody "The Semantic Medallion proposes upgrading the traditional Bronze-Silver-Gold data architecture. Bronze harvests raw data. Silver mints stable globally unique IRIs for every entity. Gold maps DataFrames to RDF via a shared ontology using OTTR templates and maplib. The result is a knowledge graph-powered data catalog where DCAT metadata and customer facts coexist in the same queryable graph, enabling entity resolution, semantic search, and impact analysis through SPARQL."@en ;
+    schema:about :bronzeLayer, :silverLayer, :goldLayer, :semanticMedallionOntology, :dcatCatalog, :ottrTemplates, :maplib, :iriMinting, :knowledgeGraphCatalog ;
+    schema:datePublished "2026-05-14"^^xsd:date ;
+    schema:author :veronikaHeimsbakk ;
+    schema:publisher :modernData101 ;
+    schema:url "https://moderndata101.substack.com/p/the-semantic-medallion" ;
+    schema:inLanguage "en" ;
+    schema:hasPart :bronzeSection, :silverSection, :goldSection, :catalogSection, :dcatSection, :technologySection,
+        :faqSection, :glossarySection, :howtoSection, :sparqlQuerySection, :customerInstanceData ;
+    prov:wasGeneratedBy :kgGeneratorSkill .
+
+# --- Article Sections ---
+
+:bronzeSection a schema:ArticleSection ;
+    schema:name "The Bronze Layer — Raw Data Harvest"@en ;
+    schema:description "The Bronze layer harvests raw data from source systems with no semantic enrichment — it is the raw material ingestion stage of the medallion."@en ;
+    schema:isPartOf :analysis .
+
+:silverSection a schema:ArticleSection ;
+    schema:name "The Silver Layer — IRI Minting"@en ;
+    schema:description "At the Silver layer, every entity receives a stable globally unique IRI, elevating raw records to identifiable, linkable resources with local semantics."@en ;
+    schema:isPartOf :analysis .
+
+:goldSection a schema:ArticleSection ;
+    schema:name "The Gold Layer — RDF Knowledge Graph"@en ;
+    schema:description "The Gold layer transforms DataFrames into RDF using a shared ontology via OTTR templates and maplib, achieving global semantics where entities connect across systems."@en ;
+    schema:isPartOf :analysis .
+
+:catalogSection a schema:ArticleSection ;
+    schema:name "The Catalog Experience"@en ;
+    schema:description "SPARQL queries against the knowledge graph replace traditional catalog browsing — users query for customer facts, contributing data sources, and cross-domain patterns like billing issues combined with contract status."@en ;
+    schema:isPartOf :analysis .
+
+:dcatSection a schema:ArticleSection ;
+    schema:name "DCAT in the Architecture"@en ;
+    schema:description "The W3C Data Catalog Vocabulary (DCAT) is applied at each medallion layer to describe datasets, distributions, and data services. Catalog metadata and instance data coexist in the same RDF graph, making the catalog self-describing."@en ;
+    schema:isPartOf :analysis .
+
+:technologySection a schema:ArticleSection ;
+    schema:name "Technology Stack"@en ;
+    schema:description "Key technologies: maplib (Python DataFrame-to-RDF library), OTTR/stOTTR (template-based ontology mapping), DCAT (W3C Data Catalog Vocabulary), PROV-O (provenance ontology), and SHACL (shapes validation)."@en ;
+    schema:isPartOf :analysis .
+
+:sparqlQuerySection a schema:ArticleSection ;
+    schema:name "SPARQL Query Examples"@en ;
+    schema:description "Three SPARQL queries demonstrate the catalog experience: retrieving all facts about a customer, listing contributing data sources, and finding customers with billing issues who have active contracts."@en ;
+    schema:isPartOf :analysis .
+
+# --- Author: Veronika Heimsbakk ---
+
+:veronikaHeimsbakk a schema:Person ;
+    schema:name "Veronika Heimsbakk" ;
+    schema:description "Knowledge Graph Specialist at Data Treehouse, author of 'The Semantic Medallion' on Modern Data 101"@en ;
+    schema:affiliation :dataTreehouse ;
+    schema:url "https://substack.com/@veronikaheimsbakk" ;
+    schema:identifier "https://substack.com/@veronikaheimsbakk" .
+
+# --- Organizations ---
+
+:dataTreehouse a schema:Organization ;
+    schema:name "Data Treehouse" ;
+    schema:description "Consultancy specializing in knowledge graph solutions and semantic data architecture."@en ;
+    schema:url "https://datatreehouse.com" .
+
+:modernData101 a schema:Organization ;
+    schema:name "Modern Data 101" ;
+    schema:description "Publication covering modern data architecture, knowledge graphs, and semantic technologies."@en ;
+    schema:url "https://moderndata101.substack.com" ;
+    schema:publisher :modernData101 .
+
+# ============================================================================
+# MEDALLION LAYER INSTANCES
+# ============================================================================
+
+:bronzeLayer a :BronzeLayer, schema:Thing ;
+    rdfs:label "Bronze Layer"@en ;
+    schema:name "Bronze Layer"@en ;
+    schema:description "Raw data harvested from source systems. No semantics applied — pure raw material ingestion. Data is stored as-is from CRM, ERP, billing, and other operational systems."@en ;
+    :layerName "Bronze" ;
+    :layerOrder 1 ;
+    :semanticEnrichment "none" ;
+    :transformsTo :silverLayer ;
+    schema:isPartOf :semanticMedallionOntology .
+
+:silverLayer a :SilverLayer, schema:Thing ;
+    rdfs:label "Silver Layer"@en ;
+    schema:name "Silver Layer"@en ;
+    schema:description "Every entity receives a stable globally unique IRI. Raw records become identifiable linkable resources with local semantics. IRI minting ensures entities can be referenced across systems."@en ;
+    :layerName "Silver" ;
+    :layerOrder 2 ;
+    :semanticEnrichment "local" ;
+    :mintsIRI true ;
+    :transformsTo :goldLayer ;
+    schema:isPartOf :semanticMedallionOntology .
+
+:goldLayer a :GoldLayer, schema:Thing ;
+    rdfs:label "Gold Layer"@en ;
+    schema:name "Gold Layer"@en ;
+    schema:description "DataFrames are mapped to RDF via a shared ontology using OTTR templates and maplib. Global semantics enable cross-system entity resolution, semantic search, and impact analysis through SPARQL."@en ;
+    :layerName "Gold" ;
+    :layerOrder 3 ;
+    :semanticEnrichment "global" ;
+    schema:isPartOf :semanticMedallionOntology .
+
+# ============================================================================
+# TECHNOLOGY ENTITIES
+# ============================================================================
+
+:maplib a schema:SoftwareApplication ;
+    schema:name "maplib" ;
+    schema:description "Python library for DataFrame-to-RDF transformation using OTTR templates. Enables a single maplib.map() call to convert Silver-layer DataFrames into RDF triples."@en ;
+    schema:url "https://github.com/DataTreehouse/maplib" ;
+    schema:applicationCategory "Data Transformation Library" ;
+    schema:programmingLanguage "Python" ;
+    schema:isPartOf :technologySection .
+
+:ottrTemplates a schema:SoftwareApplication ;
+    schema:name "OTTR (Reasonable Ontology Templates)" ;
+    schema:description "Template-based ontology mapping framework. stOTTR (string OTTR) syntax defines reusable templates that map DataFrame columns to RDF ontology classes and properties, enabling declarative data-to-knowledge transformations."@en ;
+    schema:url "https://ottr.xyz" ;
+    schema:applicationCategory "Ontology Mapping Framework" ;
+    schema:isPartOf :technologySection .
+
+:dcatCatalog a schema:DataCatalog ;
+    schema:name "DCAT — Data Catalog Vocabulary" ;
+    schema:description "W3C standard vocabulary for describing data catalogs, datasets, distributions, and data services. Applied at each medallion layer to weave catalog metadata into the knowledge graph."@en ;
+    schema:url "https://www.w3.org/TR/vocab-dcat-3/" ;
+    schema:identifier "https://www.w3.org/TR/vocab-dcat-3/" ;
+    schema:isPartOf :technologySection .
+
+:provO a schema:DefinedTerm ;
+    schema:name "PROV-O" ;
+    schema:description "W3C Provenance Ontology for tracking data lineage — where data came from, who generated it, and what transformations were applied."@en ;
+    schema:url "https://www.w3.org/TR/prov-o/" ;
+    schema:isPartOf :technologySection .
+
+:shacl a schema:DefinedTerm ;
+    schema:name "SHACL" ;
+    schema:description "Shapes Constraint Language — a W3C standard for validating RDF graphs against a set of shape conditions, ensuring data quality in the knowledge graph."@en ;
+    schema:url "https://www.w3.org/TR/shacl/" ;
+    schema:isPartOf :technologySection .
+
+:iriMinting a schema:DefinedTerm ;
+    schema:name "IRI Minting" ;
+    schema:description "The process of assigning stable globally unique Internationalized Resource Identifiers to every entity at the Silver layer, ensuring entities can be referenced and linked across systems."@en ;
+    schema:isPartOf :silverSection .
+
+:knowledgeGraphCatalog a schema:DataCatalog ;
+    schema:name "Knowledge Graph-Powered Data Catalog" ;
+    schema:description "A data catalog where catalog metadata (DCAT) and instance data coexist in the same RDF knowledge graph, enabling SPARQL queries that span both catalog descriptions and customer facts."@en ;
+    schema:isPartOf :catalogSection .
+
+# ============================================================================
+# SPARQL ENDPOINT
+# ============================================================================
+
+:uriburnerEndpoint a schema:WebAPI ;
+    schema:name "URIBurner SPARQL Endpoint" ;
+    schema:url "https://linkeddata.uriburner.com/sparql" ;
+    schema:description "Public SPARQL endpoint for querying the Semantic Medallion knowledge graph."@en ;
+    schema:isPartOf :sparqlQuerySection .
+
+# ============================================================================
+# SPARQL QUERY 1: All Facts About Customer C-001
+# ============================================================================
+
+:sparqlQuery1 a schema:SoftwareSourceCode ;
+    schema:name "SPARQL Query: All Facts About Customer C-001"@en ;
+    schema:description "Retrieves all property-value pairs for customer C-001 from the knowledge graph. This is the simplest entry point into the catalog — look up everything known about a single entity."@en ;
+    schema:programmingLanguage "SPARQL" ;
+    schema:codeSampleType "SELECT query" ;
+    schema:text """PREFIX : <https://moderndata101.substack.com/p/the-semantic-medallion#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+
+SELECT ?property ?value WHERE {
+  :C-001 ?property ?value .
+  OPTIONAL { ?value rdfs:label ?label }
+}
+ORDER BY ?property""" ;
+    schema:target :uriburnerEndpoint ;
+    schema:potentialAction :sparqlQ1LiveAction ;
+    schema:isPartOf :sparqlQuerySection .
+
+:sparqlQ1LiveAction a schema:SearchAction ;
+    schema:name "Run Query 1 Live"@en ;
+    schema:target [
+        a schema:EntryPoint ;
+        schema:url "https://linkeddata.uriburner.com/sparql?default-graph-uri=&query=PREFIX%20%3A%20%3Chttps%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23%3E%0APREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0APREFIX%20prov%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0ASELECT%20%3Fproperty%20%3Fvalue%20WHERE%20%7B%0A%20%20GRAPH%20%3Chttps%3A%2F%2Flinkeddata.uriburner.com%2FDAV%2Fdemos%2Fdaas%2Fthe-semantic-medallion-claude_code-1.ttl%3E%20%7B%0A%20%20%20%20%3AC-001%20%3Fproperty%20%3Fvalue%20.%0A%20%20%20%20OPTIONAL%20%7B%20%3Fvalue%20rdfs%3Alabel%20%3Flabel%20%7D%0A%20%20%7D%0A%7D%0AORDER%20BY%20%3Fproperty&format=text%2Fhtml&timeout=0&debug=on&run=+Run+Query+" ;
+        schema:httpMethod "GET"
+    ] ;
+    schema:isPartOf :sparqlQuerySection .
+
+# ============================================================================
+# SPARQL QUERY 2: Contributing Data Sources for Customer Records
+# ============================================================================
+
+:sparqlQuery2 a schema:SoftwareSourceCode ;
+    schema:name "SPARQL Query: Contributing Data Sources for Customer C-001"@en ;
+    schema:description "Lists all data source systems that contributed records for customer C-001, showing the provenance chain. Uses PROV-O wasDerivedFrom to trace lineage back to source systems."@en ;
+    schema:programmingLanguage "SPARQL" ;
+    schema:codeSampleType "SELECT query" ;
+    schema:text """PREFIX : <https://moderndata101.substack.com/p/the-semantic-medallion#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+
+SELECT ?source ?sourceName ?sourceType WHERE {
+  :C-001 prov:wasDerivedFrom ?source .
+  ?source a :DataSource ;
+    :sourceName ?sourceName ;
+    :sourceType ?sourceType .
+}
+ORDER BY ?sourceName""" ;
+    schema:target :uriburnerEndpoint ;
+    schema:potentialAction :sparqlQ2LiveAction ;
+    schema:isPartOf :sparqlQuerySection .
+
+:sparqlQ2LiveAction a schema:SearchAction ;
+    schema:name "Run Query 2 Live"@en ;
+    schema:target [
+        a schema:EntryPoint ;
+        schema:url "https://linkeddata.uriburner.com/sparql?default-graph-uri=&query=PREFIX%20%3A%20%3Chttps%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23%3E%0APREFIX%20prov%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0ASELECT%20%3Fsource%20%3FsourceName%20%3FsourceType%20WHERE%20%7B%0A%20%20GRAPH%20%3Chttps%3A%2F%2Flinkeddata.uriburner.com%2FDAV%2Fdemos%2Fdaas%2Fthe-semantic-medallion-claude_code-1.ttl%3E%20%7B%0A%20%20%20%20%3AC-001%20prov%3AwasDerivedFrom%20%3Fsource%20.%0A%20%20%20%20%3Fsource%20a%20%3ADataSource%20%3B%0A%20%20%20%20%20%20%3AsourceName%20%3FsourceName%20%3B%0A%20%20%20%20%20%20%3AsourceType%20%3FsourceType%20.%0A%20%20%7D%0A%7D%0AORDER%20BY%20%3FsourceName&format=text%2Fhtml&timeout=0&debug=on&run=+Run+Query+" ;
+        schema:httpMethod "GET"
+    ] ;
+    schema:isPartOf :sparqlQuerySection .
+
+# ============================================================================
+# SPARQL QUERY 3: Customers with Billing Issues and Active Contracts
+# ============================================================================
+
+:sparqlQuery3 a schema:SoftwareSourceCode ;
+    schema:name "SPARQL Query: Customers with Billing Issues and Active Contracts"@en ;
+    schema:description "Cross-domain SPARQL query that finds all customers who have both a billing issue AND an active contract — a pattern that would be difficult to express in SQL across siloed systems but is natural in a knowledge graph."@en ;
+    schema:programmingLanguage "SPARQL" ;
+    schema:codeSampleType "SELECT query" ;
+    schema:text """PREFIX : <https://moderndata101.substack.com/p/the-semantic-medallion#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?customer ?name ?issueDescription ?contractStatus WHERE {
+  ?customer a :Customer ;
+    :hasName ?name ;
+    :hasBillingIssue ?issue ;
+    :hasContract ?contract .
+  ?issue a :BillingIssue ;
+    :issueDescription ?issueDescription .
+  ?contract a :Contract ;
+    :contractStatus "Active" .
+}
+ORDER BY ?name""" ;
+    schema:target :uriburnerEndpoint ;
+    schema:potentialAction :sparqlQ3LiveAction ;
+    schema:isPartOf :sparqlQuerySection .
+
+:sparqlQ3LiveAction a schema:SearchAction ;
+    schema:name "Run Query 3 Live"@en ;
+    schema:target [
+        a schema:EntryPoint ;
+        schema:url "https://linkeddata.uriburner.com/sparql?default-graph-uri=&query=PREFIX%20%3A%20%3Chttps%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23%3E%0APREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0ASELECT%20%3Fcustomer%20%3Fname%20%3FissueDescription%20%3FcontractStatus%20WHERE%20%7B%0A%20%20GRAPH%20%3Chttps%3A%2F%2Flinkeddata.uriburner.com%2FDAV%2Fdemos%2Fdaas%2Fthe-semantic-medallion-claude_code-1.ttl%3E%20%7B%0A%20%20%20%20%3Fcustomer%20a%20%3ACustomer%20%3B%0A%20%20%20%20%20%20%3AhasName%20%3Fname%20%3B%0A%20%20%20%20%20%20%3AhasBillingIssue%20%3Fissue%20%3B%0A%20%20%20%20%20%20%3AhasContract%20%3Fcontract%20.%0A%20%20%20%20%3Fissue%20a%20%3ABillingIssue%20%3B%0A%20%20%20%20%20%20%3AissueDescription%20%3FissueDescription%20.%0A%20%20%20%20%3Fcontract%20a%20%3AContract%20%3B%0A%20%20%20%20%20%20%3AcontractStatus%20%22Active%22%20.%0A%20%20%7D%0A%7D%0AORDER%20BY%20%3Fname&format=text%2Fhtml&timeout=0&debug=on&run=+Run+Query+" ;
+        schema:httpMethod "GET"
+    ] ;
+    schema:isPartOf :sparqlQuerySection .
+
+# ============================================================================
+# INSTANCE DATA — Customers, Data Sources, Contracts, Billing Issues
+# (Sample data that makes the SPARQL queries executable)
+# ============================================================================
+
+:customerInstanceData a schema:ArticleSection ;
+    schema:name "Sample Customer Instance Data"@en ;
+    schema:description "A curated set of sample customer, data source, contract, and billing issue instances that make the SPARQL query examples executable against real RDF data."@en ;
+    schema:isPartOf :analysis ;
+    schema:hasPart :C-001, :C-002, :C-003, :srcCRM, :srcERP, :srcBilling, :srcSupport,
+        :contractC001, :contractC002, :contractC003,
+        :billingIssueC001, :billingIssueC003 .
+
+# --- Customers ---
+
+:C-001 a :Customer ;
+    rdfs:label "Customer C-001"@en ;
+    schema:name "Acme Corporation" ;
+    :hasName "Acme Corporation" ;
+    :hasEmail "contact@acmecorp.example" ;
+    :hasContract :contractC001 ;
+    :hasDataSource :srcCRM, :srcERP, :srcBilling ;
+    :hasBillingIssue :billingIssueC001 ;
+    prov:wasDerivedFrom :srcCRM, :srcERP, :srcBilling .
+
+:C-002 a :Customer ;
+    rdfs:label "Customer C-002"@en ;
+    schema:name "Beta Industries" ;
+    :hasName "Beta Industries" ;
+    :hasEmail "info@betaindustries.example" ;
+    :hasContract :contractC002 ;
+    :hasDataSource :srcCRM, :srcSupport ;
+    prov:wasDerivedFrom :srcCRM, :srcSupport .
+
+:C-003 a :Customer ;
+    rdfs:label "Customer C-003"@en ;
+    schema:name "Gamma Solutions" ;
+    :hasName "Gamma Solutions" ;
+    :hasEmail "support@gammasolutions.example" ;
+    :hasContract :contractC003 ;
+    :hasDataSource :srcCRM, :srcBilling, :srcSupport ;
+    :hasBillingIssue :billingIssueC003 ;
+    prov:wasDerivedFrom :srcCRM, :srcBilling, :srcSupport .
+
+# --- Data Sources ---
+
+:srcCRM a :DataSource ;
+    rdfs:label "CRM System"@en ;
+    schema:name "SalesForce CRM" ;
+    :sourceName "SalesForce CRM" ;
+    :sourceType "CRM" ;
+    schema:isPartOf :customerInstanceData .
+
+:srcERP a :DataSource ;
+    rdfs:label "ERP System"@en ;
+    schema:name "SAP ERP" ;
+    :sourceName "SAP ERP" ;
+    :sourceType "ERP" ;
+    schema:isPartOf :customerInstanceData .
+
+:srcBilling a :DataSource ;
+    rdfs:label "Billing System"@en ;
+    schema:name "Stripe Billing" ;
+    :sourceName "Stripe Billing" ;
+    :sourceType "Billing" ;
+    schema:isPartOf :customerInstanceData .
+
+:srcSupport a :DataSource ;
+    rdfs:label "Support System"@en ;
+    schema:name "Zendesk Support" ;
+    :sourceName "Zendesk Support" ;
+    :sourceType "Support" ;
+    schema:isPartOf :customerInstanceData .
+
+# --- Contracts ---
+
+:contractC001 a :Contract ;
+    rdfs:label "Contract C-001"@en ;
+    schema:name "Acme Corporation — Enterprise Plan" ;
+    :contractStatus "Active" ;
+    schema:isPartOf :customerInstanceData .
+
+:contractC002 a :Contract ;
+    rdfs:label "Contract C-002"@en ;
+    schema:name "Beta Industries — Standard Plan" ;
+    :contractStatus "Active" ;
+    schema:isPartOf :customerInstanceData .
+
+:contractC003 a :Contract ;
+    rdfs:label "Contract C-003"@en ;
+    schema:name "Gamma Solutions — Premium Plan" ;
+    :contractStatus "Active" ;
+    schema:isPartOf :customerInstanceData .
+
+# --- Billing Issues ---
+
+:billingIssueC001 a :BillingIssue ;
+    rdfs:label "Billing Issue C-001"@en ;
+    schema:name "Duplicate charge on March invoice" ;
+    :issueDescription "Duplicate charge detected on March 2026 invoice — customer reported overcharge of $2,400."@en ;
+    :hasBillingStatus "Open" ;
+    schema:isPartOf :customerInstanceData .
+
+:billingIssueC003 a :BillingIssue ;
+    rdfs:label "Billing Issue C-003"@en ;
+    schema:name "Incorrect plan tier applied" ;
+    :issueDescription "Customer was billed at Premium tier but should be on Standard tier per contract terms. Adjustment of $1,800 needed."@en ;
+    :hasBillingStatus "Under Review" ;
+    schema:isPartOf :customerInstanceData .
+
+# ============================================================================
+# FAQ SECTION (12 Questions)
+# ============================================================================
+
+:faqSection a schema:FAQPage ;
+    schema:name "Frequently Asked Questions — The Semantic Medallion"@en ;
+    schema:mainEntity :q1, :q2, :q3, :q4, :q5, :q6, :q7, :q8, :q9, :q10, :q11, :q12 ;
+    schema:isPartOf :analysis .
+
+:q1 a schema:Question ;
+    schema:name "What is the Semantic Medallion?"@en ;
+    schema:text "What is the Semantic Medallion?"@en ;
+    schema:acceptedAnswer :a1 .
+
+:a1 a schema:Answer ;
+    schema:text "The Semantic Medallion is an augmentation of the traditional medallion data architecture (Bronze → Silver → Gold) where the Gold layer becomes an RDF knowledge graph instead of clean tabular data. DCAT catalog metadata is woven into the same graph, creating a self-describing knowledge graph-powered data catalog."@en ;
+    schema:isPartOf :faqSection .
+
+:q2 a schema:Question ;
+    schema:name "How does the Bronze layer differ from traditional medallion Bronze?"@en ;
+    schema:text "How does the Bronze layer differ from traditional medallion Bronze?"@en ;
+    schema:acceptedAnswer :a2 .
+
+:a2 a schema:Answer ;
+    schema:text "In the Semantic Medallion, the Bronze layer functions identically to traditional medallion — it harvests raw data from source systems without transformation. The difference emerges at Silver, where IRIs are minted instead of just cleaning data."@en ;
+    schema:isPartOf :faqSection .
+
+:q3 a schema:Question ;
+    schema:name "What is IRI minting and why is it important?"@en ;
+    schema:text "What is IRI minting and why is it important?"@en ;
+    schema:acceptedAnswer :a3 .
+
+:a3 a schema:Answer ;
+    schema:text "IRI minting is the process of assigning a stable globally unique Internationalized Resource Identifier to every entity at the Silver layer. It is critical because it makes entities referenceable across systems — without stable IRIs, linking customer records from CRM, ERP, and billing systems would require fragile key matching. IRIs are the foundation of linked data."@en ;
+    schema:isPartOf :faqSection .
+
+:q4 a schema:Question ;
+    schema:name "What role do OTTR templates play?"@en ;
+    schema:text "What role do OTTR templates play?"@en ;
+    schema:acceptedAnswer :a4 .
+
+:a4 a schema:Answer ;
+    schema:text "OTTR (Reasonable Ontology Templates) provides a declarative template language for mapping structured data to RDF. Using stOTTR (string OTTR) syntax, templates define how DataFrame columns map to ontology classes and properties. A single template can transform millions of Silver-layer rows into RDF triples in a consistent repeatable way."@en ;
+    schema:isPartOf :faqSection .
+
+:q5 a schema:Question ;
+    schema:name "How does maplib simplify the DataFrame-to-RDF transformation?"@en ;
+    schema:text "How does maplib simplify the DataFrame-to-RDF transformation?"@en ;
+    schema:acceptedAnswer :a5 .
+
+:a5 a schema:Answer ;
+    schema:text "maplib is a Python library that accepts a pandas DataFrame, an OTTR template, and a result RDF container, then executes the mapping in a single call: `maplib.map(dataframe, template, result_container)`. This reduces what would otherwise be hundreds of lines of triple-construction code to four lines of Python."@en ;
+    schema:isPartOf :faqSection .
+
+:q6 a schema:Question ;
+    schema:name "What is DCAT and why is it used in the Semantic Medallion?"@en ;
+    schema:text "What is DCAT and why is it used in the Semantic Medallion?"@en ;
+    schema:acceptedAnswer :a6 .
+
+:a6 a schema:Answer ;
+    schema:text "DCAT (Data Catalog Vocabulary) is a W3C standard for describing data catalogs, datasets, distributions, and data services in RDF. In the Semantic Medallion, each medallion layer receives DCAT descriptions — the catalog metadata and the actual data coexist in the same graph, making the catalog self-describing rather than a separate metadata store."@en ;
+    schema:isPartOf :faqSection .
+
+:q7 a schema:Question ;
+    schema:name "How does PROV-O enhance the catalog?"@en ;
+    schema:text "How does PROV-O enhance the catalog?"@en ;
+    schema:acceptedAnswer :a7 .
+
+:a7 a schema:Answer ;
+    schema:text "PROV-O (Provenance Ontology) tracks data lineage — where each record came from, which system generated it, and what transformations were applied. In the catalog, provenance links connect customer facts back to their source systems, answering questions like 'Which CRM and billing records contributed to this customer view?'"@en ;
+    schema:isPartOf :faqSection .
+
+:q8 a schema:Question ;
+    schema:name "What kinds of queries does the knowledge graph catalog enable?"@en ;
+    schema:text "What kinds of queries does the knowledge graph catalog enable?"@en ;
+    schema:acceptedAnswer :a8 .
+
+:a8 a schema:Answer ;
+    schema:text "The knowledge graph catalog enables three categories of queries: (1) entity lookup — retrieve all facts about a single entity; (2) provenance tracing — list all source systems contributing to a record; (3) cross-domain pattern detection — find entities that match conditions spanning multiple domains, such as customers with both active contracts and open billing issues. These cross-domain queries are particularly powerful because they traverse relationships that would require complex joins across siloed SQL databases."@en ;
+    schema:isPartOf :faqSection .
+
+:q9 a schema:Question ;
+    schema:name "How does the Semantic Medallion handle entity resolution?"@en ;
+    schema:text "How does the Semantic Medallion handle entity resolution?"@en ;
+    schema:acceptedAnswer :a9 .
+
+:a9 a schema:Answer ;
+    schema:text "Entity resolution happens naturally through IRI alignment. Because every entity receives a globally unique IRI at the Silver layer, records from different source systems that refer to the same real-world entity are linked to the same IRI. The Gold layer's ontology then connects these IRIs across domains, enabling graph-based deduplication and identity resolution."@en ;
+    schema:isPartOf :faqSection .
+
+:q10 a schema:Question ;
+    schema:name "What is SHACL and how does it fit?"@en ;
+    schema:text "What is SHACL and how does it fit?"@en ;
+    schema:acceptedAnswer :a10 .
+
+:a10 a schema:Answer ;
+    schema:text "SHACL (Shapes Constraint Language) is a W3C standard for validating RDF data against shape conditions. In the Semantic Medallion architecture, SHACL shapes can be applied to the Gold layer to enforce data quality rules — ensuring every Customer has required properties, contracts have valid statuses, and data sources are properly typed."@en ;
+    schema:isPartOf :faqSection .
+
+:q11 a schema:Question ;
+    schema:name "What are the key lessons from implementing the Semantic Medallion?"@en ;
+    schema:text "What are the key lessons from implementing the Semantic Medallion?"@en ;
+    schema:acceptedAnswer :a11 .
+
+:a11 a schema:Answer ;
+    schema:text "Three key lessons: (1) Start with IRIs early — minting identifiers at the Silver layer pays compounding dividends as more systems connect. (2) Design ontologies iteratively — begin with a minimal shared ontology and expand as new use cases emerge rather than attempting a complete model upfront. (3) The medallion is about semantic enrichment layers — Bronze has no semantics, Silver has local semantics, Gold has global semantics. Each layer adds meaning rather than just cleanliness."@en ;
+    schema:isPartOf :faqSection .
+
+:q12 a schema:Question ;
+    schema:name "How does the Semantic Medallion compare to a traditional data catalog?"@en ;
+    schema:text "How does the Semantic Medallion compare to a traditional data catalog?"@en ;
+    schema:acceptedAnswer :a12 .
+
+:a12 a schema:Answer ;
+    schema:text "Traditional data catalogs describe where data lives (table names, column schemas, storage locations) but do not describe how data connects across systems. A knowledge graph-powered catalog captures both — DCAT metadata describes the datasets while RDF relationships connect customer entities to their source systems, contracts, and issues. The catalog becomes queryable in the same SPARQL endpoint as the data it describes."@en ;
+    schema:isPartOf :faqSection .
+
+# ============================================================================
+# GLOSSARY SECTION (10 Terms)
+# ============================================================================
+
+:glossarySection a schema:DefinedTermSet, skos:ConceptScheme ;
+    schema:name "Glossary — Semantic Medallion"@en ;
+    schema:description "Key terminology from the Semantic Medallion architecture and knowledge graph-powered data catalog ecosystem."@en ;
+    schema:hasDefinedTerm :termMedallionArchitecture, :termIRIMinting, :termOTTR, :termMaplib, :termDCAT,
+        :termPROVO, :termSHACL, :termKnowledgeGraph, :termSPARQL, :termSemanticEnrichment ;
+    schema:isPartOf :analysis .
+
+:termMedallionArchitecture a schema:DefinedTerm, skos:Concept ;
+    schema:name "Medallion Architecture"@en ;
+    schema:termCode "medallion-architecture" ;
+    schema:description "A data architecture pattern organizing data into Bronze (raw), Silver (cleaned/enriched), and Gold (analytics-ready) layers. The Semantic Medallion redefines Gold as an RDF knowledge graph."@en ;
+    schema:inDefinedTermSet :glossarySection .
+
+:termIRIMinting a schema:DefinedTerm, skos:Concept ;
+    schema:name "IRI Minting"@en ;
+    schema:termCode "iri-minting" ;
+    schema:description "The process of assigning stable globally unique Internationalized Resource Identifiers to entities, enabling cross-system linking and resolution in linked data architectures."@en ;
+    schema:inDefinedTermSet :glossarySection .
+
+:termOTTR a schema:DefinedTerm, skos:Concept ;
+    schema:name "OTTR (Reasonable Ontology Templates)"@en ;
+    schema:termCode "ottr" ;
+    schema:description "A framework for template-based ontology mapping. stOTTR (string syntax) defines reusable templates that declaratively map structured data columns to RDF ontology classes and properties."@en ;
+    schema:inDefinedTermSet :glossarySection .
+
+:termMaplib a schema:DefinedTerm, skos:Concept ;
+    schema:name "maplib"@en ;
+    schema:termCode "maplib" ;
+    schema:description "A Python library for DataFrame-to-RDF transformation using OTTR templates. Enables a single function call to convert pandas DataFrames into RDF knowledge graphs."@en ;
+    schema:inDefinedTermSet :glossarySection .
+
+:termDCAT a schema:DefinedTerm, skos:Concept ;
+    schema:name "DCAT (Data Catalog Vocabulary)"@en ;
+    schema:termCode "dcat" ;
+    schema:description "A W3C standard RDF vocabulary for describing data catalogs, datasets, distributions, and data services. Used in the Semantic Medallion to weave catalog metadata into the knowledge graph."@en ;
+    schema:inDefinedTermSet :glossarySection .
+
+:termPROVO a schema:DefinedTerm, skos:Concept ;
+    schema:name "PROV-O (Provenance Ontology)"@en ;
+    schema:termCode "prov-o" ;
+    schema:description "A W3C standard ontology for representing provenance information — tracking who generated data, what sources it came from, and what transformations were applied."@en ;
+    schema:inDefinedTermSet :glossarySection .
+
+:termSHACL a schema:DefinedTerm, skos:Concept ;
+    schema:name "SHACL (Shapes Constraint Language)"@en ;
+    schema:termCode "shacl" ;
+    schema:description "A W3C standard for validating RDF graphs against shape conditions, enabling data quality enforcement in knowledge graph systems."@en ;
+    schema:inDefinedTermSet :glossarySection .
+
+:termKnowledgeGraph a schema:DefinedTerm, skos:Concept ;
+    schema:name "Knowledge Graph"@en ;
+    schema:termCode "knowledge-graph" ;
+    schema:description "A graph-structured representation of data where entities are nodes connected by typed relationships, enabling semantic querying and inference beyond what relational databases support."@en ;
+    schema:inDefinedTermSet :glossarySection .
+
+:termSPARQL a schema:DefinedTerm, skos:Concept ;
+    schema:name "SPARQL"@en ;
+    schema:termCode "sparql" ;
+    schema:description "SPARQL Protocol and RDF Query Language — the W3C standard query language for RDF knowledge graphs, analogous to SQL for relational databases but designed for graph pattern matching."@en ;
+    schema:inDefinedTermSet :glossarySection .
+
+:termSemanticEnrichment a schema:DefinedTerm, skos:Concept ;
+    schema:name "Semantic Enrichment"@en ;
+    schema:termCode "semantic-enrichment" ;
+    schema:description "The progressive addition of meaning to data as it moves through the medallion layers: none at Bronze, local at Silver (IRIs within a domain), global at Gold (cross-domain ontology linking)."@en ;
+    schema:inDefinedTermSet :glossarySection .
+
+# ============================================================================
+# HOW-TO SECTION (7 Steps)
+# ============================================================================
+
+:howtoSection a schema:HowTo ;
+    schema:name "How to Build a Semantic Medallion Pipeline"@en ;
+    schema:description "Step-by-step guide to implementing a knowledge graph-powered data catalog using the Semantic Medallion architecture."@en ;
+    schema:step :step1, :step2, :step3, :step4, :step5, :step6, :step7 ;
+    schema:isPartOf :analysis .
+
+:step1 a schema:HowToStep ;
+    schema:name "Step 1: Harvest Raw Data into the Bronze Layer"@en ;
+    schema:text "Ingest raw data from all source systems — CRM, ERP, billing, support — into the Bronze layer. Apply no transformations. Preserve original formats and timestamps. This is raw material only."@en ;
+    schema:position 1 ;
+    schema:isPartOf :howtoSection .
+
+:step2 a schema:HowToStep ;
+    schema:name "Step 2: Mint Stable IRIs at the Silver Layer"@en ;
+    schema:text "For every entity in the Bronze data, create a stable globally unique IRI. Choose a consistent IRI pattern (e.g., https://company.example/entity/{type}/{id}). Store the IRI-to-record mapping. This is the most critical step — IRIs are the foundation for all downstream linking."@en ;
+    schema:position 2 ;
+    schema:isPartOf :howtoSection .
+
+:step3 a schema:HowToStep ;
+    schema:name "Step 3: Design a Shared Ontology"@en ;
+    schema:text "Define the core classes (e.g., Customer, Contract, DataSource) and properties (e.g., hasContract, wasDerivedFrom) that span your business domains. Start minimal — a small shared ontology that captures cross-domain relationships. Expand iteratively as new use cases emerge. Document every class and property with rdfs:label and rdfs:comment."@en ;
+    schema:position 3 ;
+    schema:isPartOf :howtoSection .
+
+:step4 a schema:HowToStep ;
+    schema:name "Step 4: Author OTTR Templates"@en ;
+    schema:text "Write stOTTR templates that map Silver-layer DataFrame columns to your shared ontology. Each template defines how a row becomes RDF: which column maps to which class, which columns become properties, and how IRIs are constructed. Templates make the mapping declarative and reusable."@en ;
+    schema:position 4 ;
+    schema:isPartOf :howtoSection .
+
+:step5 a schema:HowToStep ;
+    schema:name "Step 5: Transform to RDF with maplib"@en ;
+    schema:text "Load Silver-layer DataFrames into pandas. Call maplib.map(dataframe, template, result_container) for each template. The library executes the OTTR mapping and populates the RDF graph. Validate the output RDF syntax before proceeding."@en ;
+    schema:position 5 ;
+    schema:isPartOf :howtoSection .
+
+:step6 a schema:HowToStep ;
+    schema:name "Step 6: Weave in DCAT and PROV-O Metadata"@en ;
+    schema:text "Describe each medallion layer as a DCAT Dataset with distributions and data services. Add PROV-O provenance links connecting Gold-layer entities back to their source systems. The catalog metadata now lives alongside the data in the same RDF graph."@en ;
+    schema:position 6 ;
+    schema:isPartOf :howtoSection .
+
+:step7 a schema:HowToStep ;
+    schema:name "Step 7: Query and Validate"@en ;
+    schema:text "Load the RDF into a SPARQL-capable triplestore (e.g., Virtuoso). Run validation queries to confirm entity counts and relationship integrity. Apply SHACL shapes for data quality enforcement. Then query your knowledge graph catalog — start with entity lookup, progress to provenance tracing, and finally cross-domain pattern detection."@en ;
+    schema:position 7 ;
+    schema:isPartOf :howtoSection .
+
+# ============================================================================
+# PROVENANCE
+# ============================================================================
+
+:kgGeneratorSkill a schema:SoftwareApplication ;
+    schema:name "kg-generator skill" ;
+    schema:url "https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator" ;
+    schema:description "Knowledge Graph generation skill that transforms web content into standards-compliant RDF using schema.org and custom lightweight ontologies."@en ;
+    prov:generated :analysis .
+
+# --- Inverse relationships (bidirectional completeness) ---
+
+:analysis schema:hasPart :bronzeSection, :silverSection, :goldSection, :catalogSection, :dcatSection, :technologySection,
+    :faqSection, :glossarySection, :howtoSection, :sparqlQuerySection, :customerInstanceData .
+
+:bronzeSection schema:isPartOf :analysis .
+:silverSection schema:isPartOf :analysis .
+:goldSection schema:isPartOf :analysis .
+:catalogSection schema:isPartOf :analysis .
+:dcatSection schema:isPartOf :analysis .
+:technologySection schema:isPartOf :analysis .
+:faqSection schema:isPartOf :analysis .
+:glossarySection schema:isPartOf :analysis .
+:howtoSection schema:isPartOf :analysis .
+:sparqlQuerySection schema:isPartOf :analysis .
+:customerInstanceData schema:isPartOf :analysis .

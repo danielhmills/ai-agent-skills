@@ -59,7 +59,7 @@ openssl genrsa -out "${OUT_DIR}/key.pem" 2048 2>/dev/null
 openssl req -new -x509 -key "${OUT_DIR}/key.pem" -out "${OUT_DIR}/cert.pem" \
     -days "${VALIDITY_DAYS}" \
     -subj "${SUBJ}" \
-    -addext "subjectAltName=URI:${WEBID}" \
+    -addext "subjectAltName=URI:${WEBID//#/\\#}" \
     -addext "basicConstraints=critical,CA:FALSE" \
     -addext "keyUsage=critical,digitalSignature,keyEncipherment" \
     -addext "nsComment=YouID Self-Signed Identity Certificate"

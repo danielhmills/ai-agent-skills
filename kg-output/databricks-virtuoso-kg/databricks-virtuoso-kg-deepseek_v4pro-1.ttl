@@ -1,0 +1,919 @@
+@prefix : <https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293#> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema1: <http://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:DataPlatform a rdfs:Class ;
+    rdfs:label "Data Platform"@en ;
+    rdfs:comment "A cloud or on-premises platform hosting structured data (warehouses, lakes, lakehouses)."@en ;
+    rdfs:isDefinedBy :ontology .
+
+:GraphReasoningCapability a rdfs:Class ;
+    rdfs:label "Graph Reasoning Capability"@en ;
+    rdfs:comment "The ability to traverse relationships and discover patterns across connected data using ontology-defined semantics rather than implicit foreign keys."@en ;
+    rdfs:isDefinedBy :ontology .
+
+:LinkedDataEntityNavigation a rdfs:Class ;
+    rdfs:label "Linked Data Entity Navigation"@en ;
+    rdfs:comment "The ability to dereference entity URIs via HTTP content negotiation, receiving HTML for browsers or RDF for machines."@en ;
+    rdfs:isDefinedBy :ontology .
+
+:QuadMapGeneration a rdfs:Class ;
+    rdfs:label "Quad Map Generation"@en ;
+    rdfs:comment "The conversion of R2RML mappings into Virtuoso's internal Quad Map format for efficient SPARQL-to-SQL translation."@en ;
+    rdfs:isDefinedBy :ontology .
+
+:R2RMLMapping a rdfs:Class ;
+    rdfs:label "R2RML Mapping"@en ;
+    rdfs:comment "A W3C R2RML declarative mapping that defines how relational tables and columns map to RDF classes and properties."@en ;
+    rdfs:isDefinedBy :ontology .
+
+:SemanticEnrichment a rdfs:Class ;
+    rdfs:label "Semantic Enrichment"@en ;
+    rdfs:comment "The process of augmenting relational data with ontology-defined classes, properties, and inferred relationships to produce a knowledge graph."@en ;
+    rdfs:isDefinedBy :ontology .
+
+:VirtualDatabaseAttachment a rdfs:Class ;
+    rdfs:label "Virtual Database Attachment"@en ;
+    rdfs:comment "Connecting to a remote database via ODBC/JDBC without copying data — tables appear in the local catalog as virtual references."@en ;
+    rdfs:isDefinedBy :ontology .
+
+:VirtualKnowledgeGraph a rdfs:Class ;
+    rdfs:label "Virtual Knowledge Graph"@en ;
+    rdfs:comment "A knowledge graph constructed over existing relational data without physical data movement, using virtual database attachment and R2RML declarative mappings."@en ;
+    rdfs:isDefinedBy :ontology .
+
+<https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293> a schema1:CreativeWork ;
+    schema1:dateCreated "2026-06-17"^^xsd:date ;
+    schema1:dateModified "2026-06-17"^^xsd:date ;
+    schema1:description "Comprehensive RDF knowledge graph covering the value proposition of generating AI Agent-friendly Knowledge Graphs from Databricks-hosted data using Virtuoso, R2RML, SPARQL, and Linked Data principles."@en ;
+    schema1:name "Databricks-Virtuoso Virtual Knowledge Graph — RDF Knowledge Graph"@en .
+
+:bakehouseDataset a schema1:Dataset ;
+    schema1:description "A fictional bakery chain dataset provided by Databricks as a public sample — includes customers, franchises, suppliers, transactions, and reviews tables."@en ;
+    schema1:hasPart :tableCustomers,
+        :tableFranchises,
+        :tableReviews,
+        :tableSuppliers,
+        :tableTransactions ;
+    schema1:name "samples.bakehouse"@en .
+
+:capGraphReasoning a schema1:ActionAccessSpecification ;
+    schema1:description "SPARQL queries over Databricks tables without data movement — SQL is generated and executed at query time against the live Databricks warehouse."@en ;
+    schema1:name "Graph reasoning on existing data"@en .
+
+:capLinkedDataNavigation a schema1:ActionAccessSpecification ;
+    schema1:description "Every entity (customer, franchise, transaction) receives a dereferenceable HTTP URI with content negotiation — browsers see HTML descriptions, AI agents retrieve machine-readable RDF."@en ;
+    schema1:name "Linked Data entity navigation"@en .
+
+:capProductionGrade a schema1:ActionAccessSpecification ;
+    schema1:description "ACID compliance through the underlying Databricks warehouse, federated SPARQL for cross-graph queries, and Virtuoso's proven SPARQL-to-SQL query federation."@en ;
+    schema1:name "Production-grade infrastructure"@en .
+
+:capSemanticEnrichment a schema1:ActionAccessSpecification ;
+    schema1:description "R2RML mappings add ontology-defined classes, properties, and inferred relationships — transforming implicit foreign keys into navigable semantic links."@en ;
+    schema1:name "Semantic enrichment"@en .
+
+:capStandardsInterop a schema1:ActionAccessSpecification ;
+    schema1:description "W3C standards (RDF, SPARQL, R2RML) prevent vendor lock-in — the knowledge graph is portable and queryable by any standards-compliant SPARQL client or AI agent."@en ;
+    schema1:name "Standards-based interoperability"@en .
+
+:capZeroMovement a schema1:ActionAccessSpecification ;
+    schema1:description "Virtuoso's Virtual Database attaches Databricks tables via ODBC as virtual references — no ETL, no duplication, no stale copies."@en ;
+    schema1:name "Zero data movement"@en .
+
+:databricksOdbcDriver a schema1:SoftwareApplication ;
+    schema1:applicationCategory "Database Driver"@en ;
+    schema1:description "ODBC driver enabling SQL connectivity between Virtuoso and Databricks SQL warehouses for virtual database attachment."@en ;
+    schema1:name "Databricks ODBC Driver"@en ;
+    schema1:url "https://www.databricks.com/spark/odbc-driver-download" .
+
+:enablesCapability a rdf:Property ;
+    rdfs:label "enables capability"@en ;
+    rdfs:comment "A capability unlocked by the virtual knowledge graph approach."@en ;
+    rdfs:domain :VirtualKnowledgeGraph ;
+    rdfs:isDefinedBy :ontology .
+
+:graphInstance a schema1:DataFeed ;
+    schema1:description "Instance data graph — the runtime virtual knowledge graph containing entity triples generated by applying R2RML mappings to the live Databricks tables."@en ;
+    schema1:identifier "https://linkeddata.uriburner.com/DAV/demos/daas/databricks-virtuoso-kg-deepseek_v4pro-1.ttl" ;
+    schema1:name "https://linkeddata.uriburner.com/DAV/demos/daas/databricks-virtuoso-kg-deepseek_v4pro-1.ttl"@en .
+
+:graphOntology a schema1:DataFeed ;
+    schema1:description "Ontology graph — defines the bakehouse vocabulary: classes (Transaction, Franchise, Customer) and properties (franchise, totalPrice, city)."@en ;
+    schema1:identifier "http://www.databricks.com/bakehouse#" ;
+    schema1:name "http://www.databricks.com/bakehouse#"@en .
+
+:graphR2RML a schema1:DataFeed ;
+    schema1:description "R2RML mapping graph — defines the SQL-to-RDF mapping rules for the bakehouse schema."@en ;
+    schema1:identifier "urn:databricks:bakehouse:r2rml" ;
+    schema1:name "urn:databricks:bakehouse:r2rml"@en .
+
+:implementsStandard a rdf:Property ;
+    rdfs:label "implements standard"@en ;
+    rdfs:comment "A W3C or industry standard employed in the solution."@en ;
+    rdfs:domain :VirtualKnowledgeGraph ;
+    rdfs:isDefinedBy :ontology .
+
+:mapsTo a rdf:Property ;
+    rdfs:label "maps to"@en ;
+    rdfs:comment "The RDF class or property a relational construct maps to."@en ;
+    rdfs:domain :R2RMLMapping ;
+    rdfs:isDefinedBy :ontology .
+
+:producesArtifact a rdf:Property ;
+    rdfs:label "produces artifact"@en ;
+    rdfs:comment "An artifact (named graph, entity URI, SPARQL result) produced by the pipeline."@en ;
+    rdfs:domain :VirtualKnowledgeGraph ;
+    rdfs:isDefinedBy :ontology .
+
+:quickSetupScript a schema1:SoftwareSourceCode ;
+    schema1:codeRepository :demoRepo ;
+    schema1:description "SQL script that attaches Databricks tables to Virtuoso's local catalog, grants SPARQL access, loads R2RML mappings and ontology, generates quad maps, and configures URL rewrite rules for Linked Data."@en ;
+    schema1:name "quick_setup.sql"@en ;
+    schema1:programmingLanguage "SQL" .
+
+:requiresComponent a rdf:Property ;
+    rdfs:label "requires component"@en ;
+    rdfs:comment "A software component or driver required for the pipeline."@en ;
+    rdfs:domain :VirtualKnowledgeGraph ;
+    rdfs:isDefinedBy :ontology .
+
+:sparqlConstructVisualization a schema1:SoftwareSourceCode ;
+    schema1:codeSampleType "text/x-html-nice-turtle" ;
+    schema1:description "SPARQL CONSTRUCT extracting the Transaction-Franchise-City subgraph for interactive node-link visualization in SPARQLWorks."@en ;
+    schema1:name "CONSTRUCT for Graph Visualization (SPARQLWorks)"@en ;
+    schema1:potentialAction :actionsparqlConstructVisualization ;
+    schema1:programmingLanguage "SPARQL" ;
+    schema1:target :demoSparqlEndpoint ;
+    schema1:text """PREFIX : <http://www.databricks.com/bakehouse#>
+
+CONSTRUCT
+{
+  ?transaction a :Transaction;
+   :franchise ?franchise;
+   :totalPrice ?totalPrice.
+
+  ?franchise :city ?franchiseCity.
+}
+WHERE
+{
+  GRAPH <https://linkeddata.uriburner.com/DAV/demos/daas/databricks-virtuoso-kg-deepseek_v4pro-1.ttl>
+  {
+    ?transaction a :Transaction;
+     :franchise ?franchise;
+     :totalPrice ?totalPrice.
+
+    ?franchise :city ?franchiseCity.
+  }
+}
+LIMIT 100"""@en .
+
+:sparqlEntityTypes a schema1:SoftwareSourceCode ;
+    schema1:codeSampleType "text/x-html+tr" ;
+    schema1:description "SPARQL SELECT rdf:type FROM <https://linkeddata.uriburner.com/DAV/demos/daas/databricks-virtuoso-kg-deepseek_v4pro-1.ttl> WHERE { ?s a ?o } LIMIT 10"@en ;
+    schema1:name "Entity Type Discovery"@en ;
+    schema1:potentialAction :actionsparqlEntityTypes ;
+    schema1:programmingLanguage "SPARQL" ;
+    schema1:target :demoSparqlEndpoint ;
+    schema1:text """SELECT *
+WHERE {
+  GRAPH <https://linkeddata.uriburner.com/DAV/demos/daas/databricks-virtuoso-kg-deepseek_v4pro-1.ttl> {
+  
+    ?s a ?o
+  
+  }
+}
+LIMIT 10"""@en .
+
+:sparqlOrderSizeDistribution a schema1:SoftwareSourceCode ;
+    schema1:codeSampleType "text/x-html+tr" ;
+    schema1:description "Revenue segmentation analysis — buckets transactions by value range for a financial performance dashboard."@en ;
+    schema1:name "Dashboard: Order Size Distribution (Revenue Segmentation)"@en ;
+    schema1:potentialAction :actionsparqlOrderSizeDistribution ;
+    schema1:programmingLanguage "SPARQL" ;
+    schema1:target :demoSparqlEndpoint ;
+    schema1:text """PREFIX : <http://www.databricks.com/bakehouse#>
+
+SELECT
+?orderSizeBucket
+(COUNT(?transaction) AS ?transactionCount)
+(SUM(?totalPrice) AS ?totalRevenue)
+(ROUND(AVG(?totalPrice)) AS ?avgValue)
+WHERE {
+  GRAPH <https://linkeddata.uriburner.com/DAV/demos/daas/databricks-virtuoso-kg-deepseek_v4pro-1.ttl> {
+  
+    ?transaction a :Transaction;
+     :totalPrice ?totalPrice.
+    BIND(
+      IF(?totalPrice < 10, "Small (<$10)",
+      IF(?totalPrice < 30, "Medium ($10-$30)",
+      IF(?totalPrice < 60, "Large ($30-$60)",
+      "Enterprise (>$60)")))
+      AS ?orderSizeBucket)
+  
+  }
+}
+GROUP BY ?orderSizeBucket
+ORDER BY DESC(?totalRevenue)"""@en .
+
+:sparqlRevenueByCity a schema1:SoftwareSourceCode ;
+    schema1:codeSampleType "text/x-html+tr" ;
+    schema1:description "Geographic revenue breakdown — aggregates totalPrice by franchise city for a regional performance dashboard."@en ;
+    schema1:name "Dashboard: Revenue by City (Geographic Distribution)"@en ;
+    schema1:potentialAction :actionsparqlRevenueByCity ;
+    schema1:programmingLanguage "SPARQL" ;
+    schema1:target :demoSparqlEndpoint ;
+    schema1:text """PREFIX : <http://www.databricks.com/bakehouse#>
+
+SELECT
+?city
+(COUNT(DISTINCT ?transaction) AS ?orderCount)
+(SUM(?totalPrice) AS ?revenue)
+(ROUND(AVG(?totalPrice)) AS ?avgOrderValue)
+WHERE {
+  GRAPH <https://linkeddata.uriburner.com/DAV/demos/daas/databricks-virtuoso-kg-deepseek_v4pro-1.ttl> {
+  
+    ?transaction a :Transaction;
+     :franchise ?franchise;
+     :totalPrice ?totalPrice.
+    ?franchise :city ?city.
+  
+  }
+}
+GROUP BY ?city
+ORDER BY DESC(?revenue)"""@en .
+
+:sparqlRevenueByFranchise a schema1:SoftwareSourceCode ;
+    schema1:codeSampleType "text/x-html+tr" ;
+    schema1:description "SPARQL SELECT with SUM aggregation joining Transaction and Franchise tables via the :franchise property, grouped by franchise and city."@en ;
+    schema1:name "Revenue by Franchise (Cross-Table SPARQL Join)"@en ;
+    schema1:potentialAction :actionsparqlRevenueByFranchise ;
+    schema1:programmingLanguage "SPARQL" ;
+    schema1:target :demoSparqlEndpoint ;
+    schema1:text """PREFIX : <http://www.databricks.com/bakehouse#>
+
+SELECT
+?franchise
+?franchiseCity
+SUM(?totalPrice) as ?revenue
+WHERE {
+  GRAPH <https://linkeddata.uriburner.com/DAV/demos/daas/databricks-virtuoso-kg-deepseek_v4pro-1.ttl> {
+  
+    ?transaction a :Transaction;
+     :franchise ?franchise;
+     :totalPrice ?totalPrice.
+  
+    ?franchise :city ?franchiseCity.
+  
+  }
+}
+GROUP BY ?franchise ?franchiseCity
+ORDER BY DESC(?revenue)
+LIMIT 10"""@en .
+
+:sparqlSupplierProductFlow a schema1:SoftwareSourceCode ;
+    schema1:codeSampleType "text/x-html+tr" ;
+    schema1:description "Supply chain visibility — traces supplier ingredients to the franchises that use them for a supply chain dashboard."@en ;
+    schema1:name "Dashboard: Supplier-Ingredient-Franchise Product Flow"@en ;
+    schema1:potentialAction :actionsparqlSupplierProductFlow ;
+    schema1:programmingLanguage "SPARQL" ;
+    schema1:target :demoSparqlEndpoint ;
+    schema1:text """PREFIX : <http://www.databricks.com/bakehouse#>
+
+SELECT
+?supplierName
+?ingredientName
+(COUNT(DISTINCT ?franchise) AS ?franchisesServed)
+WHERE {
+  GRAPH <https://linkeddata.uriburner.com/DAV/demos/daas/databricks-virtuoso-kg-deepseek_v4pro-1.ttl> {
+  
+    ?supply a :SupplyContract;
+     :supplier ?supplier;
+     :ingredient ?ingredient;
+     :franchise ?franchise.
+    ?supplier :supplierName ?supplierName.
+    ?ingredient :ingredientName ?ingredientName.
+  
+  }
+}
+GROUP BY ?supplierName ?ingredientName
+ORDER BY DESC(?franchisesServed)
+LIMIT 15"""@en .
+
+:sparqlTopCustomers a schema1:SoftwareSourceCode ;
+    schema1:codeSampleType "text/x-html+tr" ;
+    schema1:description "Customer value analysis — ranks customers by total spend across all their transactions for a CRM dashboard."@en ;
+    schema1:name "Dashboard: Top 10 Customers by Total Spend"@en ;
+    schema1:potentialAction :actionsparqlTopCustomers ;
+    schema1:programmingLanguage "SPARQL" ;
+    schema1:target :demoSparqlEndpoint ;
+    schema1:text """PREFIX : <http://www.databricks.com/bakehouse#>
+
+SELECT
+?customerName
+(COUNT(DISTINCT ?transaction) AS ?purchaseCount)
+(SUM(?totalPrice) AS ?lifetimeValue)
+(ROUND(SUM(?totalPrice)/COUNT(DISTINCT ?transaction)) AS ?avgPurchaseValue)
+WHERE {
+  GRAPH <https://linkeddata.uriburner.com/DAV/demos/daas/databricks-virtuoso-kg-deepseek_v4pro-1.ttl> {
+  
+    ?transaction a :Transaction;
+     :customer ?customer;
+     :totalPrice ?totalPrice.
+    ?customer :customerName ?customerName.
+  
+  }
+}
+GROUP BY ?customerName
+ORDER BY DESC(?lifetimeValue)
+LIMIT 10"""@en .
+
+:sparqlTopRatedFranchises a schema1:SoftwareSourceCode ;
+    schema1:codeSampleType "text/x-html+tr" ;
+    schema1:description "Customer satisfaction metrics — averages review ratings per franchise for a quality monitoring dashboard."@en ;
+    schema1:name "Dashboard: Top Rated Franchises (Customer Satisfaction)"@en ;
+    schema1:potentialAction :actionsparqlTopRatedFranchises ;
+    schema1:programmingLanguage "SPARQL" ;
+    schema1:target :demoSparqlEndpoint ;
+    schema1:text """PREFIX : <http://www.databricks.com/bakehouse#>
+
+SELECT
+?franchiseName
+?city
+(COUNT(?review) AS ?reviewCount)
+(ROUND(AVG(?rating))*10/10 AS ?avgRating)
+WHERE {
+  GRAPH <https://linkeddata.uriburner.com/DAV/demos/daas/databricks-virtuoso-kg-deepseek_v4pro-1.ttl> {
+  
+    ?review a :Review;
+     :franchise ?franchise;
+     :rating ?rating.
+    ?franchise :city ?city.
+    OPTIONAL { ?franchise :franchiseName ?franchiseName. }
+  
+  }
+}
+GROUP BY ?franchiseName ?city
+HAVING (COUNT(?review) >= 3)
+ORDER BY DESC(?avgRating)
+LIMIT 10"""@en .
+
+:sparqlworks a schema1:SoftwareApplication ;
+    schema1:applicationCategory "Graph Visualization"@en ;
+    schema1:description "A SPARQL query visualisation tool that renders CONSTRUCT query results as interactive node-link diagrams for exploring knowledge graph relationships."@en ;
+    schema1:name "SPARQLWorks"@en ;
+    schema1:url "https://github.com/danielhmills/sparqlworks/" .
+
+:stdLinkedData a schema1:DefinedTerm ;
+    schema1:description "A method of publishing structured data using HTTP URIs and RDF so that it can be interlinked and become more useful through semantic queries."@en ;
+    schema1:name "Linked Data"@en ;
+    rdfs:seeAlso dbr:Linked_data .
+
+:stdODBC a schema1:DefinedTerm ;
+    schema1:description "Open Database Connectivity — standard API for accessing database management systems."@en ;
+    schema1:name "ODBC"@en ;
+    rdfs:seeAlso dbr:Open_Database_Connectivity .
+
+:stdR2RML a schema1:DefinedTerm ;
+    schema1:description "RDB to RDF Mapping Language — W3C recommendation for exposing relational data as RDF graphs using declarative mappings."@en ;
+    schema1:name "R2RML"@en ;
+    rdfs:seeAlso :stdR2RML-ext .
+
+:stdRDF a schema1:DefinedTerm ;
+    schema1:description "Resource Description Framework — W3C standard for representing entity relationships as subject-predicate-object triples."@en ;
+    schema1:name "RDF"@en ;
+    rdfs:seeAlso dbr:Resource_Description_Framework .
+
+:stdSPARQL a schema1:DefinedTerm ;
+    schema1:description "SPARQL Protocol and RDF Query Language — W3C standard for querying and manipulating RDF graphs."@en ;
+    schema1:name "SPARQL"@en ;
+    rdfs:seeAlso dbr:SPARQL .
+
+:uriburnerSparqlEndpoint a schema1:WebAPI ;
+    schema1:description "Public SPARQL endpoint for querying knowledge graphs hosted in Virtuoso-backed URIBurner."@en ;
+    schema1:name "URIBurner SPARQL Endpoint"@en ;
+    schema1:url "https://linkeddata.uriburner.com/sparql" .
+
+:usesDataPlatform a rdf:Property ;
+    rdfs:label "uses data platform"@en ;
+    rdfs:comment "The data platform whose tables are being virtualized into the knowledge graph."@en ;
+    rdfs:domain :VirtualKnowledgeGraph ;
+    rdfs:isDefinedBy :ontology .
+
+dbr:Databricks a schema1:Organization ;
+    schema1:description "Cloud data platform provider offering data lakehouse architecture combining data lakes and data warehouses."@en ;
+    schema1:name "Databricks"@en ;
+    schema1:url "https://www.databricks.com/" ;
+    owl:sameAs wd:Q52014331 .
+
+:a1 a schema1:Answer ;
+    schema1:name "Answer: What is a Virtual Knowledge Graph?..."@en ;
+    schema1:text "A Virtual Knowledge Graph (VKG) is a semantic layer constructed over existing relational data without physical data movement. It uses virtual database attachment (ODBC/JDBC) to connect to source systems, R2RML mappings to declare how tables and columns map to RDF classes and properties, and SPARQL-to-SQL query translation to execute graph queries against the live relational data at query time. The data stays in place; the semantics are layered on top."@en .
+
+:a10 a schema1:Answer ;
+    schema1:name "Answer: How does this compare to traditional ETL-based knowledge gra..."@en ;
+    schema1:text "Traditional ETL-based approaches: extract data from source, transform to RDF, load into a triplestore — creating a copy that must be kept in sync. The virtual approach: no extraction, no transformation pipeline, no load step, no stale copies. R2RML mappings define the semantic model declaratively; SPARQL queries execute against live data. Changes in Databricks tables are immediately visible in SPARQL results. The trade-off is query latency versus data freshness — the virtual approach prioritizes freshness and simplicity over raw graph traversal speed."@en .
+
+:a11 a schema1:Answer ;
+    schema1:name "Answer: Can I use this approach with data sources other than Databri..."@en ;
+    schema1:text "Yes. Virtuoso's Virtual Database supports any ODBC or JDBC data source — PostgreSQL, MySQL, Oracle, SQL Server, Snowflake, BigQuery, and many others. The same pattern applies: attach tables via ODBC, define R2RML mappings, load the ontology, generate quad maps, and query via SPARQL. The knowledge graph becomes a unified semantic layer spanning multiple heterogeneous data platforms."@en .
+
+:a12 a schema1:Answer ;
+    schema1:name "Answer: What skills or expertise are needed to implement this?..."@en ;
+    schema1:text "SQL knowledge for table attachment and testing; basic understanding of RDF and SPARQL for query writing; familiarity with R2RML for mapping design (the Turtle syntax is straightforward for anyone comfortable with data modelling); and Virtuoso administration basics (Conductor UI or isql command-line). The companion GitHub repository provides templates and working examples — most practitioners can have a working virtual knowledge graph running within an hour."@en .
+
+:a2 a schema1:Answer ;
+    schema1:name "Answer: Why use Virtuoso with Databricks instead of Databricks' buil..."@en ;
+    schema1:text "Databricks provides graph capabilities within its platform, but Virtuoso adds: (1) standards-based interoperability via W3C RDF/SPARQL/R2RML — no vendor lock-in; (2) Linked Data entity URIs enabling cross-system entity navigation; (3) federated SPARQL across multiple data sources; (4) AI Agent-friendly machine-readable RDF with content negotiation; and (5) a loosely coupled architecture where the knowledge graph is an overlay, not yet another silo."@en .
+
+:a3 a schema1:Answer ;
+    schema1:name "Answer: Does data get copied from Databricks to Virtuoso?..."@en ;
+    schema1:text "No. The virtual knowledge graph approach achieves zero data movement. Databricks tables are attached via ODBC as virtual references — they appear in Virtuoso's local catalog but no data is copied. SPARQL queries are translated to SQL at query time and executed remotely against the live Databricks SQL warehouse. This means the knowledge graph always reflects current data without ETL pipelines or stale copies."@en .
+
+:a4 a schema1:Answer ;
+    schema1:name "Answer: What is R2RML and why is it important?..."@en ;
+    schema1:text "R2RML (RDB to RDF Mapping Language) is a W3C recommendation that defines how relational database tables, columns, and foreign keys map to RDF classes, properties, and relationships. It provides a declarative, standards-based bridge between the SQL world and the semantic graph world — no custom code needed. The mapping is a Turtle file that can be version-controlled, reviewed, and reused across projects."@en .
+
+:a5 a schema1:Answer ;
+    schema1:name "Answer: How do AI agents consume this knowledge graph?..."@en ;
+    schema1:text "AI agents consume the virtual knowledge graph through three standard interfaces: (1) SPARQL endpoint — structured graph queries returning typed results with entity IRIs; (2) Linked Data entity URIs — dereferenceable HTTP URIs that return RDF (Turtle, JSON-LD, RDF/XML) when requested with the appropriate Accept header; (3) HTML entity descriptions — human-readable pages with navigable hyperlinks for agentic browsing. No custom API, SDK, or platform-specific integration is required — any standards-compliant SPARQL client or HTTP agent can interact with the graph."@en .
+
+:a6 a schema1:Answer ;
+    schema1:name "Answer: What are Quad Maps in Virtuoso?..."@en ;
+    schema1:text "Quad Maps are Virtuoso's internal representation of R2RML mappings — they define how SPARQL graph patterns translate to SQL queries against virtual tables. The R2RML_MAKE_QM_FROM_G function converts declarative R2RML Turtle mappings into optimized Quad Maps that Virtuoso's SPARQL engine uses at query time. This is what makes SPARQL queries executable against remote relational tables without data movement."@en .
+
+:a7 a schema1:Answer ;
+    schema1:name "Answer: What is content negotiation and why does it matter for AI ag..."@en ;
+    schema1:text "Content negotiation is an HTTP mechanism where the server inspects the client's Accept header to determine the response format. For the bakehouse knowledge graph: browsers requesting text/html receive a human-readable HTML description page with navigable links; AI agents and RDF clients requesting application/ld+json or text/turtle receive machine-readable RDF. This single-URI, multi-format approach means the same entity identifier works for both human exploration and automated agent consumption — a cornerstone of Linked Data and the Semantic Web."@en .
+
+:a8 a schema1:Answer ;
+    schema1:name "Answer: Is this approach suitable for real-time or high-frequency wo..."@en ;
+    schema1:text "The virtual knowledge graph approach using ODBC attachment is best suited for batch reasoning, GraphRAG over reference data, or exploratory graph analytics. For millisecond-latency graph traversals or high-frequency transactional writes, a native graph store may be more appropriate. However, for the majority of enterprise AI agent use cases — where agents need to discover entity relationships, traverse connections, and retrieve structured context — the performance characteristics are more than adequate."@en .
+
+:a9 a schema1:Answer ;
+    schema1:name "Answer: What Databricks components are required?..."@en ;
+    schema1:text "You need: (1) a Databricks SQL warehouse (Serverless, Pro, or Classic) to provide the ODBC endpoint; (2) the Databricks ODBC Driver installed on the Virtuoso host; (3) a Personal Access Token for authentication; and (4) the workspace Host and HTTP Path for the SQL warehouse. The public samples.bakehouse dataset provides the example tables — your own Databricks catalogs and schemas work the same way."@en .
+
+:actionsparqlConstructVisualization a schema1:SearchAction ;
+    schema1:target "https://demo.openlinksw.com/sparql?default-graph-uri=&query=PREFIX+%3A+%3Chttp%3A%2F%2Fwww.databricks.com%2Fbakehouse%23%3E%0A%0ACONSTRUCT%0A%7B%0A++%3Ftransaction+a+%3ATransaction%3B%0A+++%3Afranchise+%3Ffranchise%3B%0A+++%3AtotalPrice+%3FtotalPrice.%0A%0A++%3Ffranchise+%3Acity+%3FfranchiseCity.%0A%7D%0AWHERE%0A%7B%0A++GRAPH+%3Chttp%3A%2F%2Fdemo.openlinksw.com%2Fdatabricks-bakehouse-r2rml%23%3E%0A++%7B%0A++++%3Ftransaction+a+%3ATransaction%3B%0A+++++%3Afranchise+%3Ffranchise%3B%0A+++++%3AtotalPrice+%3FtotalPrice.%0A%0A++++%3Ffranchise+%3Acity+%3FfranchiseCity.%0A++%7D%0A%7D%0ALIMIT+100" .
+
+:actionsparqlEntityTypes a schema1:SearchAction ;
+    schema1:target "http://demo.openlinksw.com/sparql?default-graph-uri=&qtxt=SELECT+*%0D%0AFROM+%3Chttp%3A%2F%2Fdemo.openlinksw.com%2Fdatabricks-bakehouse-r2rml%23%3E%0D%0AWHERE%0D%0A%7B%0D%0A++%3Fs+a+%3Fo%0D%0A%7D%0D%0ALIMIT+10" .
+
+:actionsparqlOrderSizeDistribution a schema1:SearchAction ;
+    schema1:target "https://demo.openlinksw.com/sparql?default-graph-uri=&query=PREFIX+%3A+%3Chttp%3A%2F%2Fwww.databricks.com%2Fbakehouse%23%3E%0ASELECT%0A%3ForderSizeBucket%0A(COUNT(%3Ftransaction)+AS+%3FtransactionCount)%0A(SUM(%3FtotalPrice)+AS+%3FtotalRevenue)%0A(ROUND(AVG(%3FtotalPrice))+AS+%3FavgValue)%0AFROM+%3Chttp%3A%2F%2Fdemo.openlinksw.com%2Fdatabricks-bakehouse-r2rml%23%3E%0AWHERE+%7B%0A++%3Ftransaction+a+%3ATransaction%3B%0A+++%3AtotalPrice+%3FtotalPrice.%0A++BIND(%0A++++IF(%3FtotalPrice+%3C+10%2C+%22Small+(%3C%2410)%22%2C%0A++++IF(%3FtotalPrice+%3C+30%2C+%22Medium+(%2410-%2430)%22%2C%0A++++IF(%3FtotalPrice+%3C+60%2C+%22Large+(%2430-%2460)%22%2C%0A++++%22Enterprise+(%3E%2460)%22)))%0A++++AS+%3ForderSizeBucket)%0A%7D%0AGROUP+BY+%3ForderSizeBucket%0AORDER+BY+DESC(%3FtotalRevenue)&format=text%2Fx-html%2Btr&timeout=0&debug=on&run=+Run+Query+" .
+
+:actionsparqlRevenueByCity a schema1:SearchAction ;
+    schema1:target "https://demo.openlinksw.com/sparql?default-graph-uri=&query=PREFIX+%3A+%3Chttp%3A%2F%2Fwww.databricks.com%2Fbakehouse%23%3E%0ASELECT%0A%3Fcity%0A(COUNT(DISTINCT+%3Ftransaction)+AS+%3ForderCount)%0A(SUM(%3FtotalPrice)+AS+%3Frevenue)%0A(ROUND(AVG(%3FtotalPrice))+AS+%3FavgOrderValue)%0AFROM+%3Chttp%3A%2F%2Fdemo.openlinksw.com%2Fdatabricks-bakehouse-r2rml%23%3E%0AWHERE+%7B%0A++%3Ftransaction+a+%3ATransaction%3B%0A+++%3Afranchise+%3Ffranchise%3B%0A+++%3AtotalPrice+%3FtotalPrice.%0A++%3Ffranchise+%3Acity+%3Fcity.%0A%7D%0AGROUP+BY+%3Fcity%0AORDER+BY+DESC(%3Frevenue)&format=text%2Fx-html%2Btr&timeout=0&debug=on&run=+Run+Query+" .
+
+:actionsparqlRevenueByFranchise a schema1:SearchAction ;
+    schema1:target "https://demo.openlinksw.com/sparql?default-graph-uri=&qtxt=PREFIX+%3A+%3Chttp%3A%2F%2Fwww.databricks.com%2Fbakehouse%23%3E%0A%0ASELECT%0A%3Ffranchise%0A%3FfranchiseCity%0ASUM(%3FtotalPrice)+as+%3Frevenue%0AFROM+%3Chttp%3A%2F%2Fdemo.openlinksw.com%2Fdatabricks-bakehouse-r2rml%23%3E%0AWHERE%0A%7B%0A++%3Ftransaction+a+%3ATransaction%3B%0A+++%3Afranchise+%3Ffranchise%3B%0A+++%3AtotalPrice+%3FtotalPrice.%0A%0A++%3Ffranchise+%3Acity+%3FfranchiseCity.%0A%7D%0AGROUP+BY+%3Ffranchise+%3FfranchiseCity%0AORDER+BY+DESC(%3Frevenue)%0ALIMIT+10" .
+
+:actionsparqlSupplierProductFlow a schema1:SearchAction ;
+    schema1:target "https://demo.openlinksw.com/sparql?default-graph-uri=&query=PREFIX+%3A+%3Chttp%3A%2F%2Fwww.databricks.com%2Fbakehouse%23%3E%0ASELECT%0A%3FsupplierName%0A%3FingredientName%0A(COUNT(DISTINCT+%3Ffranchise)+AS+%3FfranchisesServed)%0AFROM+%3Chttp%3A%2F%2Fdemo.openlinksw.com%2Fdatabricks-bakehouse-r2rml%23%3E%0AWHERE+%7B%0A++%3Fsupply+a+%3ASupplyContract%3B%0A+++%3Asupplier+%3Fsupplier%3B%0A+++%3Aingredient+%3Fingredient%3B%0A+++%3Afranchise+%3Ffranchise.%0A++%3Fsupplier+%3AsupplierName+%3FsupplierName.%0A++%3Fingredient+%3AingredientName+%3FingredientName.%0A%7D%0AGROUP+BY+%3FsupplierName+%3FingredientName%0AORDER+BY+DESC(%3FfranchisesServed)%0ALIMIT+15&format=text%2Fx-html%2Btr&timeout=0&debug=on&run=+Run+Query+" .
+
+:actionsparqlTopCustomers a schema1:SearchAction ;
+    schema1:target "https://demo.openlinksw.com/sparql?default-graph-uri=&query=PREFIX+%3A+%3Chttp%3A%2F%2Fwww.databricks.com%2Fbakehouse%23%3E%0ASELECT%0A%3FcustomerName%0A(COUNT(DISTINCT+%3Ftransaction)+AS+%3FpurchaseCount)%0A(SUM(%3FtotalPrice)+AS+%3FlifetimeValue)%0A(ROUND(SUM(%3FtotalPrice)%2FCOUNT(DISTINCT+%3Ftransaction))+AS+%3FavgPurchaseValue)%0AFROM+%3Chttp%3A%2F%2Fdemo.openlinksw.com%2Fdatabricks-bakehouse-r2rml%23%3E%0AWHERE+%7B%0A++%3Ftransaction+a+%3ATransaction%3B%0A+++%3Acustomer+%3Fcustomer%3B%0A+++%3AtotalPrice+%3FtotalPrice.%0A++%3Fcustomer+%3AcustomerName+%3FcustomerName.%0A%7D%0AGROUP+BY+%3FcustomerName%0AORDER+BY+DESC(%3FlifetimeValue)%0ALIMIT+10&format=text%2Fx-html%2Btr&timeout=0&debug=on&run=+Run+Query+" .
+
+:actionsparqlTopRatedFranchises a schema1:SearchAction ;
+    schema1:target "https://demo.openlinksw.com/sparql?default-graph-uri=&query=PREFIX+%3A+%3Chttp%3A%2F%2Fwww.databricks.com%2Fbakehouse%23%3E%0ASELECT%0A%3FfranchiseName%0A%3Fcity%0A(COUNT(%3Freview)+AS+%3FreviewCount)%0A(ROUND(AVG(%3Frating))*10%2F10+AS+%3FavgRating)%0AFROM+%3Chttp%3A%2F%2Fdemo.openlinksw.com%2Fdatabricks-bakehouse-r2rml%23%3E%0AWHERE+%7B%0A++%3Freview+a+%3AReview%3B%0A+++%3Afranchise+%3Ffranchise%3B%0A+++%3Arating+%3Frating.%0A++%3Ffranchise+%3Acity+%3Fcity.%0A++OPTIONAL+%7B+%3Ffranchise+%3AfranchiseName+%3FfranchiseName.+%7D%0A%7D%0AGROUP+BY+%3FfranchiseName+%3Fcity%0AHAVING+(COUNT(%3Freview)+%3E%3D+3)%0AORDER+BY+DESC(%3FavgRating)%0ALIMIT+10&format=text%2Fx-html%2Btr&timeout=0&debug=on&run=+Run+Query+" .
+
+:aiAgentFriendlyKG a skos:Concept ;
+    schema1:description "A knowledge graph designed for consumption by AI agents — featuring dereferenceable entity URIs, machine-readable RDF representations, SPARQL endpoints for structured querying, and navigable entity relationships. The Databricks-Virtuoso pipeline produces such a graph: an AI agent can follow entity links, execute SPARQL queries, and retrieve structured context without custom API integration."@en ;
+    schema1:name "AI Agent-Friendly Knowledge Graph"@en .
+
+:capabilitiesSection a schema1:CreativeWork ;
+    schema1:isPartOf :analysis ;
+    schema1:name "Capabilities Enabled"@en .
+
+:conceptsSection a schema1:CreativeWork ;
+    schema1:hasPart :aiAgentFriendlyKG,
+        :contentNegotiationConcept,
+        :graphReasoningConcept,
+        :hyperlinkBasedEntityIdentity,
+        :looselyCoupledSemanticLayer,
+        :semanticEnrichmentConcept,
+        :virtualKnowledgeGraphConcept,
+        :zeroDataMovementConcept ;
+    schema1:isPartOf :analysis ;
+    schema1:name "Key Concepts"@en .
+
+:contentNegotiationConcept a skos:Concept ;
+    schema1:description "An HTTP mechanism where the server inspects the client's Accept header to determine the response format — returning an HTML description page for browsers and RDF (Turtle, JSON-LD, RDF/XML) for semantic agents and RDF clients."@en ;
+    schema1:name "Content Negotiation"@en .
+
+:datasetSection a schema1:CreativeWork ;
+    schema1:isPartOf :analysis ;
+    schema1:name "Bakehouse Sample Dataset"@en .
+
+:demoRepo a schema1:SoftwareSourceCode ;
+    schema1:codeRepository "https://github.com/danielhmills/databricks-sample-kg" ;
+    schema1:description "Companion repository containing ODBC configuration templates, R2RML mappings, ontology, and setup scripts for the Databricks-to-Virtuoso virtual knowledge graph pipeline."@en ;
+    schema1:name "databricks-sample-kg"@en ;
+    schema1:url "https://github.com/danielhmills/databricks-sample-kg" .
+
+:glossarySection a schema1:DefinedTermSet ;
+    schema1:hasDefinedTerm :termAIKGAgent,
+        :termContentNegotiation,
+        :termEntityURI,
+        :termLinkedData,
+        :termODBC,
+        :termOntology,
+        :termQuadMap,
+        :termR2RML,
+        :termSPARQL,
+        :termSemanticWeb,
+        :termVirtualDatabase,
+        :termVirtualKnowledgeGraph ;
+    schema1:isPartOf :analysis ;
+    schema1:name "Databricks-Virtuoso Knowledge Graph Glossary"@en ;
+    skos:type skos:ConceptScheme .
+
+:graphReasoningConcept a skos:Concept ;
+    schema1:description "The ability to traverse relationships and discover patterns across connected data using ontology-defined semantics rather than implicit foreign keys. In the bakehouse example, foreign keys become navigable hyperlinks connecting Transaction→Franchise→City through named relationships."@en ;
+    schema1:name "Graph Reasoning"@en .
+
+:hyperlinkBasedEntityIdentity a skos:Concept ;
+    schema1:description "The use of IRIs (Internationalized Resource Identifiers) as globally unique, dereferenceable entity identifiers — enabling entities from different systems (Databricks tables, external reference data, other knowledge graphs) to be linked and reasoned over as a single connected graph."@en ;
+    schema1:name "Hyperlink-Based Entity Identity"@en .
+
+:link a schema1:WebSite ;
+    schema1:name "OpenLink Virtuoso Homepage"@en,
+        "SPARQLWorks Visualizer"@en,
+        "Virtuoso R2RML Documentation"@en,
+        "W3C R2RML Specification"@en,
+        "W3C RDF Standard"@en,
+        "W3C SPARQL 1.1 Query Language"@en ;
+    schema1:url "http://docs.openlinksw.com/virtuoso/rdb2rdfviewsrdb2rdf/",
+        "https://github.com/danielhmills/sparqlworks/",
+        "https://virtuoso.openlinksw.com/",
+        "https://www.w3.org/RDF/",
+        "https://www.w3.org/TR/r2rml/",
+        "https://www.w3.org/TR/sparql11-query/" .
+
+:linkREADME_md a schema1:WebSite ;
+    schema1:name "Full README"@en ;
+    schema1:url "https://github.com/danielhmills/databricks-sample-kg/blob/main/README.md" .
+
+:linkdatabricks-sample-kg a schema1:WebSite ;
+    schema1:name "Companion GitHub Repository"@en ;
+    schema1:url "https://github.com/danielhmills/databricks-sample-kg" .
+
+:linkjdbc-odbc-bi_html a schema1:WebSite ;
+    schema1:name "Databricks ODBC/JDBC Documentation"@en ;
+    schema1:url "https://docs.databricks.com/integrations/bi/jdbc-odbc-bi.html" .
+
+:linkodbc-driver-download a schema1:WebSite ;
+    schema1:name "Databricks ODBC Driver Download"@en ;
+    schema1:url "https://www.databricks.com/spark/odbc-driver-download" .
+
+:linkontology_ttl a schema1:WebSite ;
+    schema1:name "Bakehouse Ontology (Turtle)"@en ;
+    schema1:url "https://github.com/danielhmills/databricks-sample-kg/blob/main/bakehouse/ontology.ttl" .
+
+:linkr2rml_ttl a schema1:WebSite ;
+    schema1:name "R2RML Mappings (Turtle)"@en ;
+    schema1:url "https://github.com/danielhmills/databricks-sample-kg/blob/main/bakehouse/r2rml.ttl" .
+
+:linksparql a schema1:WebSite ;
+    schema1:name "OpenLink Demo SPARQL Endpoint"@en,
+        "URIBurner SPARQL Endpoint"@en ;
+    schema1:url "http://demo.openlinksw.com/sparql",
+        "https://linkeddata.uriburner.com/sparql" .
+
+:looselyCoupledSemanticLayer a skos:Concept ;
+    schema1:description "A semantic enrichment layer that sits atop existing data platforms without tight coupling — replacing ETL-driven data copying with standards-based virtualization. The knowledge graph is an overlay, not a replacement or another silo."@en ;
+    schema1:name "Loosely Coupled Semantic Layer"@en .
+
+:q1 a schema1:Question ;
+    schema1:acceptedAnswer :a1 ;
+    schema1:isPartOf :faqSection ;
+    schema1:name "What is a Virtual Knowledge Graph?"@en ;
+    schema1:text "What is a Virtual Knowledge Graph?"@en .
+
+:q10 a schema1:Question ;
+    schema1:acceptedAnswer :a10 ;
+    schema1:isPartOf :faqSection ;
+    schema1:name "How does this compare to traditional ETL-based knowledge graph construction?"@en ;
+    schema1:text "How does this compare to traditional ETL-based knowledge graph construction?"@en .
+
+:q11 a schema1:Question ;
+    schema1:acceptedAnswer :a11 ;
+    schema1:isPartOf :faqSection ;
+    schema1:name "Can I use this approach with data sources other than Databricks?"@en ;
+    schema1:text "Can I use this approach with data sources other than Databricks?"@en .
+
+:q12 a schema1:Question ;
+    schema1:acceptedAnswer :a12 ;
+    schema1:isPartOf :faqSection ;
+    schema1:name "What skills or expertise are needed to implement this?"@en ;
+    schema1:text "What skills or expertise are needed to implement this?"@en .
+
+:q2 a schema1:Question ;
+    schema1:acceptedAnswer :a2 ;
+    schema1:isPartOf :faqSection ;
+    schema1:name "Why use Virtuoso with Databricks instead of Databricks' built-in graph features?"@en ;
+    schema1:text "Why use Virtuoso with Databricks instead of Databricks' built-in graph features?"@en .
+
+:q3 a schema1:Question ;
+    schema1:acceptedAnswer :a3 ;
+    schema1:isPartOf :faqSection ;
+    schema1:name "Does data get copied from Databricks to Virtuoso?"@en ;
+    schema1:text "Does data get copied from Databricks to Virtuoso?"@en .
+
+:q4 a schema1:Question ;
+    schema1:acceptedAnswer :a4 ;
+    schema1:isPartOf :faqSection ;
+    schema1:name "What is R2RML and why is it important?"@en ;
+    schema1:text "What is R2RML and why is it important?"@en .
+
+:q5 a schema1:Question ;
+    schema1:acceptedAnswer :a5 ;
+    schema1:isPartOf :faqSection ;
+    schema1:name "How do AI agents consume this knowledge graph?"@en ;
+    schema1:text "How do AI agents consume this knowledge graph?"@en .
+
+:q6 a schema1:Question ;
+    schema1:acceptedAnswer :a6 ;
+    schema1:isPartOf :faqSection ;
+    schema1:name "What are Quad Maps in Virtuoso?"@en ;
+    schema1:text "What are Quad Maps in Virtuoso?"@en .
+
+:q7 a schema1:Question ;
+    schema1:acceptedAnswer :a7 ;
+    schema1:isPartOf :faqSection ;
+    schema1:name "What is content negotiation and why does it matter for AI agents?"@en ;
+    schema1:text "What is content negotiation and why does it matter for AI agents?"@en .
+
+:q8 a schema1:Question ;
+    schema1:acceptedAnswer :a8 ;
+    schema1:isPartOf :faqSection ;
+    schema1:name "Is this approach suitable for real-time or high-frequency workloads?"@en ;
+    schema1:text "Is this approach suitable for real-time or high-frequency workloads?"@en .
+
+:q9 a schema1:Question ;
+    schema1:acceptedAnswer :a9 ;
+    schema1:isPartOf :faqSection ;
+    schema1:name "What Databricks components are required?"@en ;
+    schema1:text "What Databricks components are required?"@en .
+
+:semanticEnrichmentConcept a skos:Concept ;
+    schema1:description "The process of augmenting relational data with ontology-defined classes (e.g., :Transaction, :Franchise), properties (e.g., :franchise, :totalPrice), and inferred relationships to produce a machine-readable knowledge graph. R2RML mappings are the declarative bridge between SQL schemas and RDF vocabularies."@en ;
+    schema1:name "Semantic Enrichment"@en .
+
+:softwareSection a schema1:CreativeWork ;
+    schema1:isPartOf :analysis ;
+    schema1:name "Software Stack"@en .
+
+:standardsSection a schema1:CreativeWork ;
+    schema1:isPartOf :analysis ;
+    schema1:name "W3C Standards"@en .
+
+:step1 a schema1:HowToStep ;
+    schema1:isPartOf :howtoSection ;
+    schema1:name "Create the ODBC DSN"@en ;
+    schema1:position 1 ;
+    schema1:text "Configure a Databricks ODBC Data Source Name (DSN) — install the Databricks ODBC Driver, obtain workspace Host/HTTP Path/Personal Access Token, and populate odbcinst.ini and odbc.ini with the driver and connection details."@en .
+
+:step2 a schema1:HowToStep ;
+    schema1:isPartOf :howtoSection ;
+    schema1:name "Register the DSN in Virtuoso"@en ;
+    schema1:position 2 ;
+    schema1:text "Access the External Data Sources Manager in Virtuoso Conductor at /conductor/vdb_conn_dsn.vspx to register the databricks_odbc DSN for use by Virtuoso's Virtual Database engine."@en .
+
+:step3 a schema1:HowToStep ;
+    schema1:isPartOf :howtoSection ;
+    schema1:name "Connect to the Data Source"@en ;
+    schema1:position 3 ;
+    schema1:text "Find databricks_odbc in the External Data Sources list, click Connect, supply the username (token) and password (personal access token), and establish the ODBC connection from Virtuoso to the Databricks SQL warehouse."@en .
+
+:step4 a schema1:HowToStep ;
+    schema1:isPartOf :howtoSection ;
+    schema1:name "Clone the Demo Repository"@en ;
+    schema1:position 4 ;
+    schema1:text "Clone the companion GitHub repository containing ODBC templates, R2RML mapping files, ontology, and setup scripts: git clone https://github.com/danielhmills/databricks-sample-kg.git."@en .
+
+:step5 a schema1:HowToStep ;
+    schema1:isPartOf :howtoSection ;
+    schema1:name "Run the Quick Setup Script"@en ;
+    schema1:position 5 ;
+    schema1:text "Execute quick_setup.sql via isql — this script attaches each Databricks table (ATTACH TABLE ... FROM 'databricks_odbc'), grants SPARQL_SELECT privileges, loads the R2RML mapping and ontology via SPARQL LOAD, generates quad maps via R2RML_MAKE_QM_FROM_G, and configures URL rewrite rules for Linked Data content negotiation."@en .
+
+:step6 a schema1:HowToStep ;
+    schema1:isPartOf :howtoSection ;
+    schema1:name "Test the Attached Tables"@en ;
+    schema1:position 6 ;
+    schema1:text "Verify the virtual attachment by running a SQL SELECT query against the virtual tables (e.g., SELECT TOP 10 * FROM databricks.bakehouse.sales_customers) via isql or the Conductor iSQL UI."@en .
+
+:step7 a schema1:HowToStep ;
+    schema1:isPartOf :howtoSection ;
+    schema1:name "Verify the Knowledge Graph with SPARQL"@en ;
+    schema1:position 7 ;
+    schema1:text "Run SPARQL queries against the virtual knowledge graph — test entity type discovery (SELECT * FROM <...> WHERE { ?s a ?o }), cross-table joins (Revenue by Franchise), and CONSTRUCT queries for graph visualization in SPARQLWorks. Confirm dereferenceable entity URIs respond to both browsers and RDF clients via content negotiation."@en .
+
+:tableCustomers a schema1:Dataset,
+        :DataPlatform ;
+    schema1:description "Customer records with names, contact details, and loyalty status."@en ;
+    schema1:name "sales_customers"@en .
+
+:tableFranchises a schema1:Dataset,
+        :DataPlatform ;
+    schema1:description "Franchise locations with city, country, and coordinate data."@en ;
+    schema1:name "sales_franchises"@en .
+
+:tableReviews a schema1:Dataset,
+        :DataPlatform ;
+    schema1:description "Customer reviews and ratings for franchises."@en ;
+    schema1:name "sales_reviews"@en .
+
+:tableSuppliers a schema1:Dataset,
+        :DataPlatform ;
+    schema1:description "Supplier records for ingredients and materials."@en ;
+    schema1:name "sales_suppliers"@en .
+
+:tableTransactions a schema1:Dataset,
+        :DataPlatform ;
+    schema1:description "Transaction records linking customers to franchises with line items and pricing."@en ;
+    schema1:name "sales_transactions"@en .
+
+:termAIKGAgent a schema1:DefinedTerm ;
+    schema1:description "A knowledge graph designed for AI agent consumption — featuring dereferenceable entity URIs, machine-readable RDF, SPARQL endpoints, and navigable entity relationships without custom API integration."@en ;
+    schema1:name "AI Agent-Friendly Knowledge Graph"@en .
+
+:termContentNegotiation a schema1:DefinedTerm ;
+    schema1:description "An HTTP mechanism where a server returns different representations of the same resource based on the client's Accept header — HTML for browsers, RDF for semantic agents."@en ;
+    schema1:name "Content Negotiation"@en .
+
+:termEntityURI a schema1:DefinedTerm ;
+    schema1:description "A globally unique, dereferenceable HTTP identifier for a knowledge graph entity (e.g., http://demo.openlinksw.com/databricks/bakehouse/franchise-3000046#this). When dereferenced, returns either human-readable HTML or machine-readable RDF depending on the client."@en ;
+    schema1:name "Entity URI"@en .
+
+:termLinkedData a schema1:DefinedTerm ;
+    schema1:description "A method of publishing structured data on the web using HTTP URIs, RDF, and content negotiation — enabling entities to be interlinked across systems and consumed by both humans and machines."@en ;
+    schema1:name "Linked Data"@en .
+
+:termODBC a schema1:DefinedTerm ;
+    schema1:description "A standard API for accessing database management systems — used by Virtuoso to connect to Databricks SQL warehouses for virtual table attachment."@en ;
+    schema1:name "ODBC (Open Database Connectivity)"@en .
+
+:termOntology a schema1:DefinedTerm ;
+    schema1:description "A formal vocabulary defining classes, properties, and relationships within a domain. The bakehouse ontology defines Transaction, Franchise, Customer classes and franchise, totalPrice, city properties."@en ;
+    schema1:name "Ontology"@en .
+
+:termQuadMap a schema1:DefinedTerm ;
+    schema1:description "Virtuoso's internal compiled representation of R2RML mapping rules — the SPARQL engine uses quad maps at query time to translate SPARQL graph patterns into SQL queries against virtual tables."@en ;
+    schema1:name "Quad Map"@en .
+
+:termR2RML a schema1:DefinedTerm ;
+    schema1:description "A W3C recommendation that declaratively defines how relational database tables, columns, primary keys, and foreign keys map to RDF classes, properties, and object relationships."@en ;
+    schema1:name "R2RML (RDB to RDF Mapping Language)"@en .
+
+:termSPARQL a schema1:DefinedTerm ;
+    schema1:description "SPARQL Protocol and RDF Query Language — the W3C standard query language for RDF graphs. In the virtual knowledge graph, SPARQL queries are translated to SQL and executed against the live Databricks warehouse."@en ;
+    schema1:name "SPARQL"@en .
+
+:termSemanticWeb a schema1:DefinedTerm ;
+    schema1:description "An extension of the World Wide Web where data is given well-defined meaning through standards like RDF, SPARQL, and OWL — enabling machines and AI agents to reason about interconnected data across system boundaries."@en ;
+    schema1:name "Semantic Web"@en .
+
+:termVirtualDatabase a schema1:DefinedTerm ;
+    schema1:description "Virtuoso's capability to attach remote tables from ODBC/JDBC data sources — tables appear in the local catalog as virtual references without copying data."@en ;
+    schema1:name "Virtual Database (VDB)"@en .
+
+:termVirtualKnowledgeGraph a schema1:DefinedTerm ;
+    schema1:description "A knowledge graph constructed over existing relational data without physical data movement — using virtual database attachment to expose tables, R2RML to define semantic mappings, and SPARQL for graph querying."@en ;
+    schema1:name "Virtual Knowledge Graph (VKG)"@en .
+
+:virtuosoPlatform a schema1:SoftwareApplication ;
+    schema1:alternateName "OpenLink Virtuoso"@en ;
+    schema1:applicationCategory "Database Management System"@en,
+        "Knowledge Graph Platform"@en,
+        "SPARQL Endpoint"@en ;
+    schema1:description "A secure, high-performance, cross-platform relational and graph database server with virtual database, SPARQL, RDF, SQL, and R2RML support."@en ;
+    schema1:manufacturer dbr:OpenLink_Software ;
+    schema1:name "Virtuoso Universal Server"@en ;
+    schema1:url "https://virtuoso.openlinksw.com/" ;
+    owl:sameAs dbr:Virtuoso_Universal_Server .
+
+:zeroDataMovementConcept a skos:Concept ;
+    schema1:description "A defining characteristic of the virtual knowledge graph approach — Databricks tables are attached via ODBC as virtual references, not copied. SPARQL queries are translated to SQL and executed remotely against the Databricks warehouse at query time."@en ;
+    schema1:name "Zero Data Movement"@en .
+
+<https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator#this> a schema1:SoftwareApplication,
+        prov:SoftwareAgent ;
+    schema1:description "Knowledge graph generation skill for AI agents — transforms documents and web content into structured RDF."@en ;
+    schema1:name "kg-generator skill"@en ;
+    schema1:url "https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator" .
+
+<https://github.com/danielhmills#this> a schema1:Person ;
+    schema1:alternateName "danielhmills"@en ;
+    schema1:identifier "https://github.com/danielhmills" ;
+    schema1:name "danielhm"@en ;
+    schema1:url "https://github.com/danielhmills" .
+
+dbr:OpenLink_Software a schema1:Organization ;
+    schema1:description "Creator of Virtuoso Universal Server, URIBurner, and enterprise knowledge graph infrastructure."@en ;
+    schema1:name "OpenLink Software"@en ;
+    schema1:url "https://www.openlinksw.com/" ;
+    owl:sameAs wd:Q7096326 .
+
+:virtualKnowledgeGraphConcept a skos:Concept ;
+    schema1:description "A knowledge graph constructed over existing relational data without physical data movement — using virtual database attachment to expose tables, R2RML to define semantic mappings, and SPARQL for graph querying. The data stays in Databricks; the semantics are layered on top via Virtuoso."@en ;
+    schema1:name "Virtual Knowledge Graph"@en .
+
+:analysis a schema1:CreativeWork,
+        schema1:TechArticle ;
+    schema1:about dbr:Knowledge_graph,
+        dbr:Semantic_Web,
+        :databricksPlatform,
+        :virtualKnowledgeGraphConcept,
+        :virtuosoPlatform ;
+    schema1:abstract "A step-by-step guide demonstrating how to unlock machine-computable entity relationships across existing Databricks data without migration, duplication, or platform lock-in — using RDF, SPARQL, R2RML, and Virtuoso's Virtual Database to create an AI Agent-friendly Knowledge Graph deployed on the Semantic Web."@en ;
+    schema1:articleBody "Modern AI and analytics need graph reasoning capabilities — the ability to traverse relationships and discover patterns across connected data — but most enterprise data sits in relational warehouses where relationships rely on implicit foreign keys. This guide shows how to bridge that gap using open W3C standards: RDF for entity relationships, SPARQL for graph querying, and R2RML for exposing relational data as graphs. Hyperlinks (IRIs) serve as globally unique identifiers enabling disparate systems to be connected and reasoned over as a whole. The result is a Knowledge Graph that extends beyond the boundaries of any single database, platform, or application."@en ;
+    schema1:author <https://github.com/danielhmills#this> ;
+    schema1:dateModified "2026-06-17"^^xsd:date ;
+    schema1:datePublished "2026-06-09"^^xsd:date ;
+    schema1:hasPart :capabilitiesSection,
+        :conceptsSection,
+        :datasetSection,
+        :faqSection,
+        :glossarySection,
+        :howtoSection,
+        :softwareSection,
+        :standardsSection ;
+    schema1:headline "From Databricks Tables to a Virtual Knowledge Graph with Virtuoso"@en ;
+    schema1:inLanguage "en" ;
+    schema1:mentions dbr:Databricks,
+        dbr:OpenLink_Software ;
+    schema1:name "From Databricks Tables to a Virtual Knowledge Graph with Virtuoso"@en ;
+    schema1:relatedLink :link,
+        :linkREADME_md,
+        :linkdatabricks-sample-kg,
+        :linkjdbc-odbc-bi_html,
+        :linkodbc-driver-download,
+        :linkontology_ttl,
+        :linkr2rml_ttl,
+        :linksparql,
+        "http://demo.openlinksw.com/sparql",
+        "http://docs.openlinksw.com/virtuoso/rdb2rdfviewsrdb2rdf/",
+        "https://docs.databricks.com/integrations/bi/jdbc-odbc-bi.html",
+        "https://github.com/danielhmills/databricks-sample-kg",
+        "https://github.com/danielhmills/databricks-sample-kg/blob/main/README.md",
+        "https://github.com/danielhmills/databricks-sample-kg/blob/main/bakehouse/ontology.ttl",
+        "https://github.com/danielhmills/databricks-sample-kg/blob/main/bakehouse/r2rml.ttl",
+        "https://github.com/danielhmills/sparqlworks/",
+        "https://linkeddata.uriburner.com/sparql",
+        "https://virtuoso.openlinksw.com/",
+        "https://www.databricks.com/spark/odbc-driver-download",
+        "https://www.w3.org/RDF/",
+        "https://www.w3.org/TR/r2rml/",
+        "https://www.w3.org/TR/sparql11-query/" ;
+    schema1:url "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293" ;
+    prov:wasGeneratedBy <https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator#this> .
+
+:demoSparqlEndpoint a schema1:WebAPI ;
+    schema1:description "Demo SPARQL endpoint hosting the bakehouse virtual knowledge graph for live query testing."@en ;
+    schema1:name "OpenLink Demo SPARQL Endpoint"@en ;
+    schema1:url "https://demo.openlinksw.com/sparql" .
+
+:howtoSection a schema1:HowTo ;
+    schema1:description "Seven-step guide to creating an AI Agent-friendly knowledge graph from Databricks-hosted data without migration, duplication, or platform lock-in."@en ;
+    schema1:isPartOf :analysis ;
+    schema1:name "How to Build a Virtual Knowledge Graph from Databricks Tables using Virtuoso"@en ;
+    schema1:step :step1,
+        :step2,
+        :step3,
+        :step4,
+        :step5,
+        :step6,
+        :step7 .
+
+:faqSection a schema1:FAQPage ;
+    schema1:isPartOf :analysis ;
+    schema1:mainEntity :q1,
+        :q10,
+        :q11,
+        :q12,
+        :q2,
+        :q3,
+        :q4,
+        :q5,
+        :q6,
+        :q7,
+        :q8,
+        :q9 ;
+    schema1:name "Databricks-Virtuoso Virtual Knowledge Graph FAQ"@en .
+
+:ontology a owl:Ontology ;
+    rdfs:label "Databricks-Virtuoso KG Ontology"@en ;
+    schema1:description "Lightweight ontology for modelling the Databricks-to-Virtuoso virtual knowledge graph pipeline: ODBC attachment, R2RML mapping, SPARQL querying, Linked Data entity dereferencing, and AI Agent consumption patterns."@en ;
+    schema1:identifier "https://community.openlinksw.com/t/from-databricks-tables-to-a-virtual-knowledge-graph-with-virtuoso/6293" ;
+    schema1:name "Databricks-Virtuoso Knowledge Graph Ontology"@en .
+

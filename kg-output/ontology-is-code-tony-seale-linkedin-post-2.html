@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ontology Is Code — Tony Seale — Knowledge Graph Infographic (Edition 2)</title>
+<meta name="description" content="Edition 2: Interactive infographic exploring Tony Seale's thesis — ontologies are source code for meaning — with 14 comment threads, KG Explorer, and Kingsley Idehen's featured LLM + Semantic Web insight.">
+<meta name="author" content="Tony Seale">
+<link rel="canonical" href="https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54">
+<link rel="related" href="ontology-is-code-tony-seale-linkedin-post-2.ttl" type="text/turtle">
+<link rel="alternate" href="ontology-is-code-tony-seale-linkedin-post-2.md" type="text/markdown" title="Markdown representation (Edition 2)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+:root{--bg:#fafbfc;--ink:#1a1a2e;--muted:#64748b;--panel:#fff;--panel-strong:#f1f5f9;--line:#e2e8f0;--line-strong:#cbd5e1;--accent:#2563eb;--accent2:#7c3aed;--accent-warm:#ea580c;--success:#059669;--danger:#dc2626;--chip:#e0e7ff;--chip2:#f3e8ff;--shadow:0 2px 8px rgba(0,0,0,0.06);--shadow-lg:0 8px 32px rgba(0,0,0,0.1);--radius:12px;--radius-sm:8px;--hero-gradient:linear-gradient(135deg,#1e3a5f 0%,#2563eb 50%,#7c3aed 100%)}
+html[data-theme="dark"]{--bg:#0f172a;--ink:#e2e8f0;--muted:#94a3b8;--panel:#1e293b;--panel-strong:#334155;--line:#334155;--line-strong:#475569;--accent:#3b82f6;--accent2:#8b5cf6;--accent-warm:#f97316;--success:#10b981;--danger:#ef4444;--chip:#1e3a5f;--chip2:#2d1b69;--shadow:0 2px 8px rgba(0,0,0,0.3);--shadow-lg:0 8px 32px rgba(0,0,0,0.5);--hero-gradient:linear-gradient(135deg,#0f172a 0%,#1e3a5f 50%,#4c1d95 100%)}
+@media(prefers-color-scheme:dark){html:not([data-theme="light"]){--bg:#0f172a;--ink:#e2e8f0;--muted:#94a3b8;--panel:#1e293b;--panel-strong:#334155;--line:#334155;--line-strong:#475569;--accent:#3b82f6;--accent2:#8b5cf6;--accent-warm:#f97316;--success:#10b981;--danger:#ef4444;--chip:#1e3a5f;--chip2:#2d1b69;--shadow:0 2px 8px rgba(0,0,0,0.3);--shadow-lg:0 8px 32px rgba(0,0,0,0.5);--hero-gradient:linear-gradient(135deg,#0f172a 0%,#1e3a5f 50%,#4c1d95 100%)}}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.7;overflow-x:hidden}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+
+#fnav{position:fixed;top:24px;left:24px;z-index:1000;background:color-mix(in srgb,var(--panel) 92%,transparent);border:1px solid color-mix(in srgb,var(--line) 70%,transparent);border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.08);backdrop-filter:blur(28px) saturate(1.4);-webkit-backdrop-filter:blur(28px) saturate(1.4);min-width:210px;max-width:340px;overflow:hidden}
+#fnav:hover{box-shadow:0 8px 40px rgba(0,0,0,0.12)}
+#fnav-header{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;cursor:grab;user-select:none;background:color-mix(in srgb,var(--panel-strong) 60%,transparent);border-bottom:1px solid color-mix(in srgb,var(--line) 50%,transparent);font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.82rem;color:var(--accent);position:relative}
+#fnav-header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2),transparent);opacity:0.6}
+#fnav:hover #fnav-header::after{opacity:1}
+#fnav-header:active{cursor:grabbing}
+.nav-title{display:flex;align-items:center;gap:7px;white-space:nowrap}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px color-mix(in srgb,var(--accent) 60%,transparent);animation:dotPulse 2s ease-in-out infinite}
+@keyframes dotPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.3);opacity:0.7}}
+#fnav-toggle{background:color-mix(in srgb,var(--accent) 8%,transparent);border:1px solid color-mix(in srgb,var(--accent) 20%,transparent);cursor:pointer;color:var(--accent);font-size:1rem;padding:4px 8px;border-radius:8px;line-height:1;transition:all 0.25s;font-family:'Space Grotesk',sans-serif;font-weight:600}
+#fnav-toggle:hover{background:color-mix(in srgb,var(--accent) 15%,transparent);border-color:var(--accent)}
+#fnav-links{max-height:0;overflow:hidden;transition:max-height 0.4s,padding 0.3s;padding:0 8px;scrollbar-width:thin}
+#fnav-links.open{max-height:55vh;overflow-y:auto;padding:10px 8px}
+#fnav-links a{display:flex;align-items:center;gap:8px;padding:7px 12px;margin-bottom:2px;font-size:0.8rem;color:var(--muted);font-weight:500;border-radius:8px;transition:all 0.2s;position:relative}
+#fnav-links a::before{content:'';position:absolute;left:0;top:6px;bottom:6px;width:3px;border-radius:0 3px 3px 0;background:var(--accent);transform:scaleY(0);transition:transform 0.2s}
+#fnav-links a:hover{color:var(--accent);background:color-mix(in srgb,var(--accent) 6%,transparent);text-decoration:none;transform:translateX(2px)}
+#fnav-links a:hover::before{transform:scaleY(1)}
+#fnav-links a.nav-active{color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent);font-weight:600}
+#fnav-links a.nav-active::before{transform:scaleY(1)}
+#fnav-resize{position:absolute;right:0;bottom:0;width:16px;height:16px;cursor:se-resize;background:linear-gradient(135deg,transparent 50%,color-mix(in srgb,var(--line) 40%,transparent) 50%);border-radius:0 0 14px 0}
+.theme-toggle{background:color-mix(in srgb,var(--panel) 50%,transparent);border:1px solid color-mix(in srgb,var(--line) 60%,transparent);border-radius:8px;cursor:pointer;padding:4px 7px;font-size:0.85rem;color:var(--muted);margin-right:5px;transition:all 0.2s;line-height:1}
+.theme-toggle:hover{background:color-mix(in srgb,var(--accent) 12%,transparent);border-color:var(--accent)}
+
+.hero{background:var(--hero-gradient);color:white;padding:100px 24px 80px;text-align:center}
+.hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;color:white;margin-bottom:16px;animation:slideUpFade 1s ease-out}
+.hero .tagline{font-size:1.15rem;color:rgba(255,255,255,0.9);max-width:700px;margin:0 auto 24px;animation:slideUpFade 1s ease-out 0.2s backwards}
+.hero .meta{font-size:0.88rem;color:rgba(255,255,255,0.7);animation:slideUpFade 1s ease-out 0.4s backwards}
+.hero .meta a{color:rgba(255,255,255,0.95);text-decoration:underline}
+@keyframes slideUpFade{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero .edition-badge{display:inline-block;background:rgba(255,255,255,0.15);color:white;padding:4px 14px;border-radius:16px;font-size:0.75rem;font-weight:600;font-family:'Space Grotesk',sans-serif;letter-spacing:0.05em;border:1px solid rgba(255,255,255,0.2);margin-bottom:12px;backdrop-filter:blur(4px)}
+
+.section{max-width:900px;margin:0 auto;padding:64px 24px}
+.section+.section{border-top:1px solid var(--line)}
+.eyebrow{font-family:'Space Grotesk',sans-serif;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);margin-bottom:8px;font-weight:600}
+.eyebrow-dark{font-family:'Space Grotesk',sans-serif;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:8px;font-weight:600}
+.section-title h2{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;margin-bottom:12px}
+.section-title+p{color:var(--muted)}
+
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:24px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);transition:transform 0.2s,box-shadow 0.2s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.card h3{font-size:1rem;font-weight:600;margin-bottom:8px}
+.card p{font-size:0.88rem;color:var(--muted)}
+.entity-link{color:var(--accent);font-weight:500}.entity-link:hover{text-decoration:underline}
+
+.featured-insight{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 6%,var(--panel)),color-mix(in srgb,var(--accent2) 4%,var(--panel)));border:2px solid color-mix(in srgb,var(--accent) 25%,transparent);border-radius:var(--radius);padding:28px 32px;margin-top:32px;position:relative}
+.featured-insight::before{content:'★ Featured Insight';position:absolute;top:-12px;left:24px;background:var(--accent);color:white;padding:3px 14px;border-radius:8px;font-size:0.68rem;font-weight:700;font-family:'Space Grotesk',sans-serif;text-transform:uppercase;letter-spacing:0.08em}
+.featured-insight .insight-author{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;margin-bottom:10px;color:var(--accent)}
+.featured-insight .insight-body{font-size:0.92rem;line-height:1.7;color:var(--ink)}
+
+.comment{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px;box-shadow:var(--shadow);transition:transform 0.15s}
+.comment:hover{transform:translateY(-2px)}
+.comment .comment-author{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.92rem;margin-bottom:6px}
+.comment .comment-text{font-size:0.9rem;color:var(--ink);line-height:1.6}
+.comment.kingsley{border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 3%,var(--panel))}
+.comment.veronika{border-left:4px solid var(--accent2);background:color-mix(in srgb,var(--accent2) 2%,var(--panel))}
+
+.tag{display:inline-block;padding:2px 10px;background:var(--chip);color:var(--accent);border-radius:10px;font-size:0.7rem;font-weight:600;font-family:'Space Grotesk',sans-serif;margin-left:6px;vertical-align:middle}
+
+.accordion{margin-top:20px}
+.accordion-item{border:1px solid var(--line);border-radius:var(--radius-sm);margin-bottom:12px;overflow:hidden;background:var(--panel)}
+.accordion-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer;background:var(--panel-strong);font-family:'Space Grotesk',sans-serif;font-size:0.92rem;font-weight:600;user-select:none;transition:background 0.15s}
+.accordion-header:hover{background:var(--line)}
+.accordion-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--accent);color:white;font-size:0.75rem;font-weight:700;margin-right:10px;flex-shrink:0}
+.accordion-toggle{font-size:1.1rem;transition:transform 0.25s;color:var(--muted)}
+.accordion-item.open .accordion-toggle{transform:rotate(180deg)}
+.accordion-body{display:none;padding:18px;border-top:1px solid var(--line)}
+.accordion-item.open .accordion-body{display:block}
+
+.howto-steps{margin-top:24px}
+.howto-step{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.howto-step:last-child{border-bottom:none}
+.howto-step-num{flex-shrink:0;width:40px;height:40px;border-radius:50%;background:var(--accent);color:white;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem}
+.howto-step-content h4{font-size:0.95rem;font-weight:600;margin-bottom:4px}
+.howto-step-content p{font-size:0.85rem;color:var(--muted)}
+
+.stats-bar{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:32px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-sm);padding:12px 20px;text-align:center}
+.stat .stat-num{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;color:var(--accent)}
+.stat .stat-label{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-top:2px}
+
+.industry-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--chip);border-radius:var(--radius-sm);font-size:0.8rem}
+.industry-badge .naics{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--accent2)}
+
+/* KG Explorer styles */
+.kg-shell{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.kg-header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--line);background:var(--panel-strong);flex-wrap:wrap;gap:12px}
+.kg-header h3{font-family:'Space Grotesk',sans-serif;font-size:1rem;margin-bottom:2px}
+.kg-header p{font-size:0.78rem;color:var(--muted)}
+.kg-header-actions{display:flex;align-items:center;gap:10px}
+.kg-control-toggle{background:var(--accent);color:white;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.8rem}
+.kg-control-toggle:hover{opacity:0.85}
+.kg-count-badge{font-size:0.75rem;color:var(--muted);font-family:'JetBrains Mono',monospace;background:var(--panel);padding:4px 10px;border-radius:6px;border:1px solid var(--line)}
+.kg-toolbar{padding:12px 20px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--panel-strong) 50%,var(--panel))}
+.kg-toolbar-main{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.kg-segment{display:flex;gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.kg-segment button{padding:6px 14px;border:none;background:var(--panel);color:var(--ink);cursor:pointer;font-size:0.76rem;font-weight:500;font-family:'Space Grotesk',sans-serif;transition:all 0.15s}
+.kg-segment button:not(:last-child){border-right:1px solid var(--line)}
+.kg-segment button.active,.kg-segment button[aria-pressed="true"]{background:var(--accent);color:white}
+.kg-search{flex:1;min-width:140px;padding:7px 12px;border:1px solid var(--line);border-radius:6px;font-size:0.78rem;background:var(--panel);color:var(--ink)}
+.kg-tool-button{padding:6px 12px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);cursor:pointer;font-size:0.76rem;font-family:'Space Grotesk',sans-serif}
+.kg-tool-button:hover{background:var(--panel-strong)}
+.kg-meta{font-size:0.72rem;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-left:auto}
+.settings{padding:14px 20px;border-top:1px solid var(--line);background:var(--panel);display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.settings-field{display:flex;flex-direction:column;gap:2px;font-size:0.72rem;color:var(--muted);font-family:'Space Grotesk',sans-serif}
+.settings-field input,.settings-field select{padding:4px 8px;border:1px solid var(--line);border-radius:4px;font-size:0.76rem;background:var(--panel);color:var(--ink);width:110px}
+.settings-wide{display:flex;flex-direction:column;gap:2px;font-size:0.72rem;color:var(--muted);font-family:'Space Grotesk',sans-serif;flex:1;min-width:160px}
+.settings-wide input,.settings-wide select{padding:4px 8px;border:1px solid var(--line);border-radius:4px;font-size:0.76rem;background:var(--panel);color:var(--ink)}
+.settings-card{border:1px solid var(--line);border-radius:6px;padding:10px 12px;min-width:180px;flex:1}
+.settings-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.settings-title{font-family:'Space Grotesk',sans-serif;font-size:0.72rem;font-weight:600;color:var(--ink)}
+.settings-actions-inline{display:flex;gap:4px}
+.settings-actions-inline button{padding:3px 8px;border:1px solid var(--line);border-radius:4px;background:var(--panel);color:var(--ink);cursor:pointer;font-size:0.68rem}
+.settings-actions-inline button:hover{background:var(--accent);color:white;border-color:var(--accent)}
+.settings-actions{display:flex;gap:6px;width:100%;justify-content:flex-end}
+.settings-actions button{padding:6px 14px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);cursor:pointer;font-size:0.76rem}
+.settings-actions button:hover{background:var(--accent);color:white;border-color:var(--accent)}
+.filter-list{max-height:120px;overflow-y:auto;display:flex;flex-wrap:wrap;gap:4px}
+.filter-list label{display:flex;align-items:center;gap:3px;font-size:0.68rem;cursor:pointer;padding:3px 8px;border-radius:4px;background:var(--panel-strong)}
+.filter-list label.off{opacity:0.35;text-decoration:line-through}
+.filter-list input{margin:0}
+.chip-list{display:flex;flex-wrap:wrap;gap:4px}
+.chip-list label{display:flex;align-items:center;gap:3px;font-size:0.68rem;cursor:pointer;padding:3px 8px;border-radius:4px;background:var(--panel-strong)}
+.chip-list label.off{opacity:0.35;text-decoration:line-through}
+.literal-control{flex-direction:row!important;align-items:center;gap:6px}
+.kg-stage{position:relative;min-height:500px;background:color-mix(in srgb,var(--bg) 50%,var(--panel))}
+#kg-svg{width:100%;height:550px;display:block}
+#kg-svg .kg-node-label{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;fill:var(--ink);cursor:pointer;text-anchor:middle}
+#kg-svg .kg-node-label a{fill:var(--accent)}
+#kg-svg .kg-edge-label{font-family:'JetBrains Mono',monospace;font-size:9px;fill:var(--muted)}
+#kg-svg .kg-edge-label a{fill:var(--muted)}
+#kg-svg line.kg-edge{stroke:var(--line-strong);stroke-width:1.5px}
+#kg-svg circle.kg-node{fill:var(--accent);stroke:var(--panel);stroke-width:2px;cursor:pointer}
+#kg-svg circle.kg-node.instance{fill:var(--accent)}
+#kg-svg circle.kg-node.class{fill:var(--accent2)}
+#kg-svg circle.kg-node.property{fill:var(--accent-warm)}
+.kg-note{text-align:center;font-size:0.72rem;color:var(--muted);padding:12px}
+
+/* Footer & Attribution */
+.attribution-panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:32px;margin-top:48px}
+.attribution-inner{max-width:900px;margin:0 auto}
+.attribution-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:20px}
+.attribution-card{border:1px solid var(--line);border-radius:var(--radius-sm);padding:16px;background:var(--panel-strong)}
+.attribution-card.wide{grid-column:1/-1}
+.attribution-label{font-family:'Space Grotesk',sans-serif;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);font-weight:600;display:block;margin-bottom:6px}
+.attribution-card p{font-size:0.8rem;color:var(--muted);line-height:1.5}
+.attribution-links{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.attribution-pill{display:inline-block;padding:4px 12px;background:var(--chip);color:var(--accent);border-radius:12px;font-size:0.75rem;font-weight:500}
+.attribution-pill:hover{background:var(--accent);color:white;text-decoration:none}
+.attribution-card code{font-family:'JetBrains Mono',monospace;font-size:0.72rem;background:var(--chip2);padding:1px 6px;border-radius:3px;word-break:break-all}
+
+/* SPARQL Workbench */
+.sparql-launch{background:var(--panel-strong);border:1px solid var(--line);border-radius:var(--radius-sm);padding:24px;margin-top:24px}
+.sparql-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:16px}
+.sparql-head h3{font-family:'Space Grotesk',sans-serif;font-size:1rem}
+.sparql-head p{font-size:0.78rem;color:var(--muted)}
+.run-query{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:var(--accent);color:white;border-radius:6px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.82rem;text-decoration:none}
+.run-query:hover{opacity:0.9;color:white;text-decoration:none}
+.sparql-grid{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.sparql-field{display:flex;flex-direction:column;gap:3px;font-size:0.72rem;color:var(--muted);font-family:'Space Grotesk',sans-serif}
+.sparql-field select,.sparql-field input{padding:5px 8px;border:1px solid var(--line);border-radius:4px;font-size:0.78rem;background:var(--panel);color:var(--ink)}
+.sparql-editor{width:100%;height:160px;font-family:'JetBrains Mono',monospace;font-size:0.8rem;padding:12px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);resize:vertical;margin-bottom:12px}
+.sparql-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sparql-actions button{padding:7px 14px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);cursor:pointer;font-size:0.78rem;font-family:'Space Grotesk',sans-serif}
+.sparql-actions button:hover{background:var(--accent);color:white;border-color:var(--accent)}
+.sparql-link-preview{font-size:0.7rem;color:var(--muted);word-break:break-all;font-family:'JetBrains Mono',monospace;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sparql-note{font-size:0.72rem;color:var(--muted);margin-top:10px}
+.sparql-note code{font-family:'JetBrains Mono',monospace;font-size:0.7rem;background:var(--chip2);padding:1px 5px;border-radius:3px}
+
+#sources{border-top:1px solid var(--line);padding:0 24px 48px}
+
+@media(max-width:768px){.section{padding:40px 16px}.hero{padding:72px 16px 56px}.card-grid{grid-template-columns:1fr}.attribution-grid{grid-template-columns:1fr}.kg-header{flex-direction:column;align-items:flex-start}.kg-meta{margin-left:0}.sparql-head{flex-direction:column}.settings{flex-direction:column}}
+@media(max-width:375px){#fnav{min-width:160px;max-width:220px}}
+</style>
+</head>
+<body>
+
+<nav id="fnav" aria-label="Section navigation">
+  <div id="fnav-header">
+    <span class="nav-title"><span class="nav-dot"></span>Ontology Is Code v2</span>
+    <div style="display:flex;align-items:center;gap:4px">
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle dark/light mode" aria-label="Toggle dark/light mode">🌓</button>
+      <button id="fnav-toggle" onclick="toggleNav()" title="Expand navigation" aria-label="Expand navigation">+</button>
+    </div>
+  </div>
+  <div id="fnav-links">
+    <a href="#about">About</a>
+    <a href="#pillars">Three Pillars</a>
+    <a href="#featured">Featured Insight</a>
+    <a href="#comments">Comments (14)</a>
+    <a href="#howto">How-To Guide</a>
+    <a href="#faq">FAQ (12)</a>
+    <a href="#glossary">Glossary (12)</a>
+    <a href="#kg">KG Explorer</a>
+    <a href="#sources">Sources & SPARQL</a>
+  </div>
+  <div id="fnav-resize"></div>
+</nav>
+
+<header class="hero">
+  <div class="edition-badge">Edition 2 — Enhanced</div>
+  <h1>Ontology Is Source Code</h1>
+  <p class="tagline">"Your ontology is source code for your meaning." — <a href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23tonySeale" target="_blank" rel="noopener noreferrer">Tony Seale</a></p>
+  <p class="meta">By <a href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23tonySeale" target="_blank" rel="noopener noreferrer">Tony Seale</a> &middot; 400 reactions &middot; 45 comments &middot; 14 contributors &middot; May 21, 2026</p>
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-num">14</div><div class="stat-label">Contributors</div></div>
+    <div class="stat"><div class="stat-num">12</div><div class="stat-label">FAQs</div></div>
+    <div class="stat"><div class="stat-num">12</div><div class="stat-label">Glossary Terms</div></div>
+    <div class="stat"><div class="stat-num">7</div><div class="stat-label">Adoption Steps</div></div>
+    <div class="stat"><div class="stat-num">450+</div><div class="stat-label">RDF Triples</div></div>
+  </div>
+</header>
+
+<section class="section" id="about">
+  <div class="eyebrow-dark">About</div>
+  <div class="section-title"><h2>About This Knowledge Graph</h2></div>
+  <p style="color:var(--muted);line-height:1.7">This enhanced Edition 2 infographic was generated from <a href="https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">Tony Seale's LinkedIn post</a> and its full 45-comment discussion thread. Seale argues ontologies are source code — not database tables — grounded in three pillars. The post sparked 14 distinct contributor threads. <a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23kingsleyIdehen" target="_blank" rel="noopener noreferrer">Kingsley Uyi Idehen</a> anchored the discussion with a featured insight on LLM + Semantic Web synergy.</p>
+  <div style="margin-top:18px"><span class="industry-badge"><span class="naics">NAICS 541511</span> Custom Computer Programming Services &middot; Knowledge Engineering Vertical &middot; ~$80B TAM</span></div>
+  <p style="margin-top:16px;font-size:0.85rem"><strong>Technology Stack:</strong></p>
+  <ul style="margin-top:8px;font-size:0.85rem;list-style:disc;padding-left:20px">
+    <li>AI Agent: <a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">Claude Code</a></li>
+    <li>Skills: <a href="https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">kg-generator</a>, <a href="https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/rdf-infographic-skill" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">rdf-infographic-skill</a></li>
+    <li>Language Model: <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">Claude Opus 4.7</a> via Claude Code</li>
+    <li>Server Platform: <a href="https://virtuoso.openlinksw.com/" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">Virtuoso</a></li>
+    <li>Resolver: <a href="https://linkeddata.uriburner.com/" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">URIBurner</a></li>
+  </ul>
+</section>
+
+<section class="section" id="pillars">
+  <div class="eyebrow">Core Thesis</div>
+  <div class="section-title"><h2>The Three Pillars of Ontology as Code</h2></div>
+  <p style="color:var(--muted);margin-bottom:4px">Tony Seale's three foundational principles for treating ontologies with engineering discipline.</p>
+  <div class="card-grid">
+    <div class="card">
+      <h3><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23pillarCompile" target="_blank" rel="noopener noreferrer">Compile — Not Just Parse</a></h3>
+      <p>A build should break on contradictions or unexpected entailments. An absent entailment is a test failure, not a curiosity discovered six months later in production.</p>
+    </div>
+    <div class="card">
+      <h3><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23pillarPlainText" target="_blank" rel="noopener noreferrer">Live in Plain Text</a></h3>
+      <p>Enable diffs, branches, blame, and pull requests. LLMs can read, navigate, and edit the source directly — exactly like working with a codebase.</p>
+    </div>
+    <div class="card">
+      <h3><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23pillarGovernance" target="_blank" rel="noopener noreferrer">Governed Like Code</a></h3>
+      <p>Standard engineering discipline — version control, code review, and CI/CD pipelines applied to meaning itself.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="featured">
+  <div class="eyebrow">Featured Insight</div>
+  <div class="section-title"><h2>LLMs + Semantic Web: A Natural Ecosystem</h2></div>
+  <div class="featured-insight">
+    <div class="insight-author"><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23kingsleyIdehen" target="_blank" rel="noopener noreferrer">Kingsley Uyi Idehen</a> <span class="tag">Anchor Commentary</span></div>
+    <div class="insight-body">
+      <p>Ontology management is a classic files-and-filesystem interaction pattern. RDF-Turtle is very much human-readable shorthand but lacked tooling support. Today the Semantic Web stack gels naturally with LLMs and AI Agents.</p>
+      <p style="margin-top:12px">Ask an AI Agent to express worldviews in whatever notation you prefer, save to a file, and copy to a folder bound to a backend RDF DBMS. LLM-powered Agents with Skills make this process a zillion times easier.</p>
+      <p style="margin-top:12px">The demo showcases at <a href="https://linkeddata.uriburner.com/DAV/demos/daas/" target="_blank" rel="noopener noreferrer" style="color:var(--accent);font-weight:600">linkeddata.uriburner.com/DAV/demos/daas/</a> are live examples of this filesystem-to-quad-store pipeline.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="comments">
+  <div class="eyebrow">Community</div>
+  <div class="section-title"><h2>Comments &amp; Discussion (14 Contributors)</h2></div>
+  <p style="color:var(--muted);margin-bottom:16px">The post sparked a 45-comment discussion spanning LLM integration, decision ontologies, Pydantic-executable entities, temporal hypergraphs, transpilation, and the upstream/downstream AI gap.</p>
+
+  <div class="comment kingsley">
+    <div class="comment-author"><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23kingsleyIdehen" target="_blank" rel="noopener noreferrer">Kingsley Uyi Idehen</a> <span class="tag">Featured</span> — Founder &amp; CEO, OpenLink Software</div>
+    <div class="comment-text">Agreed. Ontology management is a classic files-and-filesystem interaction pattern. RDF-Turtle is very much human-readable shorthand but lacked tooling support. Today the Semantic Web stack gels naturally with LLMs and AI Agents. Ask an AI Agent to express worldviews in whatever notation you prefer, save to a file, and copy to a folder bound to a backend RDF DBMS. LLM-powered Agents with Skills make this process a zillion times easier. I will use this post to demonstrate how I've used this approach to create the demo showcases at <a href="https://linkeddata.uriburner.com/DAV/demos/daas/" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">linkeddata.uriburner.com/DAV/demos/daas/</a>.</div>
+  </div>
+
+  <div class="comment veronika">
+    <div class="comment-author"><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23veronikaHeimsbakk" target="_blank" rel="noopener noreferrer">Veronika Heimsbakk</a> — Knowledge Graph Specialist · 14 reactions</div>
+    <div class="comment-text">Hear, hear! Getting ontology from tables into code is easy with four lines of Python.</div>
+  </div>
+
+  <div class="comment"><div class="comment-author">Jacob Friedman — Semantic Reasoning Specialist</div><div class="comment-text">References conceptual graphs, Harold Boley, and RuleML. Notes OWL is based on Description Logic and asks: "Can anyone point us to a standards body with a certifiable normalization of Description Logic for OWL?"</div></div>
+  <div class="comment"><div class="comment-author">Robert Sanderson — Linked Art Contributor</div><div class="comment-text">Linked Art's compile pipeline processes RDFS+OWL into a Python class library. Ontology is code — and transpiles to other code that makes it more developer friendly.</div></div>
+  <div class="comment"><div class="comment-author">Gabor Csepregi — Knowledge Graph Practitioner</div><div class="comment-text">Can't remember the last time I had ontology and knowledge graph related content properly explained.</div></div>
+  <div class="comment"><div class="comment-author">Harish Iyer — Product-Strategy Thinker</div><div class="comment-text">The gap between engineering, design and product is narrowing. Ontology should no longer be a layer but the language of the company. Who owns the ontology guardian role?</div></div>
+  <div class="comment"><div class="comment-author">Joseph Macdonald — TODAG Advocate</div><div class="comment-text">WhenTTT, not only IFTTT. Temporal Objective-Directed Acyclic Graphs (TODAG) as a hypergraph approach for treating ontologies as revenue-generating assets.</div></div>
+  <div class="comment"><div class="comment-author">Mark O'Donovan — Data Practitioner</div><div class="comment-text">Started as an idea in my head, then a note in a notebook, then an Excel table, then a SQL table — now looking at GraphDB.</div></div>
+  <div class="comment"><div class="comment-author">Kyle Tobin — Pydantic Ontology Advocate</div><div class="comment-text">Do your ontology in Pydantic so entities are executable — they don't just describe their own behavior. They conduct it too! Ontology should be reflected in application architecture, not smeared across four duplicative components.</div></div>
+  <div class="comment"><div class="comment-author"><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23honorioPadron" target="_blank" rel="noopener noreferrer">Honorio J. Padrón III</a> — Creator, CLEARED Platform</div><div class="comment-text">Operational ontologies describe what exists. Decision ontologies describe what the enterprise does. The decision ontology is source code for your will to act.</div></div>
+  <div class="comment"><div class="comment-author">Stepan Karandin — Information Theorist</div><div class="comment-text">Ontology is information. Databases or code are just data formats. The relational model is the worst kind of normalization for ontology.</div></div>
+  <div class="comment"><div class="comment-author">Edward Henry — AI Practitioner</div><div class="comment-text">The biggest illusion in AI is the gap. We are trying to address upstream problems downstream.</div></div>
+  <div class="comment"><div class="comment-author">Olivier Rey</div><div class="comment-text">I would rather say: an ontology is a hypergraph. Code is not a graph but a tree.</div></div>
+  <div class="comment"><div class="comment-author">Thomas Smith — Database Theorist</div><div class="comment-text">Relational databases only index binary trees — two dimensions only. The correct approach uses triples to define three dimensions of a graph.</div></div>
+</section>
+
+<section class="section" id="howto">
+  <div class="eyebrow">Step-by-Step</div>
+  <div class="section-title"><h2>Adopting Ontology as Code</h2></div>
+  <div class="howto-steps">
+    <div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-content"><h4><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23step1" target="_blank" rel="noopener noreferrer">Extract Ontology from Database Tables</a></h4><p>Four lines of Python (maplib + OTTR templates). Veronika Heimsbakk: the extraction is straightforward.</p></div></div>
+    <div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-content"><h4><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23step2" target="_blank" rel="noopener noreferrer">Store in Plain Text (Turtle or JSON-LD)</a></h4><p>Save as RDF-Turtle or JSON-LD. Turtle for readability and LLM navigation; JSON-LD for tooling. Enables diffs, branches, and blame.</p></div></div>
+    <div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-content"><h4><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23step3" target="_blank" rel="noopener noreferrer">Set Up Compilation with Formal Semantics</a></h4><p>Implement a build step for logical consistency. OWL is based on Description Logic — leverage its formal semantics for normalization checks.</p></div></div>
+    <div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-content"><h4><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23step4" target="_blank" rel="noopener noreferrer">Version Control with Git</a></h4><p>Commit ontology files to Git. Use branches for changes, pull requests for review, blame for provenance tracking.</p></div></div>
+    <div class="howto-step"><div class="howto-step-num">5</div><div class="howto-step-content"><h4><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23step5" target="_blank" rel="noopener noreferrer">Enable LLM-Mediated Editing</a></h4><p>AI Agents with skills read, navigate, and edit ontology source files. Kingsley Idehen: the Semantic Web stack + LLMs form a natural ecosystem.</p></div></div>
+    <div class="howto-step"><div class="howto-step-num">6</div><div class="howto-step-content"><h4><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23step6" target="_blank" rel="noopener noreferrer">Bind to a Backend RDF DBMS</a></h4><p>Copy ontology files to a WebDAV folder transparently bound to Virtuoso. Filesystem changes auto-propagate to the live knowledge graph.</p></div></div>
+    <div class="howto-step"><div class="howto-step-num">7</div><div class="howto-step-content"><h4><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23step7" target="_blank" rel="noopener noreferrer">Define Decision Ownership &amp; Make It Executable</a></h4><p>Model who owns each decision and what triggers it. Consider Pydantic executability (Kyle Tobin), transpilation (Robert Sanderson), and TODAG temporal patterns (Joseph Macdonald).</p></div></div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="eyebrow">FAQ</div>
+  <div class="section-title"><h2>Frequently Asked Questions (12)</h2></div>
+  <div class="accordion">
+    <div class="accordion-item" id="faq1"><div class="accordion-header" onclick="toggleAccordion('faq1')"><span><span class="accordion-num">1</span>Why treat ontologies as source code?</span><span class="accordion-toggle">▼</span></div><div class="accordion-body"><p style="font-size:0.88rem;color:var(--muted)">Because ontologies express formal logic and axioms — not database rows. They should compile, live in plain text for version control, and be governed with engineering discipline. Tony Seale: "Your ontology is source code for your meaning."</p></div></div>
+    <div class="accordion-item" id="faq2"><div class="accordion-header" onclick="toggleAccordion('faq2')"><span><span class="accordion-num">2</span>What does "compile, not just parse" mean?</span><span class="accordion-toggle">▼</span></div><div class="accordion-body"><p style="font-size:0.88rem;color:var(--muted)">A build should break on contradictions or unexpected entailments. An absent entailment is a test failure, not a curiosity discovered six months later. This catches logical errors at build time rather than in production.</p></div></div>
+    <div class="accordion-item" id="faq3"><div class="accordion-header" onclick="toggleAccordion('faq3')"><span><span class="accordion-num">3</span>Why plain text for ontologies?</span><span class="accordion-toggle">▼</span></div><div class="accordion-body"><p style="font-size:0.88rem;color:var(--muted)">Plain text enables diffs, branches, blame, and PRs. LLMs can read, navigate, and edit the source directly — exactly like working with a codebase.</p></div></div>
+    <div class="accordion-item" id="faq4"><div class="accordion-header" onclick="toggleAccordion('faq4')"><span><span class="accordion-num">4</span>How do LLMs change ontology management?</span><span class="accordion-toggle">▼</span></div><div class="accordion-body"><p style="font-size:0.88rem;color:var(--muted)">Kingsley Idehen: The Semantic Web stack gels naturally with LLMs and AI Agents. Users can ask an AI Agent to express worldviews in any notation, save to a file, and copy to a folder bound to a backend RDF DBMS. LLM-powered Agents with Skills make this "a zillion times easier."</p></div></div>
+    <div class="accordion-item" id="faq5"><div class="accordion-header" onclick="toggleAccordion('faq5')"><span><span class="accordion-num">5</span>What is a decision ontology?</span><span class="accordion-toggle">▼</span></div><div class="accordion-body"><p style="font-size:0.88rem;color:var(--muted)">Honorio J. Padrón III: Operational ontologies describe what exists. Decision ontologies describe what the enterprise does — who owns each decision, what triggers it, what action it generates. The decision ontology is "source code for your will to act."</p></div></div>
+    <div class="accordion-item" id="faq6"><div class="accordion-header" onclick="toggleAccordion('faq6')"><span><span class="accordion-num">6</span>What is McOntology?</span><span class="accordion-toggle">▼</span></div><div class="accordion-body"><p style="font-size:0.88rem;color:var(--muted)">Tony Seale's term for commoditized, fast-food approaches to ontology — mass-produced rather than carefully engineered. The antithesis of ontology-as-code.</p></div></div>
+    <div class="accordion-item" id="faq7"><div class="accordion-header" onclick="toggleAccordion('faq7')"><span><span class="accordion-num">7</span>How does the Semantic Web stack relate to ontology-as-code?</span><span class="accordion-toggle">▼</span></div><div class="accordion-body"><p style="font-size:0.88rem;color:var(--muted)">RDF-Turtle is human-readable shorthand for triples; JSON-LD has more tooling support. Combined with LLMs, the stack now provides both readability and tooling. Files in a DAV folder bound to Virtuoso automatically become part of a live quad store.</p></div></div>
+    <div class="accordion-item" id="faq8"><div class="accordion-header" onclick="toggleAccordion('faq8')"><span><span class="accordion-num">8</span>What's wrong with database tables for ontology?</span><span class="accordion-toggle">▼</span></div><div class="accordion-body"><p style="font-size:0.88rem;color:var(--muted)">Tony Seale: You wouldn't write application code in a database table. Thomas Smith: relational databases index binary trees — two dimensions. Ontologies need triples for three dimensions. Stepan Karandin: the relational model is the worst kind of normalization for ontology.</p></div></div>
+    <div class="accordion-item" id="faq9"><div class="accordion-header" onclick="toggleAccordion('faq9')"><span><span class="accordion-num">9</span>How to bridge tables to ontology code?</span><span class="accordion-toggle">▼</span></div><div class="accordion-body"><p style="font-size:0.88rem;color:var(--muted)">Veronika Heimsbakk: four lines of Python — maplib + OTTR templates to map structured data to ontology properties.</p></div></div>
+    <div class="accordion-item" id="faq10"><div class="accordion-header" onclick="toggleAccordion('faq10')"><span><span class="accordion-num">10</span>Can ontologies be executable?</span><span class="accordion-toggle">▼</span></div><div class="accordion-body"><p style="font-size:0.88rem;color:var(--muted)">Kyle Tobin: Pydantic-defined ontologies where entities are executable — "they don't just describe their own behavior. They conduct it too!" Robert Sanderson: Linked Art transpiles RDFS+OWL into Python class libraries.</p></div></div>
+    <div class="accordion-item" id="faq11"><div class="accordion-header" onclick="toggleAccordion('faq11')"><span><span class="accordion-num">11</span>Who owns the ontology in an organization?</span><span class="accordion-toggle">▼</span></div><div class="accordion-body"><p style="font-size:0.88rem;color:var(--muted)">Harish Iyer: one of the most consequential product decisions a company will make. The ontology guardian role sits at the intersection of engineering, design, and product.</p></div></div>
+    <div class="accordion-item" id="faq12"><div class="accordion-header" onclick="toggleAccordion('faq12')"><span><span class="accordion-num">12</span>What is the upstream/downstream gap in AI?</span><span class="accordion-toggle">▼</span></div><div class="accordion-body"><p style="font-size:0.88rem;color:var(--muted)">Edward Henry warns the biggest illusion is trying to address upstream problems downstream — turning LLM slop into something real. Ontology-as-code addresses this by formalizing meaning at the source.</p></div></div>
+  </div>
+</section>
+
+<section class="section" id="glossary">
+  <div class="eyebrow">Glossary</div>
+  <div class="section-title"><h2>Key Terms (12)</h2></div>
+  <div class="card-grid" style="grid-template-columns:1fr">
+    <div class="card"><h3><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23termOntologyAsCode" target="_blank" rel="noopener noreferrer">Ontology as Code</a></h3><p>Treating ontologies as source code with compilation, version control, and engineering governance — not database artifacts.</p></div>
+    <div class="card"><h3><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23termCompile" target="_blank" rel="noopener noreferrer">Compile</a></h3><p>Build step checking logical consistency — contradictions should break the build, not surface in production.</p></div>
+    <div class="card"><h3><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23termPlainText" target="_blank" rel="noopener noreferrer">Plain Text</a></h3><p>Storage format enabling diffs, branches, and LLM navigation. Turtle for readability, JSON-LD for tooling.</p></div>
+    <div class="card"><h3><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23termGovernance" target="_blank" rel="noopener noreferrer">Governance</a></h3><p>Engineering discipline — version control, code review, CI/CD pipelines for meaning.</p></div>
+    <div class="card"><h3><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23termRDFTurtle" target="_blank" rel="noopener noreferrer">RDF-Turtle</a></h3><p>Human-readable RDF notation — preferred for LLM-mediated ontology creation and filesystem-based management.</p></div>
+    <div class="card"><h3><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23termLLM" target="_blank" rel="noopener noreferrer">LLM</a></h3><p>Large Language Models that can read, navigate, and edit ontology source files. Paired with skills and RDF DBMS, they enable natural-language-driven ontology management.</p></div>
+    <div class="card"><h3><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23termDecisionOntology" target="_blank" rel="noopener noreferrer">Decision Ontology</a></h3><p>Who owns each decision, what triggers it, what action it generates — making the enterprise executable. "Source code for your will to act."</p></div>
+    <div class="card"><h3><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23termSemanticWeb" target="_blank" rel="noopener noreferrer">Semantic Web Stack</a></h3><p>W3C technology stack — RDF, SPARQL, OWL, JSON-LD — now gelling naturally with LLMs for a filesystem-based ontology workflow.</p></div>
+    <div class="card"><h3><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23termKnowledgeGraph" target="_blank" rel="noopener noreferrer">Knowledge Graph</a></h3><p>Graph-structured data model — the runtime instantiation of ontologies, now manageable via plain-text files and LLM agents.</p></div>
+    <div class="card"><h3><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23termMcOntology" target="_blank" rel="noopener noreferrer">McOntology</a></h3><p>Commoditized, fast-food approach to ontology — mass-produced rather than carefully engineered.</p></div>
+    <div class="card"><h3><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23termPydanticOntology" target="_blank" rel="noopener noreferrer">Pydantic-Executable Ontology</a></h3><p>Kyle Tobin's approach: ontologies in Pydantic where entities conduct their own behavior within application architecture.</p></div>
+    <div class="card"><h3><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23termTODAG" target="_blank" rel="noopener noreferrer">Temporal Objective-Directed Acyclic Graph (TODAG)</a></h3><p>Joseph Macdonald's hypergraph approach using WhenTTT patterns for temporal, revenue-generating ontologies.</p></div>
+  </div>
+</section>
+
+<!-- KG Explorer -->
+<section class="section" id="kg">
+  <div class="eyebrow">Interactive</div>
+  <div class="section-title"><h2>Knowledge Graph Explorer</h2></div>
+  <p style="color:var(--muted);margin-bottom:16px">Graph data is derived from the generated RDF entity and relationship model. Node and edge clicks use URIBurner resolver-backed IRIs. Drag nodes to reposition; double-click to unpin.</p>
+  <div class="panel" id="kg-explorer" data-rdf-source="ontology-is-code-tony-seale-linkedin-post-2.ttl" data-graph-iri="https://linkeddata.uriburner.com/DAV/demos/daas/ontology-is-code-tony-seale-linkedin-post-2.ttl">
+    <div class="kg-shell">
+      <div class="kg-header">
+        <div>
+          <h3>RDF Graph Workbench</h3>
+          <p>Explore ontology terms, representative instances, query examples, provenance, and source entities.</p>
+        </div>
+        <div class="kg-header-actions">
+          <button class="kg-control-toggle" id="kgControlsToggle" type="button" aria-expanded="false" aria-controls="kgToolbar">Controls</button>
+          <span class="kg-count-badge" id="counts">0 nodes / 0 links</span>
+        </div>
+      </div>
+      <div class="kg-toolbar" id="kgToolbar" hidden>
+        <div class="kg-toolbar-main">
+          <div class="kg-segment" role="group" aria-label="Mode"><button class="active" type="button" data-mode="Basic" aria-pressed="true">Basic</button><button type="button" data-mode="Advanced" aria-pressed="false">Advanced</button></div>
+          <div class="kg-segment" role="group" aria-label="Density"><button class="active" type="button" data-density="Core" aria-pressed="true">Core</button><button type="button" data-density="Full" aria-pressed="false">Full</button></div>
+          <div class="kg-segment" role="group" aria-label="Node type filters"><button class="kg-modality active" type="button" data-modality="instances" aria-pressed="true">Instances</button><button class="kg-modality" type="button" data-modality="classes" aria-pressed="false">Classes</button><button class="kg-modality" type="button" data-modality="properties" aria-pressed="false">Properties</button></div>
+          <input id="nodeFilter" class="kg-search" placeholder="Search nodes" aria-label="Search graph nodes">
+          <button class="kg-tool-button" id="kgCenter" type="button" data-advanced-control hidden>Center</button>
+          <button id="kgFullscreen" type="button" data-advanced-control hidden>Fullscreen</button>
+          <button id="kgSettings" type="button" data-advanced-control hidden aria-expanded="false" aria-controls="settingsPanel">Settings</button>
+          <span class="kg-meta" id="kgState" role="status" aria-live="polite">Basic / Core</span>
+        </div>
+        <div class="settings" id="settingsPanel" hidden>
+          <label class="settings-field">Charge <input id="charge" type="range" min="-600" max="-20" value="-180"></label>
+          <label class="settings-field">Distance <input id="distance" type="range" min="20" max="220" value="72"></label>
+          <label class="settings-wide">Predicate search <input id="predicateFilter" placeholder="hasPart, type, target"></label>
+          <label class="settings-field">Predicate labels <select id="labelMode"><option selected>Predicates</option><option>Hidden</option></select></label>
+          <label class="settings-wide">Resolver <select id="resolverPreference"><option value="describe">URIBurner describe</option><option value="direct">Direct IRI</option></select></label>
+          <label class="settings-field">Arrows <select id="arrowStyle"><option value="directed">Directed</option><option value="none">Hidden</option></select></label>
+          <label class="literal-control settings-field"><input id="literalToggle" type="checkbox" checked> Literals</label>
+          <div class="settings-card predicate-card"><div class="settings-heading"><span class="settings-title">Predicate filter</span><div class="settings-actions-inline"><button id="predicateSelectAll" type="button">All</button><button id="predicateDeselectAll" type="button">None</button></div></div><div class="filter-list" id="edgeFilterList" role="group" aria-label="Predicate filters"></div></div>
+          <div class="settings-card node-card"><span class="settings-title">Node filters</span><div class="chip-list" id="nodeFilterList" role="group" aria-label="Node filters"></div></div>
+          <div class="settings-actions"><button id="clearGraphFilters" type="button">Clear filters</button><button id="closeSettings" type="button" aria-label="Close advanced settings">X</button></div>
+        </div>
+      </div>
+      <div class="kg-stage"><svg id="kg-svg" role="img" aria-label="Knowledge graph visualization"></svg><p class="kg-note">Graph data embedded from companion RDF at generation time. The controls tray is closed by default; Advanced exposes settings and predicate filters.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Attribution Footer with SPARQL Workbench -->
+<footer id="sources">
+  <section class="attribution-panel">
+    <div class="attribution-inner">
+      <div class="section-head"><h2>Sources And Attribution</h2><p>This collection is derived from source material, generated RDF, and the RDF infographic harness contract.</p></div>
+      <div class="attribution-grid">
+        <article class="attribution-card wide"><span class="attribution-label">Source material</span><p><a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23analysis" target="_blank" rel="noopener noreferrer">Ontology Is Code LinkedIn Post</a> by <a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23tonySeale" target="_blank" rel="noopener noreferrer">Tony Seale</a>, published on <a class="entity-link" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fwww.linkedin.com%2Fposts%2Ftonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54%23analysis" target="_blank" rel="noopener noreferrer">LinkedIn</a>. Entity IRIs use the canonical article URL as the document base.</p></article>
+        <article class="attribution-card"><span class="attribution-label">Companion files</span><div class="attribution-links"><a class="attribution-pill" href="ontology-is-code-tony-seale-linkedin-post-2.ttl" target="_blank" rel="noopener noreferrer">RDF Turtle</a><a class="attribution-pill" href="ontology-is-code-tony-seale-linkedin-post-2.md" target="_blank" rel="noopener noreferrer">Markdown</a></div><p>All files share the <code>ontology-is-code-tony-seale-linkedin-post-2</code> artifact stem.</p></article>
+        <article class="attribution-card"><span class="attribution-label">Skills used</span><p><a href="https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator" target="_blank" rel="noopener noreferrer">kg-generator</a> and <a href="https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/rdf-infographic-skill" target="_blank" rel="noopener noreferrer">rdf-infographic-skill</a></p></article>
+        <article class="attribution-card"><span class="attribution-label">Generation environment</span><p><a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer">Claude Code</a> with <a href="https://claude.ai" target="_blank" rel="noopener noreferrer">Claude Opus 4.7</a></p></article>
+        <article class="attribution-card"><span class="attribution-label">Linked Data runtime</span><p>Semantic links use <a href="https://linkeddata.uriburner.com/fct" target="_blank" rel="noopener noreferrer">URIBurner describe</a>; live queries target <a href="https://linkeddata.uriburner.com/sparql" target="_blank" rel="noopener noreferrer">URIBurner SPARQL</a> over <a href="https://virtuoso.openlinksw.com/" target="_blank" rel="noopener noreferrer">OpenLink Virtuoso</a>. The KG Explorer uses <a href="https://d3js.org/" target="_blank" rel="noopener noreferrer">D3.js</a>.</p></article>
+        <article class="attribution-card"><span class="attribution-label">Named graphs</span><p><code>https://linkeddata.uriburner.com/DAV/demos/daas/ontology-is-code-tony-seale-linkedin-post-2.ttl</code></p></article>
+        <article class="attribution-card"><span class="attribution-label">Resolver pattern</span><p>Visible semantic links route through <code>https://linkeddata.uriburner.com/describe/?url={encodedIRI}</code>.</p></article>
+        <article class="attribution-card"><span class="attribution-label">Extraction provenance</span><p>RDF, Markdown, HTML, SPARQL examples, and KG Explorer data are generated from the companion graph. NAICS 541511.</p></article>
+      </div>
+      <div class="sparql-launch" id="sparql-explorer">
+        <div class="sparql-head">
+          <div>
+            <h3>Explore Knowledge Graph using SPARQL</h3>
+            <p>Choose a named graph and query recipe, edit the SPARQL if needed, then open the encoded URIBurner query.</p>
+          </div>
+          <a id="sparqlBtn" class="run-query" href="#" target="_blank" rel="noopener noreferrer">Run live query</a>
+        </div>
+        <div class="sparql-grid">
+          <label class="sparql-field">Named graph<select id="sparqlGraph"><option value="https://linkeddata.uriburner.com/DAV/demos/daas/ontology-is-code-tony-seale-linkedin-post-2.ttl" selected>RDF Turtle graph</option></select></label>
+          <label class="sparql-field">Query recipe<select id="sparqlRecipe"><option value="select" selected>SELECT triples</option><option value="describe">DESCRIBE source article</option><option value="construct">CONSTRUCT compact graph</option></select></label>
+          <label class="sparql-field">Result format<input id="sparqlFormat" value="text/x-html+tr" readonly></label>
+        </div>
+        <textarea id="sparqlText" class="sparql-editor" spellcheck="false" aria-label="Editable SPARQL query">SELECT * WHERE {
+  GRAPH <https://linkeddata.uriburner.com/DAV/demos/daas/ontology-is-code-tony-seale-linkedin-post-2.ttl> {
+    ?s ?p ?o
+  }
+}
+LIMIT 50</textarea>
+        <div class="sparql-actions"><button id="sparqlRefresh" type="button">Refresh live link</button><button id="sparqlCopy" type="button">Copy query</button><span id="sparqlLinkPreview" class="sparql-link-preview"></span></div>
+        <p class="sparql-note">SELECT uses <code>text/x-html+tr</code>. DESCRIBE and CONSTRUCT use <code>text/x-html-nice-turtle</code>.</p>
+      </div>
+    </div>
+  </section>
+</footer>
+
+<script>
+// Floating nav
+let navExpanded=false;
+function toggleNav(){navExpanded=!navExpanded;const l=document.getElementById('fnav-links'),t=document.getElementById('fnav-toggle');if(navExpanded){l.classList.add('open');t.textContent='−';t.title='Collapse';t.setAttribute('aria-label','Collapse navigation')}else{l.classList.remove('open');t.textContent='+';t.title='Expand';t.setAttribute('aria-label','Expand navigation')}}
+['fnav_w','fnav_h','fnav_x','fnav_y'].forEach(k=>{const v=localStorage.getItem(k);if(v){const f=parseFloat(v);if(k.endsWith('w')&&f>180&&f<window.innerWidth)document.getElementById('fnav').style.width=v;if(k.endsWith('h')&&f>40)document.getElementById('fnav').style.height=v;if(k.endsWith('x')&&f>=-50&&f<window.innerWidth)document.getElementById('fnav').style.left=v;if(k.endsWith('y')&&f>=-20&&f<window.innerHeight)document.getElementById('fnav').style.top=v}});
+let dragActive=false,dragX=0,dragY=0;
+document.getElementById('fnav-header').addEventListener('mousedown',e=>{if(e.target.tagName==='BUTTON')return;dragActive=true;dragX=e.clientX-document.getElementById('fnav').offsetLeft;dragY=e.clientY-document.getElementById('fnav').offsetTop;e.preventDefault()});
+document.addEventListener('mousemove',e=>{if(!dragActive)return;const nx=Math.max(0,Math.min(window.innerWidth-document.getElementById('fnav').offsetWidth,e.clientX-dragX)),ny=Math.max(0,Math.min(window.innerHeight-40,e.clientY-dragY));document.getElementById('fnav').style.left=nx+'px';document.getElementById('fnav').style.top=ny+'px';if(navExpanded){localStorage.setItem('fnav_x',document.getElementById('fnav').style.left);localStorage.setItem('fnav_y',document.getElementById('fnav').style.top)}});
+document.addEventListener('mouseup',()=>{dragActive=false});
+function toggleTheme(){const h=document.documentElement,n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);document.getElementById('themeToggle').textContent=n==='dark'?'☀️':'🌓'}
+function toggleAccordion(id){document.getElementById(id).classList.toggle('open')}
+
+// SPARQL workbench
+const RESOLVER='https://linkeddata.uriburner.com/describe/?url=';
+const SPARQL_ENDPOINT='https://linkeddata.uriburner.com/sparql';
+const SOURCE_IRI='https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis';
+
+function sparqlResultFormat(q){const first=q.trim().split(/\s+/,1)[0].toUpperCase();return first==='DESCRIBE'||first==='CONSTRUCT'?'text/x-html-nice-turtle':'text/x-html+tr'}
+function sparqlLiveUrl(q){return SPARQL_ENDPOINT+'?default-graph-uri=&query='+encodeURIComponent(q)+'&format='+encodeURIComponent(sparqlResultFormat(q))+'&timeout=0&debug=on&run=+Run+Query+'}
+
+((()=>{
+  const graph=document.getElementById('sparqlGraph');
+  const recipe=document.getElementById('sparqlRecipe');
+  const text=document.getElementById('sparqlText');
+  const format=document.getElementById('sparqlFormat');
+  const btn=document.getElementById('sparqlBtn');
+  const preview=document.getElementById('sparqlLinkPreview');
+  const refresh=document.getElementById('sparqlRefresh');
+  const copy=document.getElementById('sparqlCopy');
+  function queryFor(kind,g){
+    if(kind==='describe')return 'DESCRIBE <'+SOURCE_IRI+'>\nFROM <'+g+'>';
+    if(kind==='construct')return 'CONSTRUCT { ?s ?p ?o }\nWHERE {\n  GRAPH <'+g+'> {\n    ?s ?p ?o .\n    FILTER(?p IN (<http://schema.org/about>, <http://schema.org/mentions>, <http://schema.org/hasPart>, <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>))\n  }\n}\nLIMIT 100';
+    return 'SELECT * WHERE {\n  GRAPH <'+g+'> {\n    ?s ?p ?o\n  }\n}\nLIMIT 50';
+  }
+  function fmtFor(q){const first=q.trim().split(/\s+/,1)[0].toUpperCase();return first==='DESCRIBE'||first==='CONSTRUCT'?'text/x-html-nice-turtle':'text/x-html+tr';}
+  function syncText(){text.value=queryFor(recipe.value,graph.value);update();}
+  function update(){
+    const q=text.value.trim(),fmt=fmtFor(q);
+    format.value=fmt;
+    btn.href=SPARQL_ENDPOINT+'?default-graph-uri=&query='+encodeURIComponent(q)+'&format='+encodeURIComponent(fmt)+'&timeout=0&debug=on&run=+Run+Query+';
+    preview.textContent=btn.href;
+  }
+  graph.addEventListener('change',syncText);
+  recipe.addEventListener('change',syncText);
+  text.addEventListener('input',update);
+  refresh.addEventListener('click',update);
+  copy.addEventListener('click',async()=>{await navigator.clipboard?.writeText(text.value);copy.textContent='Copied!';setTimeout(()=>copy.textContent='Copy query',1200)});
+  syncText();
+}))();
+</script>
+
+<script>
+// KG Explorer — D3 force graph
+const kgData = {"nodes":[{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","label":"Ontology Is Code Post","type":"instance","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#tonySeale","label":"Tony Seale","type":"instance","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#kingsleyIdehen","label":"Kingsley Uyi Idehen","type":"instance","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#veronikaHeimsbakk","label":"Veronika Heimsbakk","type":"instance","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#ontologyAsCode","label":"Ontology as Code","type":"class","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#pillarCompile","label":"Compile—Not Just Parse","type":"class","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#pillarPlainText","label":"Live in Plain Text","type":"class","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#pillarGovernance","label":"Governed Like Code","type":"class","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentKingsley","label":"Kingsley's Comment","type":"instance","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentVeronika","label":"Veronika's Comment","type":"instance","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentHarish","label":"Harish Iyer's Comment","type":"instance","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentHonorio","label":"Honorio Padrón's Comment","type":"instance","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentRobertSanderson","label":"R. Sanderson's Comment","type":"instance","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentKyleTobin","label":"Kyle Tobin's Comment","type":"instance","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentJosephMacdonald","label":"J. Macdonald's Comment","type":"instance","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentJacobFriedman","label":"Jacob Friedman's Comment","type":"instance","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentGaborCsepregi","label":"Gabor Csepregi's Comment","type":"instance","core":false},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentMarkODonovan","label":"Mark O'Donovan's Comment","type":"instance","core":false},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentStepan","label":"Stepan Karandin's Comment","type":"instance","core":false},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentEdwardHenry","label":"Edward Henry's Comment","type":"instance","core":false},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentOlivierRey","label":"Olivier Rey's Comment","type":"instance","core":false},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentThomasSmith","label":"Thomas Smith's Comment","type":"instance","core":false},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#harishIyer","label":"Harish Iyer","type":"instance","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#honorioPadron","label":"Honorio J. Padrón III","type":"instance","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#kyleTobin","label":"Kyle Tobin","type":"instance","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#josephMacdonald","label":"Joseph Macdonald","type":"instance","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#jacobFriedman","label":"Jacob Friedman","type":"instance","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#robertSanderson","label":"Robert Sanderson","type":"instance","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#mcOntology","label":"McOntology","type":"class","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#linkedArt","label":"Linked Art","type":"class","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#descriptionLogic","label":"Description Logic","type":"class","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#pydanticOntology","label":"Pydantic-Executable Ontology","type":"class","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#todag","label":"TODAG","type":"class","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#cleared","label":"CLEARED Platform","type":"class","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#knowledgeEngineerVertical","label":"Knowledge Engineering (NAICS 541511)","type":"instance","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#kingsleyInsight","label":"LLM+SemWeb Ecosystem Insight","type":"instance","core":true},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#OntologyPillar","label":"OntologyPillar (Class)","type":"class","core":false},{"id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#CommentaryThread","label":"CommentaryThread (Class)","type":"class","core":false}],"links":[{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#tonySeale","label":"author","iri":"http://schema.org/author"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#ontologyAsCode","label":"about","iri":"http://schema.org/about"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#pillarCompile","label":"about","iri":"http://schema.org/about"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#pillarPlainText","label":"about","iri":"http://schema.org/about"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#pillarGovernance","label":"about","iri":"http://schema.org/about"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#mcOntology","label":"about","iri":"http://schema.org/about"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#linkedArt","label":"about","iri":"http://schema.org/about"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentKingsley","label":"comment","iri":"http://schema.org/comment"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentVeronika","label":"comment","iri":"http://schema.org/comment"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentHarish","label":"comment","iri":"http://schema.org/comment"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentHonorio","label":"comment","iri":"http://schema.org/comment"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentRobertSanderson","label":"comment","iri":"http://schema.org/comment"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentKyleTobin","label":"comment","iri":"http://schema.org/comment"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentJosephMacdonald","label":"comment","iri":"http://schema.org/comment"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentJacobFriedman","label":"comment","iri":"http://schema.org/comment"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentGaborCsepregi","label":"comment","iri":"http://schema.org/comment"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentMarkODonovan","label":"comment","iri":"http://schema.org/comment"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentStepan","label":"comment","iri":"http://schema.org/comment"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentEdwardHenry","label":"comment","iri":"http://schema.org/comment"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentOlivierRey","label":"comment","iri":"http://schema.org/comment"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentThomasSmith","label":"comment","iri":"http://schema.org/comment"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentKingsley","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#kingsleyIdehen","label":"author","iri":"http://schema.org/author"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentVeronika","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#veronikaHeimsbakk","label":"author","iri":"http://schema.org/author"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentHarish","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#harishIyer","label":"author","iri":"http://schema.org/author"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentHonorio","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#honorioPadron","label":"author","iri":"http://schema.org/author"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentRobertSanderson","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#robertSanderson","label":"author","iri":"http://schema.org/author"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentKyleTobin","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#kyleTobin","label":"author","iri":"http://schema.org/author"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentJosephMacdonald","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#josephMacdonald","label":"author","iri":"http://schema.org/author"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#commentJacobFriedman","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#jacobFriedman","label":"author","iri":"http://schema.org/author"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#pillarCompile","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#OntologyPillar","label":"type","iri":"http://www.w3.org/1999/02/22-rdf-syntax-ns#type"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#pillarPlainText","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#OntologyPillar","label":"type","iri":"http://www.w3.org/1999/02/22-rdf-syntax-ns#type"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#pillarGovernance","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#OntologyPillar","label":"type","iri":"http://www.w3.org/1999/02/22-rdf-syntax-ns#type"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#kingsleyInsight","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#kingsleyIdehen","label":"author","iri":"http://schema.org/author"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#kingsleyInsight","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#CommentaryThread","label":"type","iri":"http://www.w3.org/1999/02/22-rdf-syntax-ns#type"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#kingsleyInsight","label":"hasPart","iri":"http://schema.org/hasPart"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#knowledgeEngineerVertical","label":"hasPart","iri":"http://schema.org/hasPart"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#descriptionLogic","label":"about","iri":"http://schema.org/about"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#pydanticOntology","label":"about","iri":"http://schema.org/about"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#todag","label":"about","iri":"http://schema.org/about"},{"source":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#analysis","target":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#cleared","label":"about","iri":"http://schema.org/about"}]};
+
+((()=>{
+  const svg=d3.select('#kg-svg');
+  const W=document.getElementById('kg-svg').clientWidth||900,H=550;
+  const RESOLVER='https://linkeddata.uriburner.com/describe/?url=';
+  let mode='Basic',density='Core',modalities={instances:true,classes:true,properties:true};
+  let pinned=new Set();
+
+  const tooltip=d3.select('body').append('div').attr('class','kg-tooltip').style('position','absolute').style('pointer-events','none').style('opacity',0).style('background','var(--panel)').style('border','1px solid var(--line)').style('padding','6px 10px').style('border-radius','6px').style('font-size','0.75rem').style('z-index','2000').style('max-width','320px');
+
+  function getFiltered(){
+    let nodes=kgData.nodes.filter(n=>modalities[n.type]!==false);
+    if(mode==='Basic')nodes=nodes.filter(n=>n.core!==false);
+    if(density==='Core')nodes=nodes.filter(n=>n.core!==false);
+    const nids=new Set(nodes.map(n=>n.id));
+    let links=kgData.links.filter(l=>nids.has(l.source)&&nids.has(l.target));
+    if(mode==='Basic')links=links.slice(0,Math.min(links.length,20));
+    return {nodes,links};
+  }
+
+  const g=svg.append('g');
+  const defs=svg.append('defs');
+  defs.append('marker').attr('id','arrowhead').attr('viewBox','0 -5 10 10').attr('refX',14).attr('refY',0).attr('markerWidth',7).attr('markerHeight',7).attr('orient','auto').append('path').attr('d','M0,-5L10,0L0,5').attr('fill','var(--line-strong)');
+
+  let sim;
+  function render(){
+    g.selectAll('*').remove();
+    const {nodes,links}=getFiltered();
+    document.getElementById('counts').textContent=nodes.length+' nodes / '+links.length+' links';
+    document.getElementById('kgState').textContent=mode+' / '+density;
+
+    const lmap={};
+    nodes.forEach(n=>{lmap[n.id]=n});
+
+    const edge=svg.select('g').selectAll('.kg-edge-group').data(links).join('g').attr('class','kg-edge-group');
+    edge.append('line').attr('class','kg-edge').attr('marker-end','url(#arrowhead)');
+    const elabel=edge.append('text').attr('class','kg-edge-label').attr('dy',-4).text(d=>d.label);
+
+    const node=g.selectAll('.kg-node-group').data(nodes).join('g').attr('class','kg-node-group');
+    node.append('circle').attr('class',d=>'kg-node '+d.type).attr('r',d=>d.type==='class'?8:d.type==='property'?6:10);
+    const nlabel=node.append('foreignObject').attr('width',1).attr('height',1);
+    nlabel.append('xhtml:a').attr('href',d=>RESOLVER+encodeURIComponent(d.id)).attr('target','_blank').attr('rel','noopener noreferrer').attr('data-iri',d=>d.id).attr('data-resolver-href',d=>RESOLVER+encodeURIComponent(d.id)).style('font-family','Space Grotesk,sans-serif').style('font-size','11px').style('font-weight','600').style('fill','var(--accent)').style('text-anchor','middle').style('cursor','pointer').text(d=>d.label);
+
+    sim=d3.forceSimulation(nodes).force('link',d3.forceLink(links).id(d=>d.id).distance(100)).force('charge',d3.forceManyBody().strength(parseInt(document.getElementById('charge')?.value||-180))).force('center',d3.forceCenter(W/2,H/2)).force('collision',d3.forceCollide(20)).on('tick',()=>{
+      edge.select('line').attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
+      elabel.attr('x',d=>(d.source.x+d.target.x)/2).attr('y',d=>(d.source.y+d.target.y)/2);
+      node.attr('transform',d=>'translate('+d.x+','+d.y+')');
+    });
+
+    const drag=d3.drag().on('start',function(e,d){if(!d3.event?.active)sim.alphaTarget(0.3).restart();d.fx=d.x;d.fy=d.y;pinned.add(d.id)}).on('drag',function(e,d){d.fx=e.x;d.fy=e.y}).on('end',function(e,d){if(!d3.event?.active)sim.alphaTarget(0)});
+    node.call(drag).on('dblclick',function(e,d){delete d.fx;delete d.fy;pinned.delete(d.id);sim.alphaTarget(0.3).restart()});
+
+    // Node filter chips
+    const types=[...new Set(kgData.nodes.map(n=>n.type))];
+    const chipC=document.getElementById('nodeFilterList');
+    chipC.innerHTML=types.map(t=>'<label class="'+(modalities[t]!==false?'':'off')+'"><input type="checkbox" '+(modalities[t]!==false?'checked':'')+' onchange="toggleNodeType(\''+t+'\')">'+t+'</label>').join('');
+    // Edge filter chips
+    const preds=[...new Set(kgData.links.map(l=>l.label))];
+    const edgeC=document.getElementById('edgeFilterList');
+    edgeC.innerHTML=preds.map(p=>'<label><input type="checkbox" checked>'+p+'</label>').join('');
+  }
+
+  window.toggleNodeType=function(t){modalities[t]=!modalities[t];render()};
+
+  document.getElementById('kgControlsToggle').addEventListener('click',function(){
+    const tb=document.getElementById('kgToolbar');
+    tb.hidden=!tb.hidden;this.setAttribute('aria-expanded',String(!tb.hidden));
+  });
+
+  document.querySelectorAll('[data-mode]').forEach(b=>{b.addEventListener('click',function(){
+    document.querySelectorAll('[data-mode]').forEach(x=>x.setAttribute('aria-pressed','false'));
+    document.querySelectorAll('[data-mode]').forEach(x=>x.classList.remove('active'));
+    this.setAttribute('aria-pressed','true');this.classList.add('active');
+    mode=this.dataset.mode;
+    document.querySelectorAll('[data-advanced-control]').forEach(c=>{c.hidden=mode!=='Advanced'});
+    document.getElementById('kgSettings').style.display=mode==='Advanced'?'':'none';
+    if(mode==='Basic')document.getElementById('settingsPanel').hidden=true;
+    render();
+  })});
+
+  document.querySelectorAll('[data-density]').forEach(b=>{b.addEventListener('click',function(){
+    document.querySelectorAll('[data-density]').forEach(x=>x.setAttribute('aria-pressed','false'));
+    document.querySelectorAll('[data-density]').forEach(x=>x.classList.remove('active'));
+    this.setAttribute('aria-pressed','true');this.classList.add('active');
+    density=this.dataset.density;render();
+  })});
+
+  document.querySelectorAll('.kg-modality').forEach(b=>{b.addEventListener('click',function(){
+    this.classList.toggle('active');this.setAttribute('aria-pressed',String(this.classList.contains('active')));
+    modalities[this.dataset.modality]=this.classList.contains('active');render();
+  })});
+
+  document.getElementById('nodeFilter').addEventListener('input',function(){
+    const q=this.value.toLowerCase();
+    svg.selectAll('.kg-node-group').style('opacity',function(d){return d.label.toLowerCase().includes(q)||!q?1:0.15});
+  });
+
+  document.getElementById('kgCenter').addEventListener('click',()=>{sim.force('center',d3.forceCenter(W/2,H/2));sim.alpha(0.5).restart()});
+  document.getElementById('kgFullscreen').addEventListener('click',()=>{document.getElementById('kg-svg').requestFullscreen?.()});
+  document.getElementById('kgSettings').addEventListener('click',function(){
+    const p=document.getElementById('settingsPanel');p.hidden=!p.hidden;this.setAttribute('aria-expanded',String(!p.hidden));
+  });
+  document.getElementById('closeSettings').addEventListener('click',()=>{document.getElementById('settingsPanel').hidden=true;document.getElementById('kgSettings').setAttribute('aria-expanded','false')});
+  document.getElementById('charge').addEventListener('input',function(){sim.force('charge',d3.forceManyBody().strength(parseInt(this.value)));sim.alpha(0.3).restart()});
+  document.getElementById('distance').addEventListener('input',function(){sim.force('link').distance(parseInt(this.value));sim.alpha(0.3).restart()});
+  document.getElementById('literalToggle').addEventListener('change',function(){sim.alpha(0.3).restart()});
+  document.getElementById('predicateSelectAll').addEventListener('click',()=>{document.querySelectorAll('#edgeFilterList input').forEach(c=>c.checked=true)});
+  document.getElementById('predicateDeselectAll').addEventListener('click',()=>{document.querySelectorAll('#edgeFilterList input').forEach(c=>c.checked=false)});
+  document.getElementById('clearGraphFilters').addEventListener('click',()=>{modalities={instances:true,classes:true,properties:true};render()});
+  document.getElementById('labelMode').addEventListener('change',function(){
+    const hide=this.value==='Hidden';
+    svg.selectAll('.kg-edge-label').style('opacity',hide?0:1);
+  });
+
+  render();
+  document.getElementById('themeToggle').textContent=document.documentElement.getAttribute('data-theme')==='dark'?'☀️':'🌓';
+}))();
+</script>
+<script type="application/ld+json">
+{"@context":{"schema":"http://schema.org/","prov":"http://www.w3.org/ns/prov#"},"@type":"schema:WebPage","name":"Ontology Is Code — Tony Seale — Knowledge Graph Infographic (Edition 2)","description":"Edition 2: Interactive infographic exploring Tony Seale's thesis with 14 comment threads, KG Explorer with D3.js, and Kingsley Idehen's featured LLM + Semantic Web insight.","about":{"@id":"https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#ontologyAsCode"},"version":"2.0","datePublished":"2026-05-22","relatedLink":[{"@id":"ontology-is-code-tony-seale-linkedin-post-2.ttl"},{"@id":"ontology-is-code-tony-seale-linkedin-post-2.md"}],"prov:wasGeneratedBy":[{"@type":"schema:SoftwareApplication","name":"kg-generator skill","url":"https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator"},{"@type":"schema:SoftwareApplication","name":"rdf-infographic-skill","url":"https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/rdf-infographic-skill"}]}
+</script>
+</body>
+</html>

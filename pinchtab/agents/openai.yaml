@@ -1,0 +1,5 @@
+interface:
+  display_name: "PinchTab"
+  short_description: "Automate browser capture and interaction"
+  brand_color: "#2563EB"
+  default_prompt: "Use $pinchtab to capture article source material, inspect fresh refs, and complete browser automation efficiently."

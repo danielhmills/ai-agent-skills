@@ -15,8 +15,32 @@ scripts/watch-indexes.sh
 CLAUDE.md
 AGENT.md
 AGENT-basic.md
+AGENT-prior.md
+CLAUDE-prior.md
 agent-rdf-memory/projects/
 agent-rdf-memory/sessions/*
 !agent-rdf-memory/sessions/2026-06-15-deepseek_v4pro-claude_code.ttl
 !agent-rdf-memory/sessions/2026-06-15-gpt5_chat-codex.ttl
 !agent-rdf-memory/sessions/2026-06-15-claude_sonnet_4_6-claude_code.ttl
+
+# Logs
+*.log
+*.log.*
+
+# Python cache
+__pycache__/
+
+# Agent tool config dirs
+.grok/
+.opencode/
+.playwright-cli/
+.playwright-mcp/
+.claude/
+
+# Generated output files
+gptree_output.txt
+.gptree_config
+
+# Temp/unnamed files
+zi3vYccB
+zii6taXt

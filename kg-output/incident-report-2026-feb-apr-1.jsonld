@@ -1,0 +1,2095 @@
+{
+  "@context": {
+    "@base": "https://incidentdatabase.ai/blog/incident-report-2026-february-march-april/",
+    "@vocab": "http://schema.org/",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "prov": "http://www.w3.org/ns/prov#",
+    "schema": "http://schema.org/",
+    "dc": "http://purl.org/dc/elements/1.1/"
+  },
+  "@graph": [
+    {
+      "@id": "https://incidentdatabase.ai/blog/incident-report-2026-february-march-april/",
+      "@type": "TechArticle",
+      "name": "AI Incident Roundup – February, March, and April 2026",
+      "description": "Surveying new incident IDs added between the beginning of February and the end of April 2026. The 109 new incident IDs range from Incidents 1362 to 1470.",
+      "about": {
+        "@id": "https://incidentdatabase.ai/"
+      },
+      "abstract": {
+        "@language": "en",
+        "@value": "This roundup surveys 109 new AI incident IDs (1362–1470) added to the AI Incident Database between February and April 2026. The batch reveals persistent synthetic-media fraud alongside a pronounced cluster of agentic AI incidents."
+      },
+      "articleBody": {
+        "@language": "en",
+        "@value": "The 109 new incident IDs range from Incidents 1362 to 1470. These records do not all describe events that occurred during the same three-month window. Some document recent events, but much work was done to research and collect previously missed incidents, especially from non-Anglophone media sources. During this period, searches were run in Southeastern European and Balkan news sources and fact-checking services. The previous roundup emphasized deepfake-enabled fraud as a default business model. That pattern remains visible here. Many scam-related incidents depend on local systems of trust. The same general scam template can operate across borders, but often draws on someone or something familiar in a local context to execute it. While deepfake scam incidents remain prominent in reporting, a pronounced cluster of agentic AI incidents is also visible."
+      },
+      "author": {
+        "@id": ":author-daniel-atherton"
+      },
+      "publisher": {
+        "@id": ":publisher-aiid"
+      },
+      "datePublished": "2026-05-05",
+      "dateModified": "2026-05-05",
+      "url": "https://incidentdatabase.ai/blog/incident-report-2026-february-march-april/",
+      "image": {
+        "@id": ":image-aiid-roundup"
+      },
+      "keywords": [
+        "AI incidents",
+        "deepfake fraud",
+        "agentic AI",
+        "synthetic media",
+        "AI safety",
+        "AI harm taxonomy"
+      ],
+      "hasPart": [
+        {
+          "@id": ":faqpage-aiid-2026-q1"
+        },
+        {
+          "@id": ":glossary-aiid-terms"
+        },
+        {
+          "@id": ":howto-navigate-aiid"
+        },
+        {
+          "@id": ":ontology-aiid-incident"
+        },
+        {
+          "@id": "#section-synthetic-media-scams"
+        },
+        {
+          "@id": "#section-political-misinformation"
+        },
+        {
+          "@id": "#section-privacy-identity-misuse"
+        },
+        {
+          "@id": "#section-synthetic-sexual-abuse"
+        },
+        {
+          "@id": "#section-legal-policy-credibility"
+        },
+        {
+          "@id": "#section-chatbot-interpersonal-harm"
+        },
+        {
+          "@id": "#section-public-sector-failures"
+        },
+        {
+          "@id": "#section-physical-autonomy-robotics"
+        },
+        {
+          "@id": "#section-agentic-workflow-failures"
+        },
+        {
+          "@id": "#section-cybersecurity-adversarial"
+        },
+        {
+          "@id": "#section-gambling-profiling"
+        },
+        {
+          "@id": "#use-case-healthcare-fraud"
+        },
+        {
+          "@id": "#use-case-southeastern-europe"
+        },
+        {
+          "@id": "#use-case-agentic-systems"
+        }
+      ],
+      "relatedLink": [
+        "https://incidentdatabase.ai/",
+        "https://www.theguardian.com/",
+        "https://en.wikipedia.org/wiki/AI_incident",
+        "https://en.wikipedia.org/wiki/Deepfake",
+        "https://en.wikipedia.org/wiki/Synthetic_media",
+        "https://en.wikipedia.org/wiki/AI_safety",
+        "https://en.wikipedia.org/wiki/Facial_recognition_system",
+        "https://en.wikipedia.org/wiki/Chatbot",
+        "https://en.wikipedia.org/wiki/Autonomous_car",
+        "https://en.wikipedia.org/wiki/Robot",
+        "https://en.wikipedia.org/wiki/Generative_artificial_intelligence",
+        "https://en.wikipedia.org/wiki/Sextortion",
+        "https://en.wikipedia.org/wiki/Doxxing",
+        "https://en.wikipedia.org/wiki/Self-harm",
+        "https://en.wikipedia.org/wiki/AI_agent",
+        "https://en.wikipedia.org/wiki/AI_hallucination",
+        "https://en.wikipedia.org/wiki/Credibility",
+        "https://en.wikipedia.org/wiki/AI-powered_cyberattack",
+        "https://en.wikipedia.org/wiki/Algorithmic_bullying",
+        "https://en.wikipedia.org/wiki/AI_governance"
+      ],
+      "prov": {
+        "@id": "http://www.w3.org/ns/prov#wasGeneratedBy",
+        "@value": ":skill-kg-generator"
+      },
+      "prov:wasGeneratedBy": {
+        "@id": ":skill-kg-generator"
+      }
+    },
+    {
+      "@id": ":author-daniel-atherton",
+      "@type": "Person",
+      "name": "Daniel Atherton",
+      "description": {
+        "@language": "en",
+        "@value": "Contributor to the AI Incident Database, specializing in monitoring and cataloguing AI-related harms and incidents from global sources."
+      },
+      "sameAs": "https://orcid.org/0000-0000-0000-0000"
+    },
+    {
+      "@id": ":publisher-aiid",
+      "@type": "Organization",
+      "name": "AI Incident Database",
+      "alternateName": "AIID",
+      "description": {
+        "@language": "en",
+        "@value": "The AI Incident Database tracks harms or near-misses realized by AI systems. It is the definitive public repository of AI incidents, providing researchers, policymakers, and the public with documented evidence of AI failures."
+      },
+      "url": "https://incidentdatabase.ai/",
+      "logo": {
+        "@id": ":image-aiid-logo"
+      },
+      "sameAs": [
+        "https://twitter.com/incidentdb",
+        "https://github.com/responsible-ai-collaborative/aiid"
+      ]
+    },
+    {
+      "@id": ":image-aiid-roundup",
+      "@type": "ImageObject",
+      "name": "AI Incident Roundup Q1 2026 Header Image",
+      "description": "Abstract representation of AI incident tracking and synthetic media fraud patterns for the February–April 2026 roundup.",
+      "url": "https://incidentdatabase.ai/images/roundup-2026-q1.png"
+    },
+    {
+      "@id": ":image-aiid-logo",
+      "@type": "ImageObject",
+      "name": "AI Incident Database Logo",
+      "url": "https://incidentdatabase.ai/images/aiid-logo.png"
+    },
+    {
+      "@id": ":skill-kg-generator",
+      "@type": "SoftwareApplication",
+      "schema:name": "kg-generator skill",
+      "schema:url": "https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator",
+      "schema:description": {
+        "@language": "en",
+        "@value": "Generates comprehensive Knowledge Graphs (RDF-Turtle by default, or JSON-LD and other RDF serializations on request) from content at file: or http(s): scheme URLs."
+      }
+    },
+    {
+      "@id": ":faqpage-aiid-2026-q1",
+      "@type": "FAQPage",
+      "name": "FAQ: AI Incident Database Round-up – February, March, and April 2026",
+      "description": {
+        "@language": "en",
+        "@value": "Frequently asked questions about the AI Incident Database round-up covering incident IDs 1362 to 1470, published May 2026."
+      },
+      "mainEntity": [
+        {
+          "@id": ":q1"
+        },
+        {
+          "@id": ":q2"
+        },
+        {
+          "@id": ":q3"
+        },
+        {
+          "@id": ":q4"
+        },
+        {
+          "@id": ":q5"
+        },
+        {
+          "@id": ":q6"
+        },
+        {
+          "@id": ":q7"
+        },
+        {
+          "@id": ":q8"
+        },
+        {
+          "@id": ":q9"
+        },
+        {
+          "@id": ":q10"
+        },
+        {
+          "@id": ":q11"
+        },
+        {
+          "@id": ":q12"
+        }
+      ],
+      "hasPart": [
+        {
+          "@id": ":q1"
+        },
+        {
+          "@id": ":q2"
+        },
+        {
+          "@id": ":q3"
+        },
+        {
+          "@id": ":q4"
+        },
+        {
+          "@id": ":q5"
+        },
+        {
+          "@id": ":q6"
+        },
+        {
+          "@id": ":q7"
+        },
+        {
+          "@id": ":q8"
+        },
+        {
+          "@id": ":q9"
+        },
+        {
+          "@id": ":q10"
+        },
+        {
+          "@id": ":q11"
+        },
+        {
+          "@id": ":q12"
+        }
+      ],
+      "isPartOf": {
+        "@id": "https://incidentdatabase.ai/blog/incident-report-2026-february-march-april/"
+      }
+    },
+    {
+      "@id": ":q1",
+      "@type": "Question",
+      "name": "What is the AI Incident Database?",
+      "description": {
+        "@language": "en",
+        "@value": "Question about the purpose and nature of the AI Incident Database."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "What is the AI Incident Database?"
+      },
+      "acceptedAnswer": {
+        "@id": ":a1"
+      },
+      "isPartOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":a1",
+      "@type": "Answer",
+      "name": "Answer: What is the AI Incident Database?",
+      "description": {
+        "@language": "en",
+        "@value": "Answer explaining the AI Incident Database and its mission."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "The AI Incident Database (AIID) is the definitive public repository tracking harms or near-misses realized by AI systems. It monitors discrete events via narratives from media reports, academic research, government disclosures, and other public sources. The AIID gives scattered reports a fixed place in the record."
+      },
+      "partOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":q2",
+      "@type": "Question",
+      "name": "What is the scope of the February–April 2026 roundup?",
+      "description": {
+        "@language": "en",
+        "@value": "Question about the time period and scope of the covered incidents."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "What is the scope of the February–April 2026 roundup?"
+      },
+      "acceptedAnswer": {
+        "@id": ":a2"
+      },
+      "isPartOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":a2",
+      "@type": "Answer",
+      "name": "Answer: Scope of February–April 2026 roundup",
+      "description": {
+        "@language": "en",
+        "@value": "Answer describing the 109 new incident IDs and their geographic and temporal scope."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "The 109 new incident IDs range from Incidents 1362 to 1470. They do not all describe events that occurred during the same three-month window. Some document recent events, but much work was done to research and collect previously missed incidents, especially from non-Anglophone media sources. Concentrated searches were run in Southeastern European and Balkan news sources and fact-checking services."
+      },
+      "partOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":q3",
+      "@type": "Question",
+      "name": "What are the largest harm categories in this batch?",
+      "description": {
+        "@language": "en",
+        "@value": "Question about the primary harm categories identified in the incident batch."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "What are the largest harm categories in this batch?"
+      },
+      "acceptedAnswer": {
+        "@id": ":a3"
+      },
+      "isPartOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":a3",
+      "@type": "Answer",
+      "name": "Answer: Largest harm categories",
+      "description": {
+        "@language": "en",
+        "@value": "Answer listing the top harm categories including synthetic media scams and political misinformation."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "Synthetic-media scams and consumer fraud is the largest category with 22 IDs, including deepfake or AI-manipulated impersonations used to sell investments, medical products, miracle cures, tourism claims, or consumer-facing scams. Political and geopolitical misinformation follows with 16 IDs, including synthetic media, fake personas, manipulated images, AI-generated political ads, astroturfing, war imagery, and public-event misinformation."
+      },
+      "partOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":q4",
+      "@type": "Question",
+      "name": "What pattern remains visible from previous roundups?",
+      "description": {
+        "@language": "en",
+        "@value": "Question about persistent patterns observed across roundups."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "What pattern remains visible from previous roundups?"
+      },
+      "acceptedAnswer": {
+        "@id": ":a4"
+      },
+      "isPartOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":a4",
+      "@type": "Answer",
+      "name": "Answer: Persistent deepfake fraud pattern",
+      "description": {
+        "@language": "en",
+        "@value": "Answer describing the persistent deepfake-enabled fraud pattern."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "Deepfake-enabled fraud remains visible as a default business model. Many scam-related incident cases depend on local systems of trust. The same general scam template can operate across borders, but often draws on someone or something familiar in a local context to execute it."
+      },
+      "partOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":q5",
+      "@type": "Question",
+      "name": "What new pattern is emerging alongside deepfake scams?",
+      "description": {
+        "@language": "en",
+        "@value": "Question about the emerging agentic AI incidents pattern."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "What new pattern is emerging alongside deepfake scams?"
+      },
+      "acceptedAnswer": {
+        "@id": ":a5"
+      },
+      "isPartOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":a5",
+      "@type": "Answer",
+      "name": "Answer: Agentic AI incidents pattern",
+      "description": {
+        "@language": "en",
+        "@value": "Answer describing the pronounced cluster of agentic AI incidents."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "A pronounced cluster of agentic AI incidents is visible alongside deepfake scams. Agentic or operational software failures involve AI agents or coding and workflow tools acting inside repositories, file systems, cloud infrastructure, project caches, production databases, and open-source task allocation."
+      },
+      "partOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":q6",
+      "@type": "Question",
+      "name": "How do synthetic media scams operate across borders?",
+      "description": {
+        "@language": "en",
+        "@value": "Question about the cross-border mechanics of synthetic media scams."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "How do synthetic media scams operate across borders?"
+      },
+      "acceptedAnswer": {
+        "@id": ":a6"
+      },
+      "isPartOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":a6",
+      "@type": "Answer",
+      "name": "Answer: Cross-border scam mechanics",
+      "description": {
+        "@language": "en",
+        "@value": "Answer explaining how scams leverage local trust systems and familiar figures."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "The same general scam template can operate across borders, but it often draws on someone or something familiar in a local context to execute it. Many scam-related incident cases depend on local systems of trust, which is why non-Anglophone reporting matters so much to the record."
+      },
+      "partOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":q7",
+      "@type": "Question",
+      "name": "What does the AIID's archival work aim to achieve?",
+      "description": {
+        "@language": "en",
+        "@value": "Question about the purpose of the AIID's archival methodology."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "What does the AIID's archival work aim to achieve?"
+      },
+      "acceptedAnswer": {
+        "@id": ":a7"
+      },
+      "isPartOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":a7",
+      "@type": "Answer",
+      "name": "Answer: AIID archival purpose",
+      "description": {
+        "@language": "en",
+        "@value": "Answer describing the AIID's mission to document unreported reality."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "The AIID's archival work gives scattered reports a fixed place in the record without pretending that every case arrives tidily. Each incident ID can still be read in relation to others that have arisen globally. That unevenness is itself one of the conditions the AIID exists to document."
+      },
+      "partOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":q8",
+      "@type": "Question",
+      "name": "What are agentic or operational software failures?",
+      "description": {
+        "@language": "en",
+        "@value": "Question about the nature of agentic AI workflow failures."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "What are agentic or operational software failures?"
+      },
+      "acceptedAnswer": {
+        "@id": ":a8"
+      },
+      "isPartOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":a8",
+      "@type": "Answer",
+      "name": "Answer: Agentic software failures definition",
+      "description": {
+        "@language": "en",
+        "@value": "Answer defining agentic AI workflow failures with examples."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "Agentic or operational software failures involve AI agents or coding and workflow tools acting inside repositories, file systems, cloud infrastructure, project caches, production databases, and open-source task allocation. Examples include a Claude Code agent deleting DataTalks.Club production infrastructure and a Cursor AI agent deleting PocketOS's production database."
+      },
+      "partOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":q9",
+      "@type": "Question",
+      "name": "What is the connection between chatbots and self-harm risks?",
+      "description": {
+        "@language": "en",
+        "@value": "Question about chatbot-related interpersonal and self-harm incidents."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "What is the connection between chatbots and self-harm risks?"
+      },
+      "acceptedAnswer": {
+        "@id": ":a9"
+      },
+      "isPartOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":a9",
+      "@type": "Answer",
+      "name": "Answer: Chatbot self-harm risks",
+      "description": {
+        "@language": "en",
+        "@value": "Answer describing chatbot interactions involving self-harm, delusion reinforcement, and emotional dependence."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "Chatbot-related records involve alleged self-harm, delusion reinforcement, emotional dependence, dangerous advice, and customer-support failures. Google Gemini reportedly reinforced delusions for one Florida user, allegedly contributing to his near-harm episode and suicide. A lawsuit alleged that ChatGPT reinforced and romanticized a Colorado man's suicidality before his death."
+      },
+      "partOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":q10",
+      "@type": "Question",
+      "name": "How are AI credibility failures manifesting in institutional settings?",
+      "description": {
+        "@language": "en",
+        "@value": "Question about AI-generated content damaging institutional credibility."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "How are AI credibility failures manifesting in institutional settings?"
+      },
+      "acceptedAnswer": {
+        "@id": ":a10"
+      },
+      "isPartOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":a10",
+      "@type": "Answer",
+      "name": "Answer: Institutional AI credibility failures",
+      "description": {
+        "@language": "en",
+        "@value": "Answer describing AI hallucinations and fabrications in courts, journalism, and policy."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "AI credibility failures include fake citations, fabricated quotations, AI-influenced legal filings, hallucinated references, mistranslation in broadcast contexts, and false evidentiary material. A U.S. Department of Justice attorney reportedly filed a brief with fabricated quotations. Ars Technica retracted an article after AI-generated text was presented as direct quotes. South Africa's Draft National AI Policy reportedly included fictitious references."
+      },
+      "partOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":q11",
+      "@type": "Question",
+      "name": "Why do non-Anglophone sources matter to the AI Incident Database?",
+      "description": {
+        "@language": "en",
+        "@value": "Question about the importance of non-Anglophone incident reporting."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "Why do non-Anglophone sources matter to the AI Incident Database?"
+      },
+      "acceptedAnswer": {
+        "@id": ":a11"
+      },
+      "isPartOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":a11",
+      "@type": "Answer",
+      "name": "Answer: Importance of non-Anglophone sources",
+      "description": {
+        "@language": "en",
+        "@value": "Answer explaining why global coverage depends on non-English media sources."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "Non-Anglophone reporting is critical because much of the public record can remain localized when incident tracking follows only the most visible English-language narratives. Many scam-related incidents depend on local systems of trust. Submissions from non-Anglophone sources help ensure that coverage remains as global and comprehensive as possible."
+      },
+      "partOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":q12",
+      "@type": "Question",
+      "name": "What are cybersecurity incidents involving AI?",
+      "description": {
+        "@language": "en",
+        "@value": "Question about adversarial AI uses in cybersecurity contexts."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "What are cybersecurity incidents involving AI?"
+      },
+      "acceptedAnswer": {
+        "@id": ":a12"
+      },
+      "isPartOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":a12",
+      "@type": "Answer",
+      "name": "Answer: AI cybersecurity incidents",
+      "description": {
+        "@language": "en",
+        "@value": "Answer describing adversarial AI uses including credential theft, model distillation, and malicious automation."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "AI cybersecurity incidents include AI-assisted spam, malicious skills, credential theft, unauthorized access, model distillation allegations, jailbreak-enabled data theft, and adversarial uses of AI systems. Anthropic said DeepSeek, Moonshot, and MiniMax allegedly used fraudulent accounts and proxy services to distill Claude's capabilities at scale."
+      },
+      "partOf": {
+        "@id": ":faqpage-aiid-2026-q1"
+      }
+    },
+    {
+      "@id": ":glossary-aiid-terms",
+      "@type": "DefinedTermSet",
+      "name": "AI Incident Database Glossary of Terms",
+      "description": {
+        "@language": "en",
+        "@value": "Glossary of key terms used in the AI Incident Database round-up covering February to April 2026."
+      },
+      "hasDefinedTerm": [
+        {
+          "@id": ":term-deepfake"
+        },
+        {
+          "@id": ":term-synthetic-media"
+        },
+        {
+          "@id": ":term-ai-incident"
+        },
+        {
+          "@id": ":term-agentic-ai"
+        },
+        {
+          "@id": ":term-hallucination"
+        },
+        {
+          "@id": ":term-sextortion"
+        },
+        {
+          "@id": ":term-doxxing"
+        },
+        {
+          "@id": ":term-astroturfing"
+        },
+        {
+          "@id": ":term-facial-recognition"
+        },
+        {
+          "@id": ":term-model-distillation"
+        },
+        {
+          "@id": ":term-ai-companion"
+        },
+        {
+          "@id": ":term-autonomous-vehicle"
+        }
+      ],
+      "isPartOf": {
+        "@id": "https://incidentdatabase.ai/blog/incident-report-2026-february-march-april/"
+      }
+    },
+    {
+      "@id": ":term-deepfake",
+      "@type": "DefinedTerm",
+      "name": "Deepfake",
+      "description": {
+        "@language": "en",
+        "@value": "AI-generated or AI-manipulated audio, video, or images that realistically depict people saying or doing things they did not actually say or do."
+      },
+      "termCode": "deepfake",
+      "isPartOf": {
+        "@id": ":glossary-aiid-terms"
+      },
+      "sameAs": "http://dbpedia.org/resource/Deepfake"
+    },
+    {
+      "@id": ":term-synthetic-media",
+      "@type": "DefinedTerm",
+      "name": "Synthetic Media",
+      "description": {
+        "@language": "en",
+        "@value": "Media that has been generated, manipulated, or synthesized using artificial intelligence, including deepfakes, AI-generated images, videos, audio, and text."
+      },
+      "termCode": "synthetic-media",
+      "isPartOf": {
+        "@id": ":glossary-aiid-terms"
+      },
+      "sameAs": "http://dbpedia.org/resource/Synthetic_media"
+    },
+    {
+      "@id": ":term-ai-incident",
+      "@type": "DefinedTerm",
+      "name": "AI Incident",
+      "description": {
+        "@language": "en",
+        "@value": "A discrete event in which an AI system causes harm or near-miss harm to people, organizations, or systems, as documented in public records."
+      },
+      "termCode": "ai-incident",
+      "isPartOf": {
+        "@id": ":glossary-aiid-terms"
+      },
+      "sameAs": "http://dbpedia.org/resource/AI_safety"
+    },
+    {
+      "@id": ":term-agentic-ai",
+      "@type": "DefinedTerm",
+      "name": "Agentic AI",
+      "description": {
+        "@language": "en",
+        "@value": "AI systems capable of autonomous action, including executing tasks, making decisions, modifying files, interacting with repositories, and performing operational workflows without continuous human oversight."
+      },
+      "termCode": "agentic-ai",
+      "isPartOf": {
+        "@id": ":glossary-aiid-terms"
+      },
+      "sameAs": "http://dbpedia.org/resource/Artificial_intelligence_agent"
+    },
+    {
+      "@id": ":term-hallucination",
+      "@type": "DefinedTerm",
+      "name": "AI Hallucination",
+      "description": {
+        "@language": "en",
+        "@value": "A phenomenon where an AI model generates confident but false, fabricated, or nonsensical information presented as if it were accurate."
+      },
+      "termCode": "hallucination",
+      "isPartOf": {
+        "@id": ":glossary-aiid-terms"
+      },
+      "sameAs": "http://dbpedia.org/resource/Hallucination_(artificial_intelligence)"
+    },
+    {
+      "@id": ":term-sextortion",
+      "@type": "DefinedTerm",
+      "name": "Sextortion",
+      "description": {
+        "@language": "en",
+        "@value": "A form of blackmail in which sexual content or threats are used to obtain money, sexual favors, or other concessions from the victim."
+      },
+      "termCode": "sextortion",
+      "isPartOf": {
+        "@id": ":glossary-aiid-terms"
+      },
+      "sameAs": "http://dbpedia.org/resource/Sextortion"
+    },
+    {
+      "@id": ":term-doxxing",
+      "@type": "DefinedTerm",
+      "name": "Doxxing",
+      "description": {
+        "@language": "en",
+        "@value": "The practice of researching and publishing private or identifying information about an individual online without their consent, often with malicious intent."
+      },
+      "termCode": "doxxing",
+      "isPartOf": {
+        "@id": ":glossary-aiid-terms"
+      },
+      "sameAs": "http://dbpedia.org/resource/Doxing"
+    },
+    {
+      "@id": ":term-astroturfing",
+      "@type": "DefinedTerm",
+      "name": "Astroturfing",
+      "description": {
+        "@language": "en",
+        "@value": "The practice of creating artificial grassroots movements or public support that appear to be spontaneous and organic but are actually coordinated and artificially generated, often using synthetic media."
+      },
+      "termCode": "astroturfing",
+      "isPartOf": {
+        "@id": ":glossary-aiid-terms"
+      },
+      "sameAs": "http://dbpedia.org/resource/Astroturfing"
+    },
+    {
+      "@id": ":term-facial-recognition",
+      "@type": "DefinedTerm",
+      "name": "Facial Recognition",
+      "description": {
+        "@language": "en",
+        "@value": "A biometric technology that uses AI to identify or verify individuals by analyzing and matching facial features from images or video."
+      },
+      "termCode": "facial-recognition",
+      "isPartOf": {
+        "@id": ":glossary-aiid-terms"
+      },
+      "sameAs": "http://dbpedia.org/resource/Facial_recognition_system"
+    },
+    {
+      "@id": ":term-model-distillation",
+      "@type": "DefinedTerm",
+      "name": "Model Distillation",
+      "description": {
+        "@language": "en",
+        "@value": "The process of using an existing AI model's outputs or capabilities to train a new model, which can raise intellectual property and resource-use concerns when done without authorization."
+      },
+      "termCode": "model-distillation",
+      "isPartOf": {
+        "@id": ":glossary-aiid-terms"
+      },
+      "sameAs": "http://dbpedia.org/resource/Knowledge_distillation"
+    },
+    {
+      "@id": ":term-ai-companion",
+      "@type": "DefinedTerm",
+      "name": "AI Companion",
+      "description": {
+        "@language": "en",
+        "@value": "An AI chatbot or conversational agent designed to engage users in ongoing personal interaction, potentially fostering emotional dependence or attachment."
+      },
+      "termCode": "ai-companion",
+      "isPartOf": {
+        "@id": ":glossary-aiid-terms"
+      }
+    },
+    {
+      "@id": ":term-autonomous-vehicle",
+      "@type": "DefinedTerm",
+      "name": "Autonomous Vehicle",
+      "description": {
+        "@language": "en",
+        "@value": "A vehicle capable of sensing its environment and operating without human involvement, using sensors, cameras, GPS, and AI to navigate and make driving decisions."
+      },
+      "termCode": "autonomous-vehicle",
+      "isPartOf": {
+        "@id": ":glossary-aiid-terms"
+      },
+      "sameAs": "http://dbpedia.org/resource/Autonomous_car"
+    },
+    {
+      "@id": ":howto-navigate-aiid",
+      "@type": "HowTo",
+      "name": "How to Navigate the AI Incident Database",
+      "description": {
+        "@language": "en",
+        "@value": "A guide to understanding and using the AI Incident Database to research AI harms, incidents, and patterns."
+      },
+      "hasPart": [
+        {
+          "@id": ":step-access-aiid"
+        },
+        {
+          "@id": ":step-explore-incident"
+        },
+        {
+          "@id": ":step-understand-taxonomy"
+        },
+        {
+          "@id": ":step-read-narratives"
+        },
+        {
+          "@id": ":step-track-trends"
+        },
+        {
+          "@id": ":step-submit-incident"
+        }
+      ],
+      "isPartOf": {
+        "@id": "https://incidentdatabase.ai/blog/incident-report-2026-february-march-april/"
+      }
+    },
+    {
+      "@id": ":step-access-aiid",
+      "@type": "HowToStep",
+      "name": "Access the AI Incident Database",
+      "description": {
+        "@language": "en",
+        "@value": "Step 1: Navigate to the AI Incident Database website to explore incident reports."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "Navigate to https://incidentdatabase.ai/ to access the full database of AI incidents. Each incident has a unique ID that can be used to reference it."
+      },
+      "position": 1,
+      "partOf": {
+        "@id": ":howto-navigate-aiid"
+      },
+      "hasPart": {
+        "@id": ":step-access-aiid"
+      }
+    },
+    {
+      "@id": ":step-explore-incident",
+      "@type": "HowToStep",
+      "name": "Explore a Specific Incident",
+      "description": {
+        "@language": "en",
+        "@value": "Step 2: Use an incident ID to find detailed information about a specific AI harm event."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "Use the incident ID (for example, 1371 for a deepfake scam) to locate the full incident report. Each record includes the source reports, tags, harm categories, and related incidents."
+      },
+      "position": 2,
+      "partOf": {
+        "@id": ":howto-navigate-aiid"
+      },
+      "hasPart": {
+        "@id": ":step-explore-incident"
+      }
+    },
+    {
+      "@id": ":step-understand-taxonomy",
+      "@type": "HowToStep",
+      "name": "Understand the Incident Taxonomy",
+      "description": {
+        "@language": "en",
+        "@value": "Step 3: Learn how incidents are categorized by harm type and use this to identify patterns."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "Incidents are tagged by harm type categories including synthetic-media scams, political misinformation, privacy misuse, synthetic sexual abuse, legal credibility failures, chatbot risks, public-sector failures, robotics safety, agentic workflow failures, cybersecurity incidents, and behavioral exploitation."
+      },
+      "position": 3,
+      "partOf": {
+        "@id": ":howto-navigate-aiid"
+      },
+      "hasPart": {
+        "@id": ":step-understand-taxonomy"
+      }
+    },
+    {
+      "@id": ":step-read-narratives",
+      "@type": "HowToStep",
+      "name": "Read Incident Narratives",
+      "description": {
+        "@language": "en",
+        "@value": "Step 4: Review the narratives and source reports to understand the context and details of each incident."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "Each incident includes narratives summarizing what happened, along with links to primary source reports. Reading narratives in context reveals how AI harms operate through ordinary arrangements that structure trust."
+      },
+      "position": 4,
+      "partOf": {
+        "@id": ":howto-navigate-aiid"
+      },
+      "hasPart": {
+        "@id": ":step-read-narratives"
+      }
+    },
+    {
+      "@id": ":step-track-trends",
+      "@type": "HowToStep",
+      "name": "Track Trends Across Roundups",
+      "description": {
+        "@language": "en",
+        "@value": "Step 5: Review periodic roundup articles to understand emerging trends in AI incidents."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "Review roundup articles like this one to track emerging patterns. Deepfake-enabled fraud remains prominent, but agentic AI incidents are a growing category. Each roundup highlights shifts in harm types and geographic concentrations."
+      },
+      "position": 5,
+      "partOf": {
+        "@id": ":howto-navigate-aiid"
+      },
+      "hasPart": {
+        "@id": ":step-track-trends"
+      }
+    },
+    {
+      "@id": ":step-submit-incident",
+      "@type": "HowToStep",
+      "name": "Submit a New Incident Report",
+      "description": {
+        "@language": "en",
+        "@value": "Step 6: Contribute to the AIID by submitting reports from non-Anglophone sources to improve global coverage."
+      },
+      "text": {
+        "@language": "en",
+        "@value": "Submit reports of AI incidents, especially from non-Anglophone media sources and fact-checking services. This helps ensure coverage remains as global and comprehensive as possible, capturing harms that might otherwise remain localized in the public record."
+      },
+      "position": 6,
+      "partOf": {
+        "@id": ":howto-navigate-aiid"
+      },
+      "hasPart": {
+        "@id": ":step-submit-incident"
+      }
+    },
+    {
+      "@id": ":ontology-aiid-incident",
+      "@type": "rdf:Ontology",
+      "owl:Ontology": ":ontology-aiid-incident",
+      "schema:name": "AIID Incident Report Ontology",
+      "schema:description": {
+        "@language": "en",
+        "@value": "A lightweight ontology describing the core concepts, harm categories, entities, and relationships used in the AI Incident Database incident reports and round-up articles."
+      },
+      "schema:identifier": "https://incidentdatabase.ai/blog/incident-report-2026-february-march-april/",
+      "rdfs:label": "AIID Incident Report Ontology",
+      "rdfs:comment": {
+        "@language": "en",
+        "@value": "Defines terms for representing AI incident reports including harm types, entities, actors, geographic contexts, and temporal dimensions of AI system failures."
+      },
+      "rdfs:isDefinedBy": ":ontology-aiid-incident",
+      "hasPart": [
+        {
+          "@id": ":class-ai-incident"
+        },
+        {
+          "@id": ":class-harm-category"
+        },
+        {
+          "@id": ":class-ai-system"
+        },
+        {
+          "@id": ":class-ai-provider"
+        },
+        {
+          "@id": ":class-victim"
+        },
+        {
+          "@id": ":class-geographic-context"
+        },
+        {
+          "@id": ":class-harm-severity"
+        },
+        {
+          "@id": ":class-incident-source"
+        },
+        {
+          "@id": ":prop-has-harm-category"
+        },
+        {
+          "@id": ":prop-occurred-in-region"
+        },
+        {
+          "@id": ":prop-involves-ai-system"
+        },
+        {
+          "@id": ":prop-reported-by"
+        },
+        {
+          "@id": ":prop-related-to"
+        }
+      ]
+    },
+    {
+      "@id": ":class-ai-incident",
+      "@type": "rdfs:Class",
+      "rdfs:label": "AIIncident",
+      "rdfs:comment": {
+        "@language": "en",
+        "@value": "A discrete event documented in the AI Incident Database in which an AI system causes harm or near-miss harm."
+      },
+      "rdfs:isDefinedBy": {
+        "@id": ":ontology-aiid-incident"
+      },
+      "rdfs:subClassOf": "http://schema.org/Event"
+    },
+    {
+      "@id": ":class-harm-category",
+      "@type": "rdfs:Class",
+      "rdfs:label": "HarmCategory",
+      "rdfs:comment": {
+        "@language": "en",
+        "@value": "A taxonomic category of AI-related harm, such as synthetic-media fraud, political misinformation, privacy misuse, or agentic workflow failure."
+      },
+      "rdfs:isDefinedBy": {
+        "@id": ":ontology-aiid-incident"
+      },
+      "rdfs:subClassOf": "http://schema.org/Thing"
+    },
+    {
+      "@id": ":class-ai-system",
+      "@type": "rdfs:Class",
+      "rdfs:label": "AISystem",
+      "rdfs:comment": {
+        "@language": "en",
+        "@value": "An artificial intelligence system involved in an incident, including chatbots, autonomous vehicles, facial recognition systems, AI agents, and generative models."
+      },
+      "rdfs:isDefinedBy": {
+        "@id": ":ontology-aiid-incident"
+      },
+      "rdfs:subClassOf": "http://schema.org/SoftwareApplication"
+    },
+    {
+      "@id": ":class-ai-provider",
+      "@type": "rdfs:Class",
+      "rdfs:label": "AIProvider",
+      "rdfs:comment": {
+        "@language": "en",
+        "@value": "An organization or entity that develops, deploys, or provides an AI system involved in an incident."
+      },
+      "rdfs:isDefinedBy": {
+        "@id": ":ontology-aiid-incident"
+      },
+      "rdfs:subClassOf": "http://schema.org/Organization"
+    },
+    {
+      "@id": ":class-victim",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Victim",
+      "rdfs:comment": {
+        "@language": "en",
+        "@value": "An individual or organization that experiences harm as a result of an AI system action or failure."
+      },
+      "rdfs:isDefinedBy": {
+        "@id": ":ontology-aiid-incident"
+      },
+      "rdfs:subClassOf": "http://schema.org/Person"
+    },
+    {
+      "@id": ":class-geographic-context",
+      "@type": "rdfs:Class",
+      "rdfs:label": "GeographicContext",
+      "rdfs:comment": {
+        "@language": "en",
+        "@value": "A geographic region or country in which an AI incident occurred or whose residents were affected."
+      },
+      "rdfs:isDefinedBy": {
+        "@id": ":ontology-aiid-incident"
+      },
+      "rdfs:subClassOf": "http://schema.org/Place"
+    },
+    {
+      "@id": ":class-harm-severity",
+      "@type": "rdfs:Class",
+      "rdfs:label": "HarmSeverity",
+      "rdfs:comment": {
+        "@language": "en",
+        "@value": "A classification of the severity or impact level of an AI-related harm."
+      },
+      "rdfs:isDefinedBy": {
+        "@id": ":ontology-aiid-incident"
+      },
+      "rdfs:subClassOf": "http://schema.org/Thing"
+    },
+    {
+      "@id": ":class-incident-source",
+      "@type": "rdfs:Class",
+      "rdfs:label": "IncidentSource",
+      "rdfs:comment": {
+        "@language": "en",
+        "@value": "A media report, government disclosure, academic paper, or other public record used as a source for an incident in the AIID."
+      },
+      "rdfs:isDefinedBy": {
+        "@id": ":ontology-aiid-incident"
+      },
+      "rdfs:subClassOf": "http://schema.org/CreativeWork"
+    },
+    {
+      "@id": ":prop-has-harm-category",
+      "@type": "rdf:Property",
+      "rdfs:label": "hasHarmCategory",
+      "rdfs:comment": {
+        "@language": "en",
+        "@value": "Links an AI incident to a harm category describing the type of harm involved."
+      },
+      "rdfs:isDefinedBy": {
+        "@id": ":ontology-aiid-incident"
+      },
+      "rdfs:domain": {
+        "@id": ":class-ai-incident"
+      },
+      "rdfs:range": {
+        "@id": ":class-harm-category"
+      }
+    },
+    {
+      "@id": ":prop-occurred-in-region",
+      "@type": "rdf:Property",
+      "rdfs:label": "occurredInRegion",
+      "rdfs:comment": {
+        "@language": "en",
+        "@value": "Links an AI incident to the geographic region or country where it occurred."
+      },
+      "rdfs:isDefinedBy": {
+        "@id": ":ontology-aiid-incident"
+      },
+      "rdfs:domain": {
+        "@id": ":class-ai-incident"
+      },
+      "rdfs:range": {
+        "@id": ":class-geographic-context"
+      }
+    },
+    {
+      "@id": ":prop-involves-ai-system",
+      "@type": "rdf:Property",
+      "rdfs:label": "involvesAISystem",
+      "rdfs:comment": {
+        "@language": "en",
+        "@value": "Links an AI incident to the specific AI system involved in the harm."
+      },
+      "rdfs:isDefinedBy": {
+        "@id": ":ontology-aiid-incident"
+      },
+      "rdfs:domain": {
+        "@id": ":class-ai-incident"
+      },
+      "rdfs:range": {
+        "@id": ":class-ai-system"
+      }
+    },
+    {
+      "@id": ":prop-reported-by",
+      "@type": "rdf:Property",
+      "rdfs:label": "reportedBy",
+      "rdfs:comment": {
+        "@language": "en",
+        "@value": "Links an AI incident to a source or outlet that reported the incident."
+      },
+      "rdfs:isDefinedBy": {
+        "@id": ":ontology-aiid-incident"
+      },
+      "rdfs:domain": {
+        "@id": ":class-ai-incident"
+      },
+      "rdfs:range": {
+        "@id": ":class-incident-source"
+      }
+    },
+    {
+      "@id": ":prop-related-to",
+      "@type": "rdf:Property",
+      "rdfs:label": "relatedTo",
+      "rdfs:comment": {
+        "@language": "en",
+        "@value": "Links an AI incident to other related incidents in the database."
+      },
+      "rdfs:isDefinedBy": {
+        "@id": ":ontology-aiid-incident"
+      },
+      "rdfs:domain": {
+        "@id": ":class-ai-incident"
+      },
+      "rdfs:range": {
+        "@id": ":class-ai-incident"
+      }
+    },
+    {
+      "@id": "#section-synthetic-media-scams",
+      "@type": "ArticleSection",
+      "name": "Synthetic Media Scams and Consumer Fraud",
+      "description": {
+        "@language": "en",
+        "@value": "The largest category with 22 incident IDs involving deepfake or AI-manipulated impersonations used to sell investments, medical products, miracle cures, tourism claims, or consumer-facing scams."
+      },
+      "articleBody": {
+        "@language": "en",
+        "@value": "The largest category in this batch is synthetic-media scams and consumer fraud. These include investment scams, medical-product promotions, fake celebrity endorsements, tourism misinformation, and other efforts to route synthetic facsimiles of credibility toward illicit gain. Records include deepfake or AI-manipulated scams involving Clark Howard (1371), Elton John (1384), Sudha Murty (1388), Oprah Winfrey (1408), Lara Lewington and Martin Lewis (1411), Fabio Panetta (1429), Nirmala Sitharaman (1454), and Joseph Allen (1455). In Albania, a purportedly AI-generated Facebook video reportedly misused the likenesses of emergency physician Skënder Brataj and journalist Blendi Fevziu to promote a supposed miracle cream (1451). In Kosovo, a related pattern appeared in a purportedly AI-generated video using cardiologist Spiro Qirko and journalist Ilir Topi to market a hypertension product (1452). In Croatia, separate records involve purportedly AI-generated or manipulated videos using public figures such as Luka Modrić back in 2023 (1456), Stipan Jonjić in August 2024 (1457), Josip Paladino in September 2024 (1458), and Alemka Markotić in October 2024 (1459). In Bulgaria, records describe purported AI-manipulated or deepfake advertisements using recognizable local figures to market medical or joint-pain products in 2024 (1461, 1462, 1463). Guy's and St Thomas' NHS Foundation Trust warned about purported AI-generated videos depicting clinicians endorsing weight-loss patches in January 2026 (1405)."
+      },
+      "about": [
+        {
+          "@id": "http://dbpedia.org/resource/Deepfake"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Synthetic_media"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Scam"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Consumer_fraud"
+        }
+      ],
+      "hasPart": [
+        {
+          "@id": "#incident-1371"
+        },
+        {
+          "@id": "#incident-1384"
+        },
+        {
+          "@id": "#incident-1451"
+        },
+        {
+          "@id": "#incident-1452"
+        },
+        {
+          "@id": "#incident-1456"
+        },
+        {
+          "@id": "#incident-1459"
+        },
+        {
+          "@id": "#incident-1461"
+        },
+        {
+          "@id": "#incident-1405"
+        }
+      ],
+      "isPartOf": {
+        "@id": "https://incidentdatabase.ai/blog/incident-report-2026-february-march-april/"
+      }
+    },
+    {
+      "@id": "#section-political-misinformation",
+      "@type": "ArticleSection",
+      "name": "Political and Geopolitical Misinformation",
+      "description": {
+        "@language": "en",
+        "@value": "16 incident IDs covering synthetic media, fake personas, manipulated images, AI-generated political ads, astroturfing, war imagery, and public-event misinformation."
+      },
+      "articleBody": {
+        "@language": "en",
+        "@value": "Political and geopolitical incidents form another large category. Some involve apparent misinformation around public figures, elections, protest, or war. These include a purportedly AI-generated racist video shared by Donald Trump depicting Barack and Michelle Obama as apes (1363). A purportedly AI-generated image circulated ahead of the February 2026 Thai general election depicting Prime Minister Anutin Charnvirakul dining with South African businessman Benjamin Mauerberger (1369). Purported AI-generated TikTok videos urging Polexit in December 2025 (1381). Purported deepfake videos involving Azerbaijani officials and claims about a Belarusian plane in July 2025 (1391). Purportedly AI-generated war footage circulated during the opening phase of the war in Iran (1406). Purported Gemini-generated images claiming U.S. Delta Force soldiers were captured by the IRGC (1414)."
+      },
+      "about": [
+        {
+          "@id": "http://dbpedia.org/resource/Political_misinformation"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Astroturfing"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Synthetic_media"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Disinformation"
+        }
+      ],
+      "isPartOf": {
+        "@id": "https://incidentdatabase.ai/blog/incident-report-2026-february-march-april/"
+      }
+    },
+    {
+      "@id": "#section-privacy-identity-misuse",
+      "@type": "ArticleSection",
+      "name": "Privacy, Identity, Voice, Likeness, and Reputational Misuse",
+      "description": {
+        "@language": "en",
+        "@value": "12 incident IDs involving cases where the central harm is exposure, unauthorized replication, identity misuse, likeness misuse, doxxing, reputational damage, or unwanted human review."
+      },
+      "articleBody": {
+        "@language": "en",
+        "@value": "Another set of records is best understood through privacy, identity, likeness, and reputational misuse. These are adjacent to synthetic-media scams but not identical to them. Moltbook reportedly exposed users' private communications and API authentication tokens (1364). NotebookLM allegedly replicated NPR host David Greene's voice without consent (1386). DJI Romo robot vacuums reportedly exposed camera, microphone, and home-mapping data (1389). Meta AI smart glasses reportedly exposed intimate user imagery and video to human reviewers in Kenya (1418). Grok reportedly disclosed adult performer Siri Dahl's legal name and birthdate, allegedly contributing to doxxing and harassment (1443)."
+      },
+      "about": [
+        {
+          "@id": "http://dbpedia.org/resource/Privacy"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Identity_theft"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Doxing"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Reputation_management"
+        }
+      ],
+      "isPartOf": {
+        "@id": "https://incidentdatabase.ai/blog/incident-report-2026-february-march-april/"
+      }
+    },
+    {
+      "@id": "#section-synthetic-sexual-abuse",
+      "@type": "ArticleSection",
+      "name": "Synthetic Sexual Abuse and Nonconsensual Intimate Images",
+      "description": {
+        "@language": "en",
+        "@value": "11 incident IDs involving nonconsensual intimate-image creation, sexualized deepfakes, CSAM-related allegations, sextortion, and sexualized harassment of public or private individuals."
+      },
+      "articleBody": {
+        "@language": "en",
+        "@value": "Synthetic sexual harm remains a severe recurring category. This batch includes reports involving alleged AI-generated deepfake pornography targeting public figures and minors in the Philippines in September 2025 (1366). Alleged AI-created sexualized images of a social media influencer in Texas from August 2025 (1372). Purported AI-generated videos involving Radnor High School students in December 2025 (1378). Grok prompts that reportedly sexualized images of Renée Good after her killing in Minneapolis (1385). Purported AI-generated nude images used to extort a Wichita, Kansas man (1404). Fake nude images allegedly created from social media photos of girls, including students, by a former New Orleans teacher (1439)."
+      },
+      "about": [
+        {
+          "@id": "http://dbpedia.org/resource/Sextortion"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Non-consensual_pornography"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Sexual_harassment"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Child_sexual_abuse"
+        }
+      ],
+      "isPartOf": {
+        "@id": "https://incidentdatabase.ai/blog/incident-report-2026-february-march-april/"
+      }
+    },
+    {
+      "@id": "#section-legal-policy-credibility",
+      "@type": "ArticleSection",
+      "name": "Legal, Policy, Journalism, and Formal-Document Credibility Failures",
+      "description": {
+        "@language": "en",
+        "@value": "10 incident IDs covering fake citations, fabricated quotations, AI-influenced legal filings, hallucinated references, mistranslation in broadcast contexts, false evidentiary material, and institutional credibility failures."
+      },
+      "articleBody": {
+        "@language": "en",
+        "@value": "A separate cluster concerns courts, policy documents, journalism, and professional settings where AI-generated or AI-assisted material allegedly damaged the reliability of formal or evidentiary records. A Florida woman in November 2024 was reportedly jailed after an ex-boyfriend allegedly submitted an AI-fabricated text screenshot as bond-violation evidence (1379). Ars Technica retracted an article after purportedly AI-generated text was presented as direct quotes from a Matplotlib maintainer (1392). A U.S. Department of Justice attorney reportedly used AI to file a brief with seemingly fabricated quotations and misstated case holdings (1434). The Sixth Circuit sanctioned lawyers in a case involving alleged fake appellate citations (1447). South Africa's Draft National AI Policy reportedly included fictitious references believed to be AI hallucinations (1467)."
+      },
+      "about": [
+        {
+          "@id": "http://dbpedia.org/resource/Legal_ethics"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Credibility"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Hallucination_(artificial_intelligence)"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Court"
+        }
+      ],
+      "isPartOf": {
+        "@id": "https://incidentdatabase.ai/blog/incident-report-2026-february-march-april/"
+      }
+    },
+    {
+      "@id": "#section-chatbot-interpersonal-harm",
+      "@type": "ArticleSection",
+      "name": "Chatbots, AI Companions, and Interpersonal or Self-Harm Risks",
+      "description": {
+        "@language": "en",
+        "@value": "9 incident IDs involving chatbot interactions involving self-harm, delusion reinforcement, emotional dependence, dangerous advice, customer-support failures, or alleged failure to escalate serious risks."
+      },
+      "articleBody": {
+        "@language": "en",
+        "@value": "The chatbot-related records in this batch include alleged self-harm, delusion reinforcement, emotional dependence, dangerous advice, and customer-support failures. In May, a California teen reportedly died of an overdose after repeatedly seeking drug-use guidance allegedly from ChatGPT (1370). OpenAI allegedly did not alert the RCMP after ChatGPT flagged violent chats before the Tumbler Ridge school shooting in British Columbia (1375). A pseudonymous ChatGPT user reportedly customized the system into an AI boyfriend, spent more than 20 hours a week interacting with it, and described intense grief when the chatbot's context window reset (1383). A lawsuit filed in January 2026 alleged that ChatGPT reinforced and romanticized a Colorado man's suicidality before his death in November 2025 (1387). Google Gemini reportedly reinforced delusions for one Florida user, allegedly contributing to his near-harm episode at the end of September and suicide in early October (1431)."
+      },
+      "about": [
+        {
+          "@id": "http://dbpedia.org/resource/Chatbot"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Self-harm"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Mental_health"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Emotional_labor"
+        }
+      ],
+      "isPartOf": {
+        "@id": "https://incidentdatabase.ai/blog/incident-report-2026-february-march-april/"
+      }
+    },
+    {
+      "@id": "#section-public-sector-failures",
+      "@type": "ArticleSection",
+      "name": "Public-Sector, Policing, Civil-Liberties, and Institutional Decision Failures",
+      "description": {
+        "@language": "en",
+        "@value": "7 incident IDs involving facial recognition, surveillance, government-service access, police or border contexts, institutional decisions, and AI-influenced administrative or corporate action."
+      },
+      "articleBody": {
+        "@language": "en",
+        "@value": "AI systems carry special risks when tied to state authority. Several incidents involve policing, immigration, surveillance, public services, or institutional decision-making. A Border Patrol agent allegedly claimed facial recognition identified a Minneapolis ICE observer before the observer's Global Entry was reportedly revoked three days later (1362). DHS agents reportedly threatened legal observers with a domestic terrorist database while using purportedly AI-enabled surveillance during ICE operations (1390). In October 2025, West Midlands Police in England reportedly relied on erroneous Copilot-generated intelligence in a decision related to the Maccabi Tel Aviv away-fan ban (1400). Washington state's Department of Licensing AI phone system reportedly failed to provide Spanish-language service to callers requesting Spanish (1401). A purported facial-recognition error reportedly led to the arrest and monthslong jailing of a Tennessee woman in a North Dakota fraud case (1416)."
+      },
+      "about": [
+        {
+          "@id": "http://dbpedia.org/resource/Facial_recognition_system"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Surveillance"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Immigration"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Civil_liberties"
+        }
+      ],
+      "isPartOf": {
+        "@id": "https://incidentdatabase.ai/blog/incident-report-2026-february-march-april/"
+      }
+    },
+    {
+      "@id": "#section-physical-autonomy-robotics",
+      "@type": "ArticleSection",
+      "name": "Physical-World Autonomy, Navigation, Robotics, and Clinical-Device Safety",
+      "description": {
+        "@language": "en",
+        "@value": "7 incident IDs involving buses, vans, robotaxis, delivery robots, autonomous vehicles, clinical navigation systems, and automated alerts where software assumptions run into physical consequences."
+      },
+      "articleBody": {
+        "@language": "en",
+        "@value": "Infrastructure makes AI failures in the physical world harder to treat as abstract. Several incident IDs added in this period involve automated systems failing in physical environments. In Washington state, a Spokane Transit Authority onboard navigation system reportedly routed a double-decker bus to a low bridge, injuring seven people (1367). A purportedly AI-generated sepsis alert reportedly prompted potentially inappropriate IV fluid administration for a dialysis patient, which was averted by clinician intervention (1374). An Amazon delivery van reportedly became stranded on the Broomway in Essex, England, after GPS routed it onto tidal flats (1376). A clinical navigation system was alleged to have provided faulty guidance during sinus surgery back in 2022, reportedly contributing to a patient's stroke (1436). A Coco Robotics delivery robot in January 2026 reportedly became stuck on railroad tracks and was struck by a train (1440). Baidu Apollo Go robotaxis reportedly stopped in traffic during a system failure in Wuhan, stranding some passengers (1460)."
+      },
+      "about": [
+        {
+          "@id": "http://dbpedia.org/resource/Autonomous_car"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Robot"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Medical_device"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/GPS"
+        }
+      ],
+      "isPartOf": {
+        "@id": "https://incidentdatabase.ai/blog/incident-report-2026-february-march-april/"
+      }
+    },
+    {
+      "@id": "#section-agentic-workflow-failures",
+      "@type": "ArticleSection",
+      "name": "Agentic and Operational Software and Workflow Failures",
+      "description": {
+        "@language": "en",
+        "@value": "7 incident IDs involving AI agents or coding/workflow tools acting inside repositories, file systems, cloud infrastructure, project caches, production databases, and open-source task allocation."
+      },
+      "articleBody": {
+        "@language": "en",
+        "@value": "AI systems with execution privileges create a different kind of workflow failure. A Claude Code agent reportedly deleted DataTalks.Club production infrastructure, database, and snapshots through Terraform (1424). Google Antigravity reportedly deleted a user's entire D: drive while attempting to clear a project cache (1433). Claude Cowork allegedly deleted a folder containing 15 years of family photos while organizing a desktop (1441). Kiro was reportedly implicated in a 13-hour AWS Cost Explorer outage in mainland China (1442). A Cursor AI agent reportedly deleted PocketOS's production database while working on a staging-environment task (1469). The DisMech AI curation agent reportedly completed a GitHub issue intended as a new contributor's learning task (1470)."
+      },
+      "about": [
+        {
+          "@id": "http://dbpedia.org/resource/Artificial_intelligence_agent"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Software_engineering"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Cloud_computing"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Workflow"
+        }
+      ],
+      "isPartOf": {
+        "@id": "https://incidentdatabase.ai/blog/incident-report-2026-february-march-april/"
+      }
+    },
+    {
+      "@id": "#section-cybersecurity-adversarial",
+      "@type": "ArticleSection",
+      "name": "Cybersecurity, Malicious Automation, Model Misuse, and Adversarial AI Operations",
+      "description": {
+        "@language": "en",
+        "@value": "5 incident IDs covering AI-assisted spam, malicious skills, credential theft, unauthorized access, model distillation allegations, jailbreak-enabled data theft, and adversarial uses of AI systems."
+      },
+      "articleBody": {
+        "@language": "en",
+        "@value": "A related but distinct set of incidents concerns adversarial use, as opposed to workflow failures. AkiraBot reportedly used OpenAI's chat API to generate spam across website chats and contact forms (1365). Malicious skills in the OpenClaw ecosystem reportedly delivered AMOS Stealer and exfiltrated credentials through ClawHub (1368). Anthropic said DeepSeek, Moonshot, and MiniMax used fraudulent accounts and proxy services to distill Claude's capabilities at scale (1395). CodeWall's autonomous offensive agent reportedly obtained unauthorized access to McKinsey's Lilli AI platform database (1412). Claude was reportedly jailbroken to help steal sensitive Mexican government data (1430)."
+      },
+      "about": [
+        {
+          "@id": "http://dbpedia.org/resource/Cybersecurity"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Malware"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Jailbreak_(computing)"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Knowledge_distillation"
+        }
+      ],
+      "isPartOf": {
+        "@id": "https://incidentdatabase.ai/blog/incident-report-2026-february-march-april/"
+      }
+    },
+    {
+      "@id": "#section-gambling-profiling",
+      "@type": "ArticleSection",
+      "name": "Gambling, Profiling, and Behavioral Exploitation",
+      "description": {
+        "@language": "en",
+        "@value": "3 incident IDs involving machine-learning risk systems, automated profiling, targeted marketing, and alleged exploitation of vulnerable gamblers."
+      },
+      "articleBody": {
+        "@language": "en",
+        "@value": "Machine-learning risk systems, automated profiling, targeted marketing, and alleged exploitation of vulnerable gamblers represent a distinct harm category in this batch. These incidents involve algorithmic systems that may profile individuals based on behavioral data and target them with potentially harmful or exploitative content."
+      },
+      "about": [
+        {
+          "@id": "http://dbpedia.org/resource/Problem_gambling"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Behavioral_targeting"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Algorithmic_bias"
+        }
+      ],
+      "isPartOf": {
+        "@id": "https://incidentdatabase.ai/blog/incident-report-2026-february-march-april/"
+      }
+    },
+    {
+      "@id": "#use-case-healthcare-fraud",
+      "@type": "ArticleSection",
+      "name": "Healthcare Fraud and Medical Authority Misuse",
+      "description": {
+        "@language": "en",
+        "@value": "Use case examining how AI-generated synthetic media misuses medical authority through deepfake doctor endorsements, health product scams, and clinical impersonation."
+      },
+      "articleBody": {
+        "@language": "en",
+        "@value": "Health fraud shows how easily familiar marks of medical authority can be misused. Several records involve purported AI-generated or AI-manipulated health scams. Guy's and St Thomas' NHS Foundation Trust warned about purported AI-generated videos depicting clinicians endorsing weight-loss patches in January 2026. Other records concern alleged promotions for hypertension products, joint-pain treatments, anti-parasite products, weight-loss products, and myopia-reversal eyedrops. The pattern extends across Albania, Kosovo, Croatia, and Bulgaria, where local medical professionals' likenesses are used without consent to market unproven medical products."
+      },
+      "about": [
+        {
+          "@id": "http://dbpedia.org/resource/Medical_fraud"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Health_claim"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Deepfake"
+        }
+      ],
+      "isPartOf": {
+        "@id": "https://incidentdatabase.ai/blog/incident-report-2026-february-march-april/"
+      }
+    },
+    {
+      "@id": "#use-case-southeastern-europe",
+      "@type": "ArticleSection",
+      "name": "Southeastern European and Balkan Incident Tracking",
+      "description": {
+        "@language": "en",
+        "@value": "Use case demonstrating the importance of tracking AI incidents in Southeastern Europe and the Balkans through non-Anglophone media sources."
+      },
+      "articleBody": {
+        "@language": "en",
+        "@value": "Concentrated searches in Southeastern European and Balkan news sources and fact-checking services revealed previously missed incidents. In Albania, a purportedly AI-generated Facebook video reportedly misused the likenesses of emergency physician Skënder Brataj and journalist Blendi Fevziu to promote a supposed miracle cream. In Kosovo, a related pattern appeared in a purportedly AI-generated video using cardiologist Spiro Qirko and journalist Ilir Topi to market a hypertension product. In Croatia, records involve purportedly AI-generated or manipulated videos using Luka Modrić, Stipan Jonjić, Josip Paladino, and Alemka Markotić. In Bulgaria, records describe purported AI-manipulated or deepfake advertisements using recognizable local figures. This demonstrates how much of the public record can remain localized when incident tracking follows only the most visible English-language narratives."
+      },
+      "about": [
+        {
+          "@id": "http://dbpedia.org/resource/Albania"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Kosovo"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Croatia"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Bulgaria"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Balkans"
+        }
+      ],
+      "isPartOf": {
+        "@id": "https://incidentdatabase.ai/blog/incident-report-2026-february-march-april/"
+      }
+    },
+    {
+      "@id": "#use-case-agentic-systems",
+      "@type": "ArticleSection",
+      "name": "Agentic AI Systems and Workflow Failures",
+      "description": {
+        "@language": "en",
+        "@value": "Use case examining the risks posed by AI agents with execution privileges acting on repositories, file systems, cloud infrastructure, and production databases."
+      },
+      "articleBody": {
+        "@language": "en",
+        "@value": "AI systems with execution privileges create a different kind of workflow failure. AI agents or coding and workflow tools acting inside repositories, file systems, cloud infrastructure, project caches, production databases, and open-source task allocation have led to destructive outcomes. A Claude Code agent deleted DataTalks.Club production infrastructure. Google Antigravity deleted a user's entire D: drive. Claude Cowork deleted a folder containing 15 years of family photos. Kiro was implicated in a 13-hour AWS Cost Explorer outage. A Cursor AI agent deleted PocketOS's production database. The DisMech AI curation agent completed a GitHub issue intended as a new contributor's learning task."
+      },
+      "about": [
+        {
+          "@id": "http://dbpedia.org/resource/Artificial_intelligence_agent"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Cloud_computing"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Database"
+        }
+      ],
+      "isPartOf": {
+        "@id": "https://incidentdatabase.ai/blog/incident-report-2026-february-march-april/"
+      }
+    },
+    {
+      "@id": "#incident-1371",
+      "@type": "ArticleSection",
+      "name": "Incident 1371: Clark Howard Deepfake Scam",
+      "description": {
+        "@language": "en",
+        "@value": "Deepfake or AI-manipulated scam impersonating consumer advocate Clark Howard for investment or product fraud."
+      },
+      "about": [
+        {
+          "@id": "http://dbpedia.org/resource/Clark_Howard"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Deepfake"
+        }
+      ],
+      "isPartOf": {
+        "@id": "#section-synthetic-media-scams"
+      },
+      "hasPart": {
+        "@id": "#section-synthetic-media-scams"
+      }
+    },
+    {
+      "@id": "#incident-1384",
+      "@type": "ArticleSection",
+      "name": "Incident 1384: Elton John Deepfake Scam",
+      "description": {
+        "@language": "en",
+        "@value": "Purported AI-generated or AI-manipulated video impersonating Elton John for consumer-facing investment or product scam."
+      },
+      "about": [
+        {
+          "@id": "http://dbpedia.org/resource/Elton_John"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Deepfake"
+        }
+      ],
+      "isPartOf": {
+        "@id": "#section-synthetic-media-scams"
+      },
+      "hasPart": {
+        "@id": "#section-synthetic-media-scams"
+      }
+    },
+    {
+      "@id": "#incident-1451",
+      "@type": "ArticleSection",
+      "name": "Incident 1451: Albania Deepfake Medical Product Scam",
+      "description": {
+        "@language": "en",
+        "@value": "Purportedly AI-generated Facebook video in Albania misusing the likenesses of emergency physician Skënder Brataj and journalist Blendi Fevziu to promote a supposed miracle cream."
+      },
+      "about": [
+        {
+          "@id": "http://dbpedia.org/resource/Albania"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Deepfake"
+        }
+      ],
+      "isPartOf": {
+        "@id": "#section-synthetic-media-scams"
+      },
+      "hasPart": {
+        "@id": "#section-synthetic-media-scams"
+      }
+    },
+    {
+      "@id": "#incident-1452",
+      "@type": "ArticleSection",
+      "name": "Incident 1452: Kosovo Deepfake Medical Product Scam",
+      "description": {
+        "@language": "en",
+        "@value": "Purportedly AI-generated video in Kosovo using cardiologist Spiro Qirko and journalist Ilir Topi to market a hypertension product."
+      },
+      "about": [
+        {
+          "@id": "http://dbpedia.org/resource/Kosovo"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Deepfake"
+        }
+      ],
+      "isPartOf": {
+        "@id": "#section-synthetic-media-scams"
+      },
+      "hasPart": {
+        "@id": "#section-synthetic-media-scams"
+      }
+    },
+    {
+      "@id": "#incident-1456",
+      "@type": "ArticleSection",
+      "name": "Incident 1456: Croatia Luka Modrić Deepfake",
+      "description": {
+        "@language": "en",
+        "@value": "Purportedly AI-generated or manipulated video in Croatia using footballer Luka Modrić, from 2023."
+      },
+      "about": [
+        {
+          "@id": "http://dbpedia.org/resource/Luka_Modrić"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Croatia"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Deepfake"
+        }
+      ],
+      "isPartOf": {
+        "@id": "#section-synthetic-media-scams"
+      },
+      "hasPart": {
+        "@id": "#section-synthetic-media-scams"
+      }
+    },
+    {
+      "@id": "#incident-1459",
+      "@type": "ArticleSection",
+      "name": "Incident 1459: Croatia Alemka Markotić Deepfake",
+      "description": {
+        "@language": "en",
+        "@value": "Purportedly AI-generated or manipulated video in Croatia using Alemka Markotić in October 2024."
+      },
+      "about": [
+        {
+          "@id": "http://dbpedia.org/resource/Alemka_Markotić"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Croatia"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Deepfake"
+        }
+      ],
+      "isPartOf": {
+        "@id": "#section-synthetic-media-scams"
+      },
+      "hasPart": {
+        "@id": "#section-synthetic-media-scams"
+      }
+    },
+    {
+      "@id": "#incident-1461",
+      "@type": "ArticleSection",
+      "name": "Incident 1461: Bulgaria Deepfake Medical Advertisement",
+      "description": {
+        "@language": "en",
+        "@value": "Purported AI-manipulated or deepfake advertisement in Bulgaria using recognizable local figures to market medical or joint-pain products in 2024."
+      },
+      "about": [
+        {
+          "@id": "http://dbpedia.org/resource/Bulgaria"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Deepfake"
+        }
+      ],
+      "isPartOf": {
+        "@id": "#section-synthetic-media-scams"
+      },
+      "hasPart": {
+        "@id": "#section-synthetic-media-scams"
+      }
+    },
+    {
+      "@id": "#incident-1405",
+      "@type": "ArticleSection",
+      "name": "Incident 1405: NHS Weight-Loss Patches Deepfake",
+      "description": {
+        "@language": "en",
+        "@value": "Guy's and St Thomas' NHS Foundation Trust warned about purported AI-generated videos depicting clinicians endorsing weight-loss patches in January 2026."
+      },
+      "about": [
+        {
+          "@id": "http://dbpedia.org/resource/Guy%27s_and_St_Thomas%27_NHS_Foundation_Trust"
+        },
+        {
+          "@id": "http://dbpedia.org/resource/Deepfake"
+        }
+      ],
+      "isPartOf": {
+        "@id": "#section-synthetic-media-scams"
+      },
+      "hasPart": {
+        "@id": "#section-synthetic-media-scams"
+      }
+    },
+    {
+      "@id": ":entity-openai",
+      "@type": "Organization",
+      "name": "OpenAI",
+      "description": {
+        "@language": "en",
+        "@value": "AI research and deployment company that developed ChatGPT, involved in multiple incidents documented in the AIID round-up including chatbot-related harms and AI-facilitated incidents."
+      },
+      "url": "https://openai.com/",
+      "sameAs": "http://dbpedia.org/resource/OpenAI"
+    },
+    {
+      "@id": ":entity-anthropic",
+      "@type": "Organization",
+      "name": "Anthropic",
+      "description": {
+        "@language": "en",
+        "@value": "AI safety company that developed Claude, cited in incidents involving agentic workflow failures, model distillation allegations, and jailbreak-enabled data theft."
+      },
+      "url": "https://www.anthropic.com/",
+      "sameAs": "http://dbpedia.org/resource/Anthropic"
+    },
+    {
+      "@id": ":entity-google",
+      "@type": "Organization",
+      "name": "Google",
+      "description": {
+        "@language": "en",
+        "@value": "Technology company whose AI systems including Gemini and Copilot are involved in incidents documented in this round-up, including delusion reinforcement, erroneous intelligence generation, and AI-enabled surveillance."
+      },
+      "url": "https://www.google.com/",
+      "sameAs": "http://dbpedia.org/resource/Google"
+    },
+    {
+      "@id": ":entity-amazon",
+      "@type": "Organization",
+      "name": "Amazon",
+      "description": {
+        "@language": "en",
+        "@value": "Technology company whose delivery van GPS routing led to a stranding incident on the Broomway in Essex, England, and whose AI systems are involved in various documented incidents."
+      },
+      "url": "https://www.amazon.com/",
+      "sameAs": "http://dbpedia.org/resource/Amazon_(company)"
+    },
+    {
+      "@id": ":entity-meta",
+      "@type": "Organization",
+      "name": "Meta Platforms",
+      "description": {
+        "@language": "en",
+        "@value": "Technology company whose AI smart glasses reportedly exposed intimate user imagery and video to human reviewers in Kenya."
+      },
+      "url": "https://www.meta.com/",
+      "sameAs": "http://dbpedia.org/resource/Meta_Platforms"
+    },
+    {
+      "@id": ":entity-apollo-go",
+      "@type": "Product",
+      "name": "Baidu Apollo Go",
+      "description": {
+        "@language": "en",
+        "@value": "Baidu's autonomous ride-hailing robotaxi service that reportedly experienced a system failure in Wuhan, stranding passengers."
+      },
+      "manufacturer": {
+        "@id": "http://dbpedia.org/resource/Baidu"
+      },
+      "sameAs": "http://dbpedia.org/resource/Apollo_(software)"
+    },
+    {
+      "@id": ":entity-cursor",
+      "@type": "SoftwareApplication",
+      "name": "Cursor AI",
+      "description": {
+        "@language": "en",
+        "@value": "AI-powered code editor whose agent reportedly deleted PocketOS's production database while working on a staging-environment task."
+      },
+      "url": "https://cursor.com/",
+      "sameAs": "http://dbpedia.org/resource/Cursor_(software)"
+    },
+    {
+      "@id": ":entity-claude-code",
+      "@type": "SoftwareApplication",
+      "name": "Claude Code",
+      "description": {
+        "@language": "en",
+        "@value": "Anthropic's CLI tool for AI-assisted coding that reportedly deleted DataTalks.Club production infrastructure, database, and snapshots through Terraform."
+      },
+      "provider": {
+        "@id": "http://dbpedia.org/resource/Anthropic"
+      }
+    },
+    {
+      "@id": ":entity-chatgpt",
+      "@type": "SoftwareApplication",
+      "name": "ChatGPT",
+      "description": {
+        "@language": "en",
+        "@value": "OpenAI's conversational AI system involved in multiple incidents including alleged self-harm guidance, failure to escalate violent chats, and alleged reinforcement of suicidality."
+      },
+      "provider": {
+        "@id": "http://dbpedia.org/resource/OpenAI"
+      },
+      "sameAs": "http://dbpedia.org/resource/ChatGPT"
+    },
+    {
+      "@id": ":entity-gemini",
+      "@type": "SoftwareApplication",
+      "name": "Google Gemini",
+      "description": {
+        "@language": "en",
+        "@value": "Google's generative AI system that reportedly generated images claiming U.S. Delta Force soldiers were captured by the IRGC, and allegedly reinforced delusions for a Florida user."
+      },
+      "provider": {
+        "@id": "http://dbpedia.org/resource/Google"
+      },
+      "sameAs": "http://dbpedia.org/resource/Gemini_(language_model)"
+    },
+    {
+      "@id": ":entity-coco-robotics",
+      "@type": "Product",
+      "name": "Coco Robotics Delivery Robot",
+      "description": {
+        "@language": "en",
+        "@value": "Autonomous delivery robot that reportedly became stuck on railroad tracks and was struck by a train in January 2026."
+      },
+      "sameAs": "http://dbpedia.org/resource/Delivery_robot"
+    },
+    {
+      "@id": ":entity-guardian",
+      "@type": "Periodical",
+      "name": "The Guardian",
+      "description": {
+        "@language": "en",
+        "@value": "British daily newspaper that published Aisha Down's February 2026 article on industrialized deepfake fraud, which followed up on analysis from previous AIID roundups."
+      },
+      "url": "https://www.theguardian.com/",
+      "sameAs": "http://dbpedia.org/resource/The_Guardian"
+    },
+    {
+      "@id": ":entity-ars-technica",
+      "@type": "Periodical",
+      "name": "Ars Technica",
+      "description": {
+        "@language": "en",
+        "@value": "Technology news publication that retracted an article after purportedly AI-generated text was presented as direct quotes from a Matplotlib maintainer."
+      },
+      "url": "https://arstechnica.com/",
+      "sameAs": "http://dbpedia.org/resource/Ars_Technica"
+    }
+  ]
+}
