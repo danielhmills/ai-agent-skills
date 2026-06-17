@@ -1,0 +1,3398 @@
+[
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#glossarySection",
+    "@type": [
+      "http://schema.org/DefinedTermSet",
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Key terminology from the Semantic Medallion architecture and knowledge graph-powered data catalog ecosystem."
+      }
+    ],
+    "http://schema.org/hasDefinedTerm": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#termMedallionArchitecture"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#termIRIMinting"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#termOTTR"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#termMaplib"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#termDCAT"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#termPROVO"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#termSHACL"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#termKnowledgeGraph"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#termSPARQL"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#termSemanticEnrichment"
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#analysis"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Glossary — Semantic Medallion"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#termMaplib",
+    "@type": [
+      "http://schema.org/DefinedTerm",
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A Python library for DataFrame-to-RDF transformation using OTTR templates. Enables a single function call to convert pandas DataFrames into RDF knowledge graphs."
+      }
+    ],
+    "http://schema.org/inDefinedTermSet": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#glossarySection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "maplib"
+      }
+    ],
+    "http://schema.org/termCode": [
+      {
+        "@value": "maplib"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Ontology"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Ontology modeling the Semantic Medallion architecture: Bronze (raw harvest), Silver (IRI minting), and Gold (RDF knowledge graph) layers, augmented with DCAT catalog vocabulary, PROV-O provenance, and sample customer-domain entities that make SPARQL query examples executable."
+      }
+    ],
+    "http://schema.org/identifier": [
+      {
+        "@value": "https://moderndata101.substack.com/p/the-semantic-medallion"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "Semantic Medallion Ontology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A lightweight ontology for modeling medallion architecture layers augmented with knowledge graphs, DCAT catalog metadata, data lineage provenance, and customer-domain entities as described in 'The Semantic Medallion' article by Veronika Heimsbakk."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Semantic Medallion Ontology"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q10",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a10"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "What is SHACL and how does it fit?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "What is SHACL and how does it fit?"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q2",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a2"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "How does the Bronze layer differ from traditional medallion Bronze?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "How does the Bronze layer differ from traditional medallion Bronze?"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#maplib",
+    "@type": [
+      "http://schema.org/SoftwareApplication"
+    ],
+    "http://schema.org/applicationCategory": [
+      {
+        "@value": "Data Transformation Library"
+      }
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Python library for DataFrame-to-RDF transformation using OTTR templates. Enables a single maplib.map() call to convert Silver-layer DataFrames into RDF triples."
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#technologySection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "maplib"
+      }
+    ],
+    "http://schema.org/programmingLanguage": [
+      {
+        "@value": "Python"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://github.com/DataTreehouse/maplib"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a2",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#faqSection"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "In the Semantic Medallion, the Bronze layer functions identically to traditional medallion — it harvests raw data from source systems without transformation. The difference emerges at Silver, where IRIs are minted instead of just cleaning data."
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a1",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#faqSection"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "The Semantic Medallion is an augmentation of the traditional medallion data architecture (Bronze → Silver → Gold) where the Gold layer becomes an RDF knowledge graph instead of clean tabular data. DCAT catalog metadata is woven into the same graph, creating a self-describing knowledge graph-powered data catalog."
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#modernData101",
+    "@type": [
+      "http://schema.org/Organization"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Publication covering modern data architecture, knowledge graphs, and semantic technologies."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "Modern Data 101"
+      }
+    ],
+    "http://schema.org/publisher": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#modernData101"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://moderndata101.substack.com"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#dataTreehouse",
+    "@type": [
+      "http://schema.org/Organization"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Consultancy specializing in knowledge graph solutions and semantic data architecture."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "Data Treehouse"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://datatreehouse.com"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#sparqlQuery2",
+    "@type": [
+      "http://schema.org/SoftwareSourceCode"
+    ],
+    "http://schema.org/codeSampleType": [
+      {
+        "@value": "SELECT query"
+      }
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Lists all data source systems that contributed records for customer C-001, showing the provenance chain. Uses PROV-O wasDerivedFrom to trace lineage back to source systems."
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#sparqlQuerySection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "SPARQL Query: Contributing Data Sources for Customer C-001"
+      }
+    ],
+    "http://schema.org/potentialAction": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#sparqlQ2LiveAction"
+      }
+    ],
+    "http://schema.org/programmingLanguage": [
+      {
+        "@value": "SPARQL"
+      }
+    ],
+    "http://schema.org/target": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#uriburnerEndpoint"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@value": "PREFIX : <https://moderndata101.substack.com/p/the-semantic-medallion#>\nPREFIX prov: <http://www.w3.org/ns/prov#>\n\nSELECT ?source ?sourceName ?sourceType WHERE {\n  :C-001 prov:wasDerivedFrom ?source .\n  ?source a :DataSource ;\n    :sourceName ?sourceName ;\n    :sourceType ?sourceType .\n}\nORDER BY ?sourceName"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#sparqlQ2LiveAction",
+    "@type": [
+      "http://schema.org/SearchAction"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#sparqlQuerySection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Run Query 2 Live"
+      }
+    ],
+    "http://schema.org/target": [
+      {
+        "@id": "_:ne97944ba89b94d57af623cc83450d359b2"
+      }
+    ]
+  },
+  {
+    "@id": "_:ne97944ba89b94d57af623cc83450d359b2",
+    "@type": [
+      "http://schema.org/EntryPoint"
+    ],
+    "http://schema.org/httpMethod": [
+      {
+        "@value": "GET"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://linkeddata.uriburner.com/sparql?default-graph-uri=&query=PREFIX%20%3A%20%3Chttps%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23%3E%0APREFIX%20prov%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0ASELECT%20%3Fsource%20%3FsourceName%20%3FsourceType%20WHERE%20%7B%0A%20%20GRAPH%20%3Chttps%3A%2F%2Flinkeddata.uriburner.com%2FDAV%2Fdemos%2Fdaas%2Fthe-semantic-medallion-claude_code-1.ttl%3E%20%7B%0A%20%20%20%20%3AC-001%20prov%3AwasDerivedFrom%20%3Fsource%20.%0A%20%20%20%20%3Fsource%20a%20%3ADataSource%20%3B%0A%20%20%20%20%20%20%3AsourceName%20%3FsourceName%20%3B%0A%20%20%20%20%20%20%3AsourceType%20%3FsourceType%20.%0A%20%20%7D%0A%7D%0AORDER%20BY%20%3FsourceName&format=text%2Fhtml&timeout=0&debug=on&run=+Run+Query+"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#hasBillingIssue",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "Links a customer to a billing problem or dispute."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#Customer"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "has billing issue"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#BillingIssue"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#termIRIMinting",
+    "@type": [
+      "http://schema.org/DefinedTerm",
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "The process of assigning stable globally unique Internationalized Resource Identifiers to entities, enabling cross-system linking and resolution in linked data architectures."
+      }
+    ],
+    "http://schema.org/inDefinedTermSet": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#glossarySection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "IRI Minting"
+      }
+    ],
+    "http://schema.org/termCode": [
+      {
+        "@value": "iri-minting"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#contractC001",
+    "@type": [
+      "https://moderndata101.substack.com/p/the-semantic-medallion#Contract"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#customerInstanceData"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "Acme Corporation — Enterprise Plan"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Contract C-001"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#contractStatus": [
+      {
+        "@value": "Active"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#termSPARQL",
+    "@type": [
+      "http://schema.org/DefinedTerm",
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "SPARQL Protocol and RDF Query Language — the W3C standard query language for RDF knowledge graphs, analogous to SQL for relational databases but designed for graph pattern matching."
+      }
+    ],
+    "http://schema.org/inDefinedTermSet": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#glossarySection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "SPARQL"
+      }
+    ],
+    "http://schema.org/termCode": [
+      {
+        "@value": "sparql"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#issueDescription",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A human-readable description of a billing issue."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#BillingIssue"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "issue description"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "http://www.w3.org/2001/XMLSchema#string"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q7",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a7"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "How does PROV-O enhance the catalog?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "How does PROV-O enhance the catalog?"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#transformsTo",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "Indicates the target layer or format that a medallion layer transforms data into."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#MedallionLayer"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "transforms to"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#MedallionLayer"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#termDCAT",
+    "@type": [
+      "http://schema.org/DefinedTerm",
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A W3C standard RDF vocabulary for describing data catalogs, datasets, distributions, and data services. Used in the Semantic Medallion to weave catalog metadata into the knowledge graph."
+      }
+    ],
+    "http://schema.org/inDefinedTermSet": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#glossarySection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "DCAT (Data Catalog Vocabulary)"
+      }
+    ],
+    "http://schema.org/termCode": [
+      {
+        "@value": "dcat"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#termOTTR",
+    "@type": [
+      "http://schema.org/DefinedTerm",
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A framework for template-based ontology mapping. stOTTR (string syntax) defines reusable templates that declaratively map structured data columns to RDF ontology classes and properties."
+      }
+    ],
+    "http://schema.org/inDefinedTermSet": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#glossarySection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "OTTR (Reasonable Ontology Templates)"
+      }
+    ],
+    "http://schema.org/termCode": [
+      {
+        "@value": "ottr"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#termKnowledgeGraph",
+    "@type": [
+      "http://schema.org/DefinedTerm",
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A graph-structured representation of data where entities are nodes connected by typed relationships, enabling semantic querying and inference beyond what relational databases support."
+      }
+    ],
+    "http://schema.org/inDefinedTermSet": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#glossarySection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Knowledge Graph"
+      }
+    ],
+    "http://schema.org/termCode": [
+      {
+        "@value": "knowledge-graph"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#provO",
+    "@type": [
+      "http://schema.org/DefinedTerm"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "W3C Provenance Ontology for tracking data lineage — where data came from, who generated it, and what transformations were applied."
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#technologySection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "PROV-O"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://www.w3.org/TR/prov-o/"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#contractStatus",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "The current status of a contract (Active, Expired, Pending)."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#Contract"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "contract status"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "http://www.w3.org/2001/XMLSchema#string"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#dcatCatalog",
+    "@type": [
+      "http://schema.org/DataCatalog"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "W3C standard vocabulary for describing data catalogs, datasets, distributions, and data services. Applied at each medallion layer to weave catalog metadata into the knowledge graph."
+      }
+    ],
+    "http://schema.org/identifier": [
+      {
+        "@value": "https://www.w3.org/TR/vocab-dcat-3/"
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#technologySection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "DCAT — Data Catalog Vocabulary"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://www.w3.org/TR/vocab-dcat-3/"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#step6",
+    "@type": [
+      "http://schema.org/HowToStep"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#howtoSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Step 6: Weave in DCAT and PROV-O Metadata"
+      }
+    ],
+    "http://schema.org/position": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#integer",
+        "@value": 6
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Describe each medallion layer as a DCAT Dataset with distributions and data services. Add PROV-O provenance links connecting Gold-layer entities back to their source systems. The catalog metadata now lives alongside the data in the same RDF graph."
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#knowledgeGraphCatalog",
+    "@type": [
+      "http://schema.org/DataCatalog"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A data catalog where catalog metadata (DCAT) and instance data coexist in the same RDF knowledge graph, enabling SPARQL queries that span both catalog descriptions and customer facts."
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#catalogSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "Knowledge Graph-Powered Data Catalog"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#termSemanticEnrichment",
+    "@type": [
+      "http://schema.org/DefinedTerm",
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "The progressive addition of meaning to data as it moves through the medallion layers: none at Bronze, local at Silver (IRIs within a domain), global at Gold (cross-domain ontology linking)."
+      }
+    ],
+    "http://schema.org/inDefinedTermSet": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#glossarySection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Semantic Enrichment"
+      }
+    ],
+    "http://schema.org/termCode": [
+      {
+        "@value": "semantic-enrichment"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#sparqlQuery3",
+    "@type": [
+      "http://schema.org/SoftwareSourceCode"
+    ],
+    "http://schema.org/codeSampleType": [
+      {
+        "@value": "SELECT query"
+      }
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Cross-domain SPARQL query that finds all customers who have both a billing issue AND an active contract — a pattern that would be difficult to express in SQL across siloed systems but is natural in a knowledge graph."
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#sparqlQuerySection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "SPARQL Query: Customers with Billing Issues and Active Contracts"
+      }
+    ],
+    "http://schema.org/potentialAction": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#sparqlQ3LiveAction"
+      }
+    ],
+    "http://schema.org/programmingLanguage": [
+      {
+        "@value": "SPARQL"
+      }
+    ],
+    "http://schema.org/target": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#uriburnerEndpoint"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@value": "PREFIX : <https://moderndata101.substack.com/p/the-semantic-medallion#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?customer ?name ?issueDescription ?contractStatus WHERE {\n  ?customer a :Customer ;\n    :hasName ?name ;\n    :hasBillingIssue ?issue ;\n    :hasContract ?contract .\n  ?issue a :BillingIssue ;\n    :issueDescription ?issueDescription .\n  ?contract a :Contract ;\n    :contractStatus \"Active\" .\n}\nORDER BY ?name"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#GoldLayer",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "The Gold layer of the Semantic Medallion where DataFrames are mapped to RDF via a shared ontology (e.g., using OTTR templates and maplib) — global semantics with linked data."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Gold Layer"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#MedallionLayer"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#hasBillingStatus",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "The description or severity of a billing issue."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#BillingIssue"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "has billing status"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "http://www.w3.org/2001/XMLSchema#string"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#goldSection",
+    "@type": [
+      "http://schema.org/ArticleSection"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "The Gold layer transforms DataFrames into RDF using a shared ontology via OTTR templates and maplib, achieving global semantics where entities connect across systems."
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#analysis"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "The Gold Layer — RDF Knowledge Graph"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a7",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#faqSection"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "PROV-O (Provenance Ontology) tracks data lineage — where each record came from, which system generated it, and what transformations were applied. In the catalog, provenance links connect customer facts back to their source systems, answering questions like 'Which CRM and billing records contributed to this customer view?'"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#iriMinting",
+    "@type": [
+      "http://schema.org/DefinedTerm"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "The process of assigning stable globally unique Internationalized Resource Identifiers to every entity at the Silver layer, ensuring entities can be referenced and linked across systems."
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#silverSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "IRI Minting"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcBilling",
+    "@type": [
+      "https://moderndata101.substack.com/p/the-semantic-medallion#DataSource"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#customerInstanceData"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "Stripe Billing"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Billing System"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#sourceName": [
+      {
+        "@value": "Stripe Billing"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#sourceType": [
+      {
+        "@value": "Billing"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#contractC003",
+    "@type": [
+      "https://moderndata101.substack.com/p/the-semantic-medallion#Contract"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#customerInstanceData"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "Gamma Solutions — Premium Plan"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Contract C-003"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#contractStatus": [
+      {
+        "@value": "Active"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q5",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a5"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "How does maplib simplify the DataFrame-to-RDF transformation?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "How does maplib simplify the DataFrame-to-RDF transformation?"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#BronzeLayer",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "The Bronze layer of the Semantic Medallion where raw data is harvested from source systems — no semantics, just raw material."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Bronze Layer"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#MedallionLayer"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#layerOrder",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "The ordinal position of a medallion layer in the pipeline (1=Bronze, 2=Silver, 3=Gold)."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#MedallionLayer"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "layer order"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "http://www.w3.org/2001/XMLSchema#integer"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#step2",
+    "@type": [
+      "http://schema.org/HowToStep"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#howtoSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Step 2: Mint Stable IRIs at the Silver Layer"
+      }
+    ],
+    "http://schema.org/position": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#integer",
+        "@value": 2
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "For every entity in the Bronze data, create a stable globally unique IRI. Choose a consistent IRI pattern (e.g., https://company.example/entity/{type}/{id}). Store the IRI-to-record mapping. This is the most critical step — IRIs are the foundation for all downstream linking."
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a11",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#faqSection"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Three key lessons: (1) Start with IRIs early — minting identifiers at the Silver layer pays compounding dividends as more systems connect. (2) Design ontologies iteratively — begin with a minimal shared ontology and expand as new use cases emerge rather than attempting a complete model upfront. (3) The medallion is about semantic enrichment layers — Bronze has no semantics, Silver has local semantics, Gold has global semantics. Each layer adds meaning rather than just cleanliness."
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#bronzeSection",
+    "@type": [
+      "http://schema.org/ArticleSection"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "The Bronze layer harvests raw data from source systems with no semantic enrichment — it is the raw material ingestion stage of the medallion."
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#analysis"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "The Bronze Layer — Raw Data Harvest"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#contractC002",
+    "@type": [
+      "https://moderndata101.substack.com/p/the-semantic-medallion#Contract"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#customerInstanceData"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "Beta Industries — Standard Plan"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Contract C-002"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#contractStatus": [
+      {
+        "@value": "Active"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#customerInstanceData",
+    "@type": [
+      "http://schema.org/ArticleSection"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A curated set of sample customer, data source, contract, and billing issue instances that make the SPARQL query examples executable against real RDF data."
+      }
+    ],
+    "http://schema.org/hasPart": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#C-001"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#C-002"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#C-003"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcCRM"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcERP"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcBilling"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcSupport"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#contractC001"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#contractC002"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#contractC003"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#billingIssueC001"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#billingIssueC003"
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#analysis"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Sample Customer Instance Data"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#hasName",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "The name of an entity."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#Customer"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "has name"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "http://www.w3.org/2001/XMLSchema#string"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#step1",
+    "@type": [
+      "http://schema.org/HowToStep"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#howtoSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Step 1: Harvest Raw Data into the Bronze Layer"
+      }
+    ],
+    "http://schema.org/position": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#integer",
+        "@value": 1
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Ingest raw data from all source systems — CRM, ERP, billing, support — into the Bronze layer. Apply no transformations. Preserve original formats and timestamps. This is raw material only."
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#sourceType",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "The category of a data source (CRM, ERP, Billing, etc.)."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#DataSource"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "source type"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "http://www.w3.org/2001/XMLSchema#string"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#ottrTemplates",
+    "@type": [
+      "http://schema.org/SoftwareApplication"
+    ],
+    "http://schema.org/applicationCategory": [
+      {
+        "@value": "Ontology Mapping Framework"
+      }
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Template-based ontology mapping framework. stOTTR (string OTTR) syntax defines reusable templates that map DataFrame columns to RDF ontology classes and properties, enabling declarative data-to-knowledge transformations."
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#technologySection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "OTTR (Reasonable Ontology Templates)"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://ottr.xyz"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#technologySection",
+    "@type": [
+      "http://schema.org/ArticleSection"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Key technologies: maplib (Python DataFrame-to-RDF library), OTTR/stOTTR (template-based ontology mapping), DCAT (W3C Data Catalog Vocabulary), PROV-O (provenance ontology), and SHACL (shapes validation)."
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#analysis"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Technology Stack"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticEnrichment",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "Describes the level of semantic enrichment applied at a medallion layer (none, local, global)."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#MedallionLayer"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "semantic enrichment"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "http://www.w3.org/2001/XMLSchema#string"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#analysis",
+    "@type": [
+      "http://schema.org/Article"
+    ],
+    "http://schema.org/about": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#bronzeLayer"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#silverLayer"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#goldLayer"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#dcatCatalog"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#ottrTemplates"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#maplib"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#iriMinting"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#knowledgeGraphCatalog"
+      }
+    ],
+    "http://schema.org/abstract": [
+      {
+        "@language": "en",
+        "@value": "Augmenting the traditional medallion architecture by making the Gold layer an RDF knowledge graph instead of clean tabular data, then using DCAT to weave catalog metadata into the same graph."
+      }
+    ],
+    "http://schema.org/articleBody": [
+      {
+        "@language": "en",
+        "@value": "The Semantic Medallion proposes upgrading the traditional Bronze-Silver-Gold data architecture. Bronze harvests raw data. Silver mints stable globally unique IRIs for every entity. Gold maps DataFrames to RDF via a shared ontology using OTTR templates and maplib. The result is a knowledge graph-powered data catalog where DCAT metadata and customer facts coexist in the same queryable graph, enabling entity resolution, semantic search, and impact analysis through SPARQL."
+      }
+    ],
+    "http://schema.org/author": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#veronikaHeimsbakk"
+      }
+    ],
+    "http://schema.org/datePublished": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#date",
+        "@value": "2026-05-14"
+      }
+    ],
+    "http://schema.org/hasPart": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#bronzeSection"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#silverSection"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#goldSection"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#catalogSection"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#dcatSection"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#technologySection"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#faqSection"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#glossarySection"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#howtoSection"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#sparqlQuerySection"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#customerInstanceData"
+      }
+    ],
+    "http://schema.org/headline": [
+      {
+        "@language": "en",
+        "@value": "The Semantic Medallion: Building a Knowledge Graph-Powered Data Catalog"
+      }
+    ],
+    "http://schema.org/inLanguage": [
+      {
+        "@value": "en"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "The Semantic Medallion: Building a Knowledge Graph-Powered Data Catalog"
+      }
+    ],
+    "http://schema.org/publisher": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#modernData101"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://moderndata101.substack.com/p/the-semantic-medallion"
+      }
+    ],
+    "http://www.w3.org/ns/prov#wasGeneratedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#kgGeneratorSkill"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#sparqlQ3LiveAction",
+    "@type": [
+      "http://schema.org/SearchAction"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#sparqlQuerySection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Run Query 3 Live"
+      }
+    ],
+    "http://schema.org/target": [
+      {
+        "@id": "_:ne97944ba89b94d57af623cc83450d359b3"
+      }
+    ]
+  },
+  {
+    "@id": "_:ne97944ba89b94d57af623cc83450d359b3",
+    "@type": [
+      "http://schema.org/EntryPoint"
+    ],
+    "http://schema.org/httpMethod": [
+      {
+        "@value": "GET"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://linkeddata.uriburner.com/sparql?default-graph-uri=&query=PREFIX%20%3A%20%3Chttps%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23%3E%0APREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0ASELECT%20%3Fcustomer%20%3Fname%20%3FissueDescription%20%3FcontractStatus%20WHERE%20%7B%0A%20%20GRAPH%20%3Chttps%3A%2F%2Flinkeddata.uriburner.com%2FDAV%2Fdemos%2Fdaas%2Fthe-semantic-medallion-claude_code-1.ttl%3E%20%7B%0A%20%20%20%20%3Fcustomer%20a%20%3ACustomer%20%3B%0A%20%20%20%20%20%20%3AhasName%20%3Fname%20%3B%0A%20%20%20%20%20%20%3AhasBillingIssue%20%3Fissue%20%3B%0A%20%20%20%20%20%20%3AhasContract%20%3Fcontract%20.%0A%20%20%20%20%3Fissue%20a%20%3ABillingIssue%20%3B%0A%20%20%20%20%20%20%3AissueDescription%20%3FissueDescription%20.%0A%20%20%20%20%3Fcontract%20a%20%3AContract%20%3B%0A%20%20%20%20%20%20%3AcontractStatus%20%22Active%22%20.%0A%20%20%7D%0A%7D%0AORDER%20BY%20%3Fname&format=text%2Fhtml&timeout=0&debug=on&run=+Run+Query+"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a3",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#faqSection"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "IRI minting is the process of assigning a stable globally unique Internationalized Resource Identifier to every entity at the Silver layer. It is critical because it makes entities referenceable across systems — without stable IRIs, linking customer records from CRM, ERP, and billing systems would require fragile key matching. IRIs are the foundation of linked data."
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#DataSource",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A system or application that contributes data to the medallion pipeline. Modeled alongside DCAT Dataset for catalog integration."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Data Source"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#Customer",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A customer entity identified by a stable IRI, with relationships to data sources, contracts, and billing records."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Customer"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#termMedallionArchitecture",
+    "@type": [
+      "http://schema.org/DefinedTerm",
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A data architecture pattern organizing data into Bronze (raw), Silver (cleaned/enriched), and Gold (analytics-ready) layers. The Semantic Medallion redefines Gold as an RDF knowledge graph."
+      }
+    ],
+    "http://schema.org/inDefinedTermSet": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#glossarySection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Medallion Architecture"
+      }
+    ],
+    "http://schema.org/termCode": [
+      {
+        "@value": "medallion-architecture"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#termSHACL",
+    "@type": [
+      "http://schema.org/DefinedTerm",
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A W3C standard for validating RDF graphs against shape conditions, enabling data quality enforcement in knowledge graph systems."
+      }
+    ],
+    "http://schema.org/inDefinedTermSet": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#glossarySection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "SHACL (Shapes Constraint Language)"
+      }
+    ],
+    "http://schema.org/termCode": [
+      {
+        "@value": "shacl"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q9",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a9"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "How does the Semantic Medallion handle entity resolution?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "How does the Semantic Medallion handle entity resolution?"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#silverSection",
+    "@type": [
+      "http://schema.org/ArticleSection"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "At the Silver layer, every entity receives a stable globally unique IRI, elevating raw records to identifiable, linkable resources with local semantics."
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#analysis"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "The Silver Layer — IRI Minting"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#hasEmail",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "The email address of a customer."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#Customer"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "has email"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "http://www.w3.org/2001/XMLSchema#string"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#sourceName",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "The display name of a data source system."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#DataSource"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "source name"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "http://www.w3.org/2001/XMLSchema#string"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#BillingIssue",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A billing problem or dispute associated with a customer."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Billing Issue"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#shacl",
+    "@type": [
+      "http://schema.org/DefinedTerm"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Shapes Constraint Language — a W3C standard for validating RDF graphs against a set of shape conditions, ensuring data quality in the knowledge graph."
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#technologySection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "SHACL"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://www.w3.org/TR/shacl/"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a6",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#faqSection"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "DCAT (Data Catalog Vocabulary) is a W3C standard for describing data catalogs, datasets, distributions, and data services in RDF. In the Semantic Medallion, each medallion layer receives DCAT descriptions — the catalog metadata and the actual data coexist in the same graph, making the catalog self-describing rather than a separate metadata store."
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#MedallionLayer",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A layer in the medallion data architecture representing a stage of semantic enrichment: Bronze (raw data), Silver (IRI-minted entities), or Gold (RDF knowledge graph with global semantics)."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Medallion Layer"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#layerName",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "The name of a medallion architecture layer."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#MedallionLayer"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "layer name"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "http://www.w3.org/2001/XMLSchema#string"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a9",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#faqSection"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Entity resolution happens naturally through IRI alignment. Because every entity receives a globally unique IRI at the Silver layer, records from different source systems that refer to the same real-world entity are linked to the same IRI. The Gold layer's ontology then connects these IRIs across domains, enabling graph-based deduplication and identity resolution."
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a5",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#faqSection"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "maplib is a Python library that accepts a pandas DataFrame, an OTTR template, and a result RDF container, then executes the mapping in a single call: `maplib.map(dataframe, template, result_container)`. This reduces what would otherwise be hundreds of lines of triple-construction code to four lines of Python."
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#Contract",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A customer contract with status and terms."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Contract"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#sparqlQuerySection",
+    "@type": [
+      "http://schema.org/ArticleSection"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Three SPARQL queries demonstrate the catalog experience: retrieving all facts about a customer, listing contributing data sources, and finding customers with billing issues who have active contracts."
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#analysis"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "SPARQL Query Examples"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#C-002",
+    "@type": [
+      "https://moderndata101.substack.com/p/the-semantic-medallion#Customer"
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "Beta Industries"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Customer C-002"
+      }
+    ],
+    "http://www.w3.org/ns/prov#wasDerivedFrom": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcCRM"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcSupport"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#hasContract": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#contractC002"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#hasDataSource": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcCRM"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcSupport"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#hasEmail": [
+      {
+        "@value": "info@betaindustries.example"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#hasName": [
+      {
+        "@value": "Beta Industries"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#sparqlQ1LiveAction",
+    "@type": [
+      "http://schema.org/SearchAction"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#sparqlQuerySection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Run Query 1 Live"
+      }
+    ],
+    "http://schema.org/target": [
+      {
+        "@id": "_:ne97944ba89b94d57af623cc83450d359b1"
+      }
+    ]
+  },
+  {
+    "@id": "_:ne97944ba89b94d57af623cc83450d359b1",
+    "@type": [
+      "http://schema.org/EntryPoint"
+    ],
+    "http://schema.org/httpMethod": [
+      {
+        "@value": "GET"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://linkeddata.uriburner.com/sparql?default-graph-uri=&query=PREFIX%20%3A%20%3Chttps%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23%3E%0APREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0APREFIX%20prov%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0ASELECT%20%3Fproperty%20%3Fvalue%20WHERE%20%7B%0A%20%20GRAPH%20%3Chttps%3A%2F%2Flinkeddata.uriburner.com%2FDAV%2Fdemos%2Fdaas%2Fthe-semantic-medallion-claude_code-1.ttl%3E%20%7B%0A%20%20%20%20%3AC-001%20%3Fproperty%20%3Fvalue%20.%0A%20%20%20%20OPTIONAL%20%7B%20%3Fvalue%20rdfs%3Alabel%20%3Flabel%20%7D%0A%20%20%7D%0A%7D%0AORDER%20BY%20%3Fproperty&format=text%2Fhtml&timeout=0&debug=on&run=+Run+Query+"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#veronikaHeimsbakk",
+    "@type": [
+      "http://schema.org/Person"
+    ],
+    "http://schema.org/affiliation": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#dataTreehouse"
+      }
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Knowledge Graph Specialist at Data Treehouse, author of 'The Semantic Medallion' on Modern Data 101"
+      }
+    ],
+    "http://schema.org/identifier": [
+      {
+        "@value": "https://substack.com/@veronikaheimsbakk"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "Veronika Heimsbakk"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://substack.com/@veronikaheimsbakk"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#mintsIRI",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "Indicates that a layer or process creates stable globally unique IRIs for entities."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#SilverLayer"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "mints IRI"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q8",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a8"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "What kinds of queries does the knowledge graph catalog enable?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "What kinds of queries does the knowledge graph catalog enable?"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a8",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#faqSection"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "The knowledge graph catalog enables three categories of queries: (1) entity lookup — retrieve all facts about a single entity; (2) provenance tracing — list all source systems contributing to a record; (3) cross-domain pattern detection — find entities that match conditions spanning multiple domains, such as customers with both active contracts and open billing issues. These cross-domain queries are particularly powerful because they traverse relationships that would require complex joins across siloed SQL databases."
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q4",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a4"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "What role do OTTR templates play?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "What role do OTTR templates play?"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#silverLayer",
+    "@type": [
+      "https://moderndata101.substack.com/p/the-semantic-medallion#SilverLayer",
+      "http://schema.org/Thing"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Every entity receives a stable globally unique IRI. Raw records become identifiable linkable resources with local semantics. IRI minting ensures entities can be referenced across systems."
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Silver Layer"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Silver Layer"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#layerName": [
+      {
+        "@value": "Silver"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#layerOrder": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#integer",
+        "@value": 2
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#mintsIRI": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+        "@value": true
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#semanticEnrichment": [
+      {
+        "@value": "local"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#transformsTo": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#goldLayer"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcCRM",
+    "@type": [
+      "https://moderndata101.substack.com/p/the-semantic-medallion#DataSource"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#customerInstanceData"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "SalesForce CRM"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "CRM System"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#sourceName": [
+      {
+        "@value": "SalesForce CRM"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#sourceType": [
+      {
+        "@value": "CRM"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q11",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a11"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "What are the key lessons from implementing the Semantic Medallion?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "What are the key lessons from implementing the Semantic Medallion?"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#billingIssueC001",
+    "@type": [
+      "https://moderndata101.substack.com/p/the-semantic-medallion#BillingIssue"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#customerInstanceData"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "Duplicate charge on March invoice"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Billing Issue C-001"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#hasBillingStatus": [
+      {
+        "@value": "Open"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#issueDescription": [
+      {
+        "@language": "en",
+        "@value": "Duplicate charge detected on March 2026 invoice — customer reported overcharge of $2,400."
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q3",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a3"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "What is IRI minting and why is it important?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "What is IRI minting and why is it important?"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#termPROVO",
+    "@type": [
+      "http://schema.org/DefinedTerm",
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "A W3C standard ontology for representing provenance information — tracking who generated data, what sources it came from, and what transformations were applied."
+      }
+    ],
+    "http://schema.org/inDefinedTermSet": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#glossarySection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "PROV-O (Provenance Ontology)"
+      }
+    ],
+    "http://schema.org/termCode": [
+      {
+        "@value": "prov-o"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q6",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a6"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "What is DCAT and why is it used in the Semantic Medallion?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "What is DCAT and why is it used in the Semantic Medallion?"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#C-001",
+    "@type": [
+      "https://moderndata101.substack.com/p/the-semantic-medallion#Customer"
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "Acme Corporation"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Customer C-001"
+      }
+    ],
+    "http://www.w3.org/ns/prov#wasDerivedFrom": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcCRM"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcERP"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcBilling"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#hasBillingIssue": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#billingIssueC001"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#hasContract": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#contractC001"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#hasDataSource": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcCRM"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcERP"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcBilling"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#hasEmail": [
+      {
+        "@value": "contact@acmecorp.example"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#hasName": [
+      {
+        "@value": "Acme Corporation"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a4",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#faqSection"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "OTTR (Reasonable Ontology Templates) provides a declarative template language for mapping structured data to RDF. Using stOTTR (string OTTR) syntax, templates define how DataFrame columns map to ontology classes and properties. A single template can transform millions of Silver-layer rows into RDF triples in a consistent repeatable way."
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#faqSection",
+    "@type": [
+      "http://schema.org/FAQPage"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#analysis"
+      }
+    ],
+    "http://schema.org/mainEntity": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q1"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q2"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q3"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q4"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q5"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q6"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q7"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q8"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q9"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q10"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q11"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q12"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Frequently Asked Questions — The Semantic Medallion"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#dcatSection",
+    "@type": [
+      "http://schema.org/ArticleSection"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "The W3C Data Catalog Vocabulary (DCAT) is applied at each medallion layer to describe datasets, distributions, and data services. Catalog metadata and instance data coexist in the same RDF graph, making the catalog self-describing."
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#analysis"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "DCAT in the Architecture"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q12",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a12"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "How does the Semantic Medallion compare to a traditional data catalog?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "How does the Semantic Medallion compare to a traditional data catalog?"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#sparqlQuery1",
+    "@type": [
+      "http://schema.org/SoftwareSourceCode"
+    ],
+    "http://schema.org/codeSampleType": [
+      {
+        "@value": "SELECT query"
+      }
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Retrieves all property-value pairs for customer C-001 from the knowledge graph. This is the simplest entry point into the catalog — look up everything known about a single entity."
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#sparqlQuerySection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "SPARQL Query: All Facts About Customer C-001"
+      }
+    ],
+    "http://schema.org/potentialAction": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#sparqlQ1LiveAction"
+      }
+    ],
+    "http://schema.org/programmingLanguage": [
+      {
+        "@value": "SPARQL"
+      }
+    ],
+    "http://schema.org/target": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#uriburnerEndpoint"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@value": "PREFIX : <https://moderndata101.substack.com/p/the-semantic-medallion#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX prov: <http://www.w3.org/ns/prov#>\n\nSELECT ?property ?value WHERE {\n  :C-001 ?property ?value .\n  OPTIONAL { ?value rdfs:label ?label }\n}\nORDER BY ?property"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#SilverLayer",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "The Silver layer of the Semantic Medallion where every entity is assigned a stable, globally unique IRI — local semantics with minted identifiers."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Silver Layer"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#MedallionLayer"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#C-003",
+    "@type": [
+      "https://moderndata101.substack.com/p/the-semantic-medallion#Customer"
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "Gamma Solutions"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Customer C-003"
+      }
+    ],
+    "http://www.w3.org/ns/prov#wasDerivedFrom": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcCRM"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcBilling"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcSupport"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#hasBillingIssue": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#billingIssueC003"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#hasContract": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#contractC003"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#hasDataSource": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcCRM"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcBilling"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcSupport"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#hasEmail": [
+      {
+        "@value": "support@gammasolutions.example"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#hasName": [
+      {
+        "@value": "Gamma Solutions"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a12",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#faqSection"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Traditional data catalogs describe where data lives (table names, column schemas, storage locations) but do not describe how data connects across systems. A knowledge graph-powered catalog captures both — DCAT metadata describes the datasets while RDF relationships connect customer entities to their source systems, contracts, and issues. The catalog becomes queryable in the same SPARQL endpoint as the data it describes."
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a10",
+    "@type": [
+      "http://schema.org/Answer"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#faqSection"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "SHACL (Shapes Constraint Language) is a W3C standard for validating RDF data against shape conditions. In the Semantic Medallion architecture, SHACL shapes can be applied to the Gold layer to enforce data quality rules — ensuring every Customer has required properties, contracts have valid statuses, and data sources are properly typed."
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#step4",
+    "@type": [
+      "http://schema.org/HowToStep"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#howtoSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Step 4: Author OTTR Templates"
+      }
+    ],
+    "http://schema.org/position": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#integer",
+        "@value": 4
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Write stOTTR templates that map Silver-layer DataFrame columns to your shared ontology. Each template defines how a row becomes RDF: which column maps to which class, which columns become properties, and how IRIs are constructed. Templates make the mapping declarative and reusable."
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#bronzeLayer",
+    "@type": [
+      "https://moderndata101.substack.com/p/the-semantic-medallion#BronzeLayer",
+      "http://schema.org/Thing"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Raw data harvested from source systems. No semantics applied — pure raw material ingestion. Data is stored as-is from CRM, ERP, billing, and other operational systems."
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Bronze Layer"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Bronze Layer"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#layerName": [
+      {
+        "@value": "Bronze"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#layerOrder": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#integer",
+        "@value": 1
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#semanticEnrichment": [
+      {
+        "@value": "none"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#transformsTo": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#silverLayer"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#step3",
+    "@type": [
+      "http://schema.org/HowToStep"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#howtoSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Step 3: Design a Shared Ontology"
+      }
+    ],
+    "http://schema.org/position": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#integer",
+        "@value": 3
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Define the core classes (e.g., Customer, Contract, DataSource) and properties (e.g., hasContract, wasDerivedFrom) that span your business domains. Start minimal — a small shared ontology that captures cross-domain relationships. Expand iteratively as new use cases emerge. Document every class and property with rdfs:label and rdfs:comment."
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcSupport",
+    "@type": [
+      "https://moderndata101.substack.com/p/the-semantic-medallion#DataSource"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#customerInstanceData"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "Zendesk Support"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Support System"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#sourceName": [
+      {
+        "@value": "Zendesk Support"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#sourceType": [
+      {
+        "@value": "Support"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#step7",
+    "@type": [
+      "http://schema.org/HowToStep"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#howtoSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Step 7: Query and Validate"
+      }
+    ],
+    "http://schema.org/position": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#integer",
+        "@value": 7
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Load the RDF into a SPARQL-capable triplestore (e.g., Virtuoso). Run validation queries to confirm entity counts and relationship integrity. Apply SHACL shapes for data quality enforcement. Then query your knowledge graph catalog — start with entity lookup, progress to provenance tracing, and finally cross-domain pattern detection."
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#goldLayer",
+    "@type": [
+      "https://moderndata101.substack.com/p/the-semantic-medallion#GoldLayer",
+      "http://schema.org/Thing"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "DataFrames are mapped to RDF via a shared ontology using OTTR templates and maplib. Global semantics enable cross-system entity resolution, semantic search, and impact analysis through SPARQL."
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Gold Layer"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Gold Layer"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#layerName": [
+      {
+        "@value": "Gold"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#layerOrder": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#integer",
+        "@value": 3
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#semanticEnrichment": [
+      {
+        "@value": "global"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#hasDataSource",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "Links a customer record to its contributing data source."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#Customer"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "has data source"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#DataSource"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#step5",
+    "@type": [
+      "http://schema.org/HowToStep"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#howtoSection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Step 5: Transform to RDF with maplib"
+      }
+    ],
+    "http://schema.org/position": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#integer",
+        "@value": 5
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "Load Silver-layer DataFrames into pandas. Call maplib.map(dataframe, template, result_container) for each template. The library executes the OTTR mapping and populates the RDF graph. Validate the output RDF syntax before proceeding."
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#howtoSection",
+    "@type": [
+      "http://schema.org/HowTo"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Step-by-step guide to implementing a knowledge graph-powered data catalog using the Semantic Medallion architecture."
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#analysis"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "How to Build a Semantic Medallion Pipeline"
+      }
+    ],
+    "http://schema.org/step": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#step1"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#step2"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#step3"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#step4"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#step5"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#step6"
+      },
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#step7"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#billingIssueC003",
+    "@type": [
+      "https://moderndata101.substack.com/p/the-semantic-medallion#BillingIssue"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#customerInstanceData"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "Incorrect plan tier applied"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Billing Issue C-003"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#hasBillingStatus": [
+      {
+        "@value": "Under Review"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#issueDescription": [
+      {
+        "@language": "en",
+        "@value": "Customer was billed at Premium tier but should be on Standard tier per contract terms. Adjustment of $1,800 needed."
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#kgGeneratorSkill",
+    "@type": [
+      "http://schema.org/SoftwareApplication"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Knowledge Graph generation skill that transforms web content into standards-compliant RDF using schema.org and custom lightweight ontologies."
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "kg-generator skill"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator"
+      }
+    ],
+    "http://www.w3.org/ns/prov#generated": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#analysis"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#q1",
+    "@type": [
+      "http://schema.org/Question"
+    ],
+    "http://schema.org/acceptedAnswer": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#a1"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "What is the Semantic Medallion?"
+      }
+    ],
+    "http://schema.org/text": [
+      {
+        "@language": "en",
+        "@value": "What is the Semantic Medallion?"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#srcERP",
+    "@type": [
+      "https://moderndata101.substack.com/p/the-semantic-medallion#DataSource"
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#customerInstanceData"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "SAP ERP"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "ERP System"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#sourceName": [
+      {
+        "@value": "SAP ERP"
+      }
+    ],
+    "https://moderndata101.substack.com/p/the-semantic-medallion#sourceType": [
+      {
+        "@value": "ERP"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#hasContract",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "Links a customer to their active or historical contract."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#Customer"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#semanticMedallionOntology"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "has contract"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#Contract"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#uriburnerEndpoint",
+    "@type": [
+      "http://schema.org/WebAPI"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "Public SPARQL endpoint for querying the Semantic Medallion knowledge graph."
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#sparqlQuerySection"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "URIBurner SPARQL Endpoint"
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@value": "https://linkeddata.uriburner.com/sparql"
+      }
+    ]
+  },
+  {
+    "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#catalogSection",
+    "@type": [
+      "http://schema.org/ArticleSection"
+    ],
+    "http://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "SPARQL queries against the knowledge graph replace traditional catalog browsing — users query for customer facts, contributing data sources, and cross-domain patterns like billing issues combined with contract status."
+      }
+    ],
+    "http://schema.org/isPartOf": [
+      {
+        "@id": "https://moderndata101.substack.com/p/the-semantic-medallion#analysis"
+      }
+    ],
+    "http://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "The Catalog Experience"
+      }
+    ]
+  }
+]

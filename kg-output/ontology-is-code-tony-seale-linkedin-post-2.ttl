@@ -1,0 +1,429 @@
+@prefix : <https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54#> .
+@prefix schema: <http://schema.org/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+: a owl:Ontology ;
+    schema:name "Ontology Is Code Ontology (Edition 2)"@en ;
+    schema:description "Enhanced lightweight ontology modeling Tony Seale's thesis that ontologies are source code for meaning — not database tables — and the multi-threaded community discussion it sparked on LinkedIn. Edition 2 adds Jacob Friedman, Gabor Csepregi, Joseph Macdonald, Kyle Tobin commentaries and features Kingsley Idehen's LLM + Semantic Web synergy insight as the anchor response."@en ;
+    schema:identifier "https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54" ;
+    rdfs:label "Ontology Is Code Ontology (Edition 2)"@en ;
+    rdfs:comment "Edition 2: Models the three pillars, 14 comment threads, 7-step adoption guide, 12 FAQs, 12 glossary terms, and industry context. Kingsley Idehen's LLM-semantic-web synergy featured as anchor commentary."@en ;
+    schema:version "2.0" ;
+    rdfs:isDefinedBy : .
+
+# ============================================================================
+# ONTOLOGY CLASSES
+# ============================================================================
+
+:OntologyPillar a rdfs:Class ; rdfs:label "Ontology Pillar"@en ; rdfs:comment "A foundational principle of the ontology-as-code approach."@en ; rdfs:isDefinedBy : .
+:CommentaryThread a rdfs:Class ; rdfs:label "Commentary Thread"@en ; rdfs:comment "A thematic thread within the discussion, potentially spanning multiple comments."@en ; rdfs:isDefinedBy : .
+:Industry a rdfs:Class ; rdfs:label "Industry"@en ; rdfs:isDefinedBy : .
+:KnowledgeEngineeringIndustry a rdfs:Class ; rdfs:subClassOf :Industry ; rdfs:label "Knowledge Engineering Industry"@en ; rdfs:isDefinedBy : .
+:hasLaborTAM a rdf:Property ; rdfs:domain :Industry ; rdfs:range xsd:string ; rdfs:isDefinedBy : .
+:hasAutomationReadiness a rdf:Property ; rdfs:domain :Industry ; rdfs:range xsd:string ; rdfs:isDefinedBy : .
+:featuredInsight a rdf:Property ; rdfs:label "featured insight"@en ; rdfs:comment "Designates an insight as the anchor/featured commentary for the analysis."@en ; rdfs:isDefinedBy : .
+
+# ============================================================================
+# INDUSTRY CONTEXT
+# ============================================================================
+
+:knowledgeEngineeringVertical a :KnowledgeEngineeringIndustry ;
+    schema:naics "541511" ;
+    schema:identifier "https://www.census.gov/naics/?input=541511&year=2022&details=541511" ;
+    :hasLaborTAM "~80B" ;
+    :hasAutomationReadiness "High" ;
+    schema:description "Custom computer programming services — including ontology engineering, knowledge graph design, and semantic technology consulting."@en .
+
+# ============================================================================
+# MAIN ANALYSIS POST
+# ============================================================================
+
+:analysis a schema:SocialMediaPosting ;
+    schema:name "Did you start building your ontology as a set of rows in a custom database table?"@en ;
+    schema:headline "Your ontology is source code for your meaning."@en ;
+    schema:about :ontologyAsCode, :pillarCompile, :pillarPlainText, :pillarGovernance, :mcOntology, :knowledgeGraphGuys, :linkedArt, :descriptionLogic, :pydanticOntology, :todag, :cleared ;
+    schema:abstract "Tony Seale argues ontologies should be treated as source code, not database tables — built on three pillars: compilation (breaking the build on contradictions), plain-text version control (diffs, branches, PRs), and code governance discipline. The post sparked a 45-comment discussion with 14 distinct contributors. Kingsley Idehen anchored the response by demonstrating how LLMs and the Semantic Web stack gel naturally, making ontology management dramatically easier with AI Agents and skills. Other notable threads: Veronika Heimsbakk on Python extraction, Honorio J. Padrón III on decision ontologies, Robert Sanderson on transpilation, Kyle Tobin on Pydantic-executable ontologies, and Joseph Macdonald on temporal objective-directed acyclic graphs."@en ;
+    schema:url "https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-share-7463353332565356545-jY54" ;
+    schema:datePublished "2026-05-21"^^xsd:date ;
+    schema:dateModified "2026-05-22"^^xsd:date ;
+    schema:interactionStatistic [ schema:interactionType schema:LikeAction ; schema:userInteractionCount 400 ] ;
+    schema:interactionStatistic [ schema:interactionType schema:CommentAction ; schema:userInteractionCount 45 ] ;
+    schema:author :tonySeale ;
+    schema:comment :commentKingsley, :commentVeronika, :commentJacobFriedman, :commentRobertSanderson, :commentGaborCsepregi, :commentHarish, :commentJosephMacdonald, :commentMarkODonovan, :commentKyleTobin, :commentHonorio, :commentStepan, :commentEdwardHenry, :commentOlivierRey, :commentThomasSmith ;
+    schema:hasPart :pillarsSection, :faqSection, :glossarySection, :howtoSection, :commentsSection, :industrySection, :featuredInsightSection ;
+    prov:wasGeneratedBy :kgGeneratorSkill, :rdfInfographicSkill .
+
+# ============================================================================
+# AUTHOR
+# ============================================================================
+
+:tonySeale a schema:Person ;
+    schema:name "Tony Seale" ;
+    schema:url "https://www.linkedin.com/in/tonyseale/" ;
+    schema:identifier "https://www.linkedin.com/in/tonyseale/" ;
+    schema:description "Knowledge Graph Engineer, author of 'The Knowledge Graph Guys' newsletter, advocate for ontology-as-code practices."@en ;
+    schema:interactionStatistic [ schema:interactionType schema:FollowAction ; schema:userInteractionCount 41470 ] ;
+    owl:sameAs <https://www.linkedin.com/in/tonyseale/#this> .
+
+# ============================================================================
+# THREE PILLARS
+# ============================================================================
+
+:pillarsSection a schema:ArticleSection ;
+    schema:name "The Three Pillars of Ontology as Code"@en ;
+    schema:description "Tony Seale's three foundational principles for treating ontologies as source code."@en ;
+    schema:hasPart :pillarCompile, :pillarPlainText, :pillarGovernance ;
+    schema:isPartOf :analysis .
+
+:pillarCompile a :OntologyPillar, schema:DefinedTerm ;
+    schema:name "Compile — Not Just Parse"@en ;
+    schema:description "An ontology should compile. A build should break on contradictions or unexpected entailments. An absent entailment is a test failure, not a curiosity discovered six months later in production."@en .
+
+:pillarPlainText a :OntologyPillar, schema:DefinedTerm ;
+    schema:name "Live in Plain Text"@en ;
+    schema:description "Ontologies should live in plain text — enabling diffs, branches, blame, and pull requests. You want LLMs to read, navigate and edit the source directly, exactly the way it works with a codebase."@en .
+
+:pillarGovernance a :OntologyPillar, schema:DefinedTerm ;
+    schema:name "Governed Like Code"@en ;
+    schema:description "Ontologies should be governed with standard engineering discipline — version control, code review, and CI/CD pipelines applied to meaning itself."@en .
+
+# ============================================================================
+# DEFINED TERMS
+# ============================================================================
+
+:ontologyAsCode a schema:DefinedTerm ;
+    schema:name "Ontology as Code"@en ;
+    schema:description "The practice of treating ontologies as source code rather than database artifacts — with compilation, version control, and engineering governance."@en .
+
+:mcOntology a schema:DefinedTerm ;
+    schema:name "McOntology"@en ;
+    schema:description "A term coined by Tony Seale for commoditized, fast-food approaches to ontology — mass-produced rather than carefully engineered artifacts."@en ;
+    schema:url "https://lnkd.in/e_5YqTPe" .
+
+:knowledgeGraphGuys a schema:CreativeWork ;
+    schema:name "The Knowledge Graph Guys"@en ;
+    schema:description "Tony Seale's newsletter on knowledge graphs and ontology engineering."@en ;
+    schema:url "https://lnkd.in/eMQwyBpj" .
+
+:linkedArt a schema:DefinedTerm ;
+    schema:name "Linked Art"@en ;
+    schema:description "A linked data profile for cultural heritage that compiles RDFS+OWL ontologies into Python class libraries — demonstrating ontology-as-code in production."@en ;
+    rdfs:seeAlso :commentRobertSanderson .
+
+:descriptionLogic a schema:DefinedTerm ;
+    schema:name "Description Logic"@en ;
+    schema:description "The formal logical foundation for OWL ontologies. Jacob Friedman notes OWL is based on Description Logic and calls for a certifiable normalization standard."@en ;
+    rdfs:seeAlso :commentJacobFriedman .
+
+:pydanticOntology a schema:DefinedTerm ;
+    schema:name "Pydantic-Executable Ontology"@en ;
+    schema:description "Kyle Tobin's approach: define ontologies in Pydantic so entities are executable — they don't just describe their own behavior, they conduct it."@en ;
+    rdfs:seeAlso :commentKyleTobin .
+
+:todag a schema:DefinedTerm ;
+    schema:name "Temporal Objective-Directed Acyclic Graph (TODAG)"@en ;
+    schema:description "Joseph Macdonald's hypergraph approach for treating ontologies as revenue-generating assets — WhenTTT (When-Then-Then-Then) patterns, not just IFTTT."@en ;
+    rdfs:seeAlso :commentJosephMacdonald .
+
+:cleared a schema:DefinedTerm ;
+    schema:name "CLEARED Platform"@en ;
+    schema:description "Honorio J. Padrón III's platform that sits above the semantic layer to govern the grammar of enterprise action — operationalizing decision ontologies."@en ;
+    rdfs:seeAlso :commentHonorio .
+
+# ============================================================================
+# FEATURED INSIGHT — KINGSLEY ID EHEN (Anchor Commentary)
+# ============================================================================
+
+:featuredInsightSection a schema:ArticleSection ;
+    schema:name "Featured Insight: LLMs + Semantic Web — A Natural Ecosystem"@en ;
+    schema:description "Kingsley Idehen's anchor commentary on how LLMs and the Semantic Web stack form a natural ecosystem for ontology management."@en ;
+    schema:hasPart :kingsleyInsight ;
+    schema:isPartOf :analysis .
+
+:kingsleyInsight a :CommentaryThread, schema:Comment ;
+    schema:text "Ontology management is a classic files-and-filesystem interaction pattern. RDF-Turtle is very much human-readable shorthand but lacked tooling support. Today the Semantic Web stack gels naturally with LLMs and AI Agents. Ask an AI Agent to express worldviews in whatever notation you prefer, save to a file, and copy to a folder bound to a backend RDF DBMS. LLM-powered Agents with Skills make this process a zillion times easier."@en ;
+    schema:author :kingsleyIdehen ;
+    schema:dateCreated "2026-05-21"^^xsd:date ;
+    schema:isPartOf :commentsSection, :featuredInsightSection ;
+    :featuredInsight "true"^^xsd:boolean .
+
+# ============================================================================
+# COMMENTS SECTION
+# ============================================================================
+
+:commentsSection a schema:ArticleSection ;
+    schema:name "Comments and Discussion"@en ;
+    schema:description "14 distinct contributor threads responding to Tony Seale's ontology-as-code thesis — spanning LLM integration, decision ontologies, Pydantic executability, temporal hypergraphs, transpilation, and the upstream/downstream AI gap."@en ;
+    schema:hasPart :commentKingsley, :commentVeronika, :commentJacobFriedman, :commentRobertSanderson, :commentGaborCsepregi, :commentHarish, :commentJosephMacdonald, :commentMarkODonovan, :commentKyleTobin, :commentHonorio, :commentStepan, :commentEdwardHenry, :commentOlivierRey, :commentThomasSmith ;
+    schema:isPartOf :analysis .
+
+# --- Featured Anchor: Kingsley Idehen ---
+
+:commentKingsley a schema:Comment ;
+    schema:text "Agreed. Ontology management is a classic files-and-filesystem interaction pattern. RDF-Turtle is very much human-readable shorthand but lacked tooling support. Today the Semantic Web stack gels naturally with LLMs and AI Agents. Ask an AI Agent to express worldviews in whatever notation you prefer, save to a file, and copy to a folder bound to a backend RDF DBMS. LLM-powered Agents with Skills make this process a zillion times easier. I will use this post to demonstrate how I've used this approach to create the demo showcases at linkeddata.uriburner.com/DAV/demos/daas/"@en ;
+    schema:author :kingsleyIdehen ;
+    schema:dateCreated "2026-05-21"^^xsd:date ;
+    schema:isPartOf :commentsSection, :featuredInsightSection .
+
+:kingsleyIdehen a schema:Person ;
+    schema:name "Kingsley Uyi Idehen" ;
+    schema:url "https://www.linkedin.com/in/kidehen/" ;
+    schema:identifier "https://www.linkedin.com/in/kidehen/" ;
+    schema:description "Founder and CEO of OpenLink Software, creator of Virtuoso, Semantic Web and Linked Data pioneer. Advocate for the Semantic Medallion architecture and LLM-mediated knowledge graph construction."@en ;
+    schema:sameAs <https://x.com/kidehen/#this>, <https://substack.com/@kidehen/#this> ;
+    owl:sameAs <https://www.linkedin.com/in/kidehen/#this>, <https://x.com/kidehen/#this>, <https://substack.com/@kidehen/#this> .
+
+# --- Veronika Heimsbakk ---
+
+:commentVeronika a schema:Comment ;
+    schema:text "Hear, hear! Getting ontology from tables into code is easy with four lines of Python."@en ;
+    schema:author :veronikaHeimsbakk ;
+    schema:url "https://substack.com/@veronahe/p-183770493" ;
+    schema:dateCreated "2026-05-21"^^xsd:date ;
+    schema:interactionStatistic [ schema:interactionType schema:LikeAction ; schema:userInteractionCount 14 ] ;
+    schema:isPartOf :commentsSection .
+
+:veronikaHeimsbakk a schema:Person ;
+    schema:name "Veronika Heimsbakk" ;
+    schema:url "https://www.linkedin.com/in/vheimsbakk/" ;
+    schema:identifier "https://www.linkedin.com/in/vheimsbakk/" ;
+    schema:description "Knowledge Graph Specialist, author of 'SHACL for the Practitioner' and advocate for the Semantic Medallion architecture."@en ;
+    owl:sameAs <https://www.linkedin.com/in/vheimsbakk/#this>, <https://substack.com/@veronahe/#this> .
+
+# --- Jacob Friedman ---
+
+:commentJacobFriedman a schema:Comment ;
+    schema:text "References conceptual graphs, Harold Boley, and RuleML. Notes OWL is based on Description Logic and asks: 'Can anyone point us to a standards body with a certifiable normalization of Description Logic for OWL?'"@en ;
+    schema:author :jacobFriedman ;
+    schema:dateCreated "2026-05-21"^^xsd:date ;
+    schema:isPartOf :commentsSection .
+
+:jacobFriedman a schema:Person ;
+    schema:name "Jacob Friedman" ;
+    schema:description "Semantic reasoning specialist with expertise in conceptual graphs, RuleML, and description logic normalization."@en .
+
+# --- Robert Sanderson ---
+
+:commentRobertSanderson a schema:Comment ;
+    schema:text "Linked Art's compile pipeline processes RDFS+OWL into a Python class library. Engineers write familiar code like 'r = Person(id=\"Rob\"); r.name = \"Rob\"' instead of raw triple adds. Ontology is code — and transpiles to other code that makes it more developer friendly."@en ;
+    schema:author :robertSanderson ;
+    schema:isPartOf :commentsSection .
+
+:robertSanderson a schema:Person ;
+    schema:name "Robert Sanderson" ;
+    schema:description "Linked Art contributor demonstrating ontology-to-code transpilation in production for cultural heritage data."@en .
+
+# --- Gabor Csepregi ---
+
+:commentGaborCsepregi a schema:Comment ;
+    schema:text "Can't remember the last time I had ontology and knowledge graph related content properly explained."@en ;
+    schema:author :gaborCsepregi ;
+    schema:isPartOf :commentsSection .
+
+:gaborCsepregi a schema:Person ;
+    schema:name "Gabor Csepregi" ;
+    schema:description "Knowledge graph practitioner who appreciates clear ontology explanation."@en .
+
+# --- Harish Iyer ---
+
+:commentHarish a schema:Comment ;
+    schema:text "The gap between engineering, design and product is narrowing. Ontology should no longer be a layer but the language of the company. Context switching will be replaced by context expansion. Who owns the ontology guardian role?"@en ;
+    schema:author :harishIyer ;
+    schema:isPartOf :commentsSection .
+
+:harishIyer a schema:Person ;
+    schema:name "Harish Iyer" ;
+    schema:description "Product-strategy thinker focused on the ontology guardian role at the intersection of engineering, design, and product."@en .
+
+# --- Joseph Macdonald ---
+
+:commentJosephMacdonald a schema:Comment ;
+    schema:text "WhenTTT, not only IFTTT. Temporal Objective-Directed Acyclic Graphs (TODAG) as a hypergraph approach for treating ontologies as revenue-generating assets."@en ;
+    schema:author :josephMacdonald ;
+    schema:isPartOf :commentsSection .
+
+:josephMacdonald a schema:Person ;
+    schema:name "Joseph Macdonald" ;
+    schema:description "Proposes TODAG hypergraph approach — When-Then-Then-Then patterns for temporal, revenue-generating ontologies."@en .
+
+# --- Mark O'Donovan ---
+
+:commentMarkODonovan a schema:Comment ;
+    schema:text "Started as an idea in my head, then a note in a notebook, then an Excel table, then a SQL table — now looking at GraphDB. A personal journey toward ontology maturity."@en ;
+    schema:author :markODonovan ;
+    schema:isPartOf :commentsSection .
+
+:markODonovan a schema:Person ;
+    schema:name "Mark O'Donovan" ;
+    schema:description "Data practitioner on a personal journey from spreadsheet to graph database."@en .
+
+# --- Kyle Tobin ---
+
+:commentKyleTobin a schema:Comment ;
+    schema:text "Do your ontology in Pydantic so entities are executable — they don't just describe their own behavior. They conduct it too! Ontology should be reflected in application architecture, not smeared across four duplicative components."@en ;
+    schema:author :kyleTobin ;
+    schema:isPartOf :commentsSection .
+
+:kyleTobin a schema:Person ;
+    schema:name "Kyle Tobin" ;
+    schema:description "Advocate for Pydantic-executable ontologies — entities that conduct their own behavior within application architecture."@en .
+
+# --- Honorio J. Padrón III ---
+
+:commentHonorio a schema:Comment ;
+    schema:text "Operational ontologies describe what exists. Decision ontologies describe what the enterprise does — who owns each decision, what triggers it, what action it generates. An operational ontology makes data legible. A decision ontology makes the enterprise executable. The decision ontology is source code for your will to act. His platform CLEARED sits above the semantic layer to govern the grammar of enterprise action."@en ;
+    schema:author :honorioPadron ;
+    schema:isPartOf :commentsSection .
+
+:honorioPadron a schema:Person ;
+    schema:name "Honorio J. Padrón III" ;
+    schema:description "Creator of CLEARED platform for governing the grammar of enterprise action through decision ontologies."@en .
+
+# --- Stepan Karandin ---
+
+:commentStepan a schema:Comment ;
+    schema:text "Ontology is information. Databases or code are just data formats. The relational model is the worst kind of normalization for ontology. Mathematically, ontology could be described as a graph."@en ;
+    schema:author :stepanKarandin ;
+    schema:isPartOf :commentsSection .
+
+:stepanKarandin a schema:Person ;
+    schema:name "Stepan Karandin" ;
+    schema:description "Information theorist who views ontology as information — databases and code are mere formats."@en .
+
+# --- Edward Henry ---
+
+:commentEdwardHenry a schema:Comment ;
+    schema:text "The biggest illusion in AI is the gap. We are trying to address upstream problems downstream, trying to turn LLM slop into something real with great ideas like ontology-as-code."@en ;
+    schema:author :edwardHenry ;
+    schema:isPartOf :commentsSection .
+
+:edwardHenry a schema:Person ;
+    schema:name "Edward Henry" ;
+    schema:description "AI practitioner warning against addressing upstream problems downstream — ontology-as-code formalizes meaning at the source."@en .
+
+# --- Olivier Rey ---
+
+:commentOlivierRey a schema:Comment ;
+    schema:text "I would rather say: an ontology is a hypergraph. Code is not a graph but a tree."@en ;
+    schema:author :olivierRey ;
+    schema:isPartOf :commentsSection .
+
+:olivierRey a schema:Person ;
+    schema:name "Olivier Rey" ;
+    schema:description "Argues ontology is a hypergraph — code is a tree but ontology is a graph."@en .
+
+# --- Thomas Smith ---
+
+:commentThomasSmith a schema:Comment ;
+    schema:text "Relational databases only index binary trees — two dimensions only. The correct approach uses triples to define three dimensions of a graph. SQL gets choked up with circular references."@en ;
+    schema:author :thomasSmith ;
+    schema:isPartOf :commentsSection .
+
+:thomasSmith a schema:Person ;
+    schema:name "Thomas Smith" ;
+    schema:description "Database theorist: relational DBs index binary trees (2D), triples define 3D graphs, SQL chokes on circular references."@en .
+
+# ============================================================================
+# FAQ (12 Questions)
+# ============================================================================
+
+:faqSection a schema:FAQPage ;
+    schema:name "Ontology as Code FAQ"@en ;
+    schema:description "Frequently asked questions about treating ontologies as source code — spanning compilation, version control, LLM integration, decision ontologies, and executable approaches."@en ;
+    schema:mainEntity :q1, :q2, :q3, :q4, :q5, :q6, :q7, :q8, :q9, :q10, :q11, :q12 ;
+    schema:hasPart :q1, :q2, :q3, :q4, :q5, :q6, :q7, :q8, :q9, :q10, :q11, :q12 ;
+    schema:isPartOf :analysis .
+
+:q1 a schema:Question ; schema:name "Why should ontologies be treated as source code?"@en ; schema:text "Why should ontologies be treated as source code?"@en ; schema:acceptedAnswer :a1 . :a1 a schema:Answer ; schema:text "Because ontologies express formal logic and axioms — not database rows. They should compile, live in plain text for version control, and be governed with engineering discipline. Tony Seale: 'Your ontology is source code for your meaning.'"@en .
+
+:q2 a schema:Question ; schema:name "What does 'compile, not just parse' mean?"@en ; schema:text "What does 'compile, not just parse' mean?"@en ; schema:acceptedAnswer :a2 . :a2 a schema:Answer ; schema:text "A build should break on contradictions or unexpected entailments. An absent entailment is a test failure, not a curiosity discovered six months later in production. This catches logical errors at build time rather than in production."@en .
+
+:q3 a schema:Question ; schema:name "Why plain text for ontologies?"@en ; schema:text "Why should ontologies live in plain text?"@en ; schema:acceptedAnswer :a3 . :a3 a schema:Answer ; schema:text "Plain text enables diffs, branches, blame, and pull requests — standard software engineering tooling. It also allows LLMs to read, navigate, and edit the source directly, exactly like working with a codebase."@en .
+
+:q4 a schema:Question ; schema:name "How do LLMs change ontology management?"@en ; schema:text "How do LLMs change ontology management?"@en ; schema:acceptedAnswer :a4 . :a4 a schema:Answer ; schema:text "Kingsley Idehen (anchor commentary): The Semantic Web stack gels naturally with LLMs and AI Agents. Users can ask an AI Agent to express worldviews in any notation, save to a file, and copy to a folder bound to a backend RDF DBMS. LLM-powered Agents with Skills make this 'a zillion times easier.' The demo showcases at linkeddata.uriburner.com/DAV/demos/daas/ are live examples of this filesystem-to-quad-store pipeline."@en .
+
+:q5 a schema:Question ; schema:name "What is a decision ontology?"@en ; schema:text "What is a decision ontology?"@en ; schema:acceptedAnswer :a5 . :a5 a schema:Answer ; schema:text "Honorio J. Padrón III distinguishes operational ontologies (what exists) from decision ontologies (who owns each decision, what triggers it, what action it generates). An operational ontology makes data legible; a decision ontology makes the enterprise executable. The decision ontology is 'source code for your will to act.' His CLEARED platform operationalizes this distinction."@en .
+
+:q6 a schema:Question ; schema:name "What is McOntology?"@en ; schema:text "What is McOntology?"@en ; schema:acceptedAnswer :a6 . :a6 a schema:Answer ; schema:text "A term coined by Tony Seale for commoditized, fast-food approaches to ontology — treating ontologies as mass-produced rather than carefully engineered artifacts. It is the antithesis of the ontology-as-code philosophy."@en .
+
+:q7 a schema:Question ; schema:name "How does the Semantic Web stack relate to ontology-as-code?"@en ; schema:text "How does the Semantic Web stack relate to ontology-as-code?"@en ; schema:acceptedAnswer :a7 . :a7 a schema:Answer ; schema:text "RDF-Turtle is human-readable shorthand for triples. JSON-LD has more tooling support. Combined with LLMs, the stack now provides both readability and tooling — bridging the historical gap that made ontology management difficult. As Kingsley Idehen notes, files in a DAV folder bound to Virtuoso automatically become part of a live quad store."@en .
+
+:q8 a schema:Question ; schema:name "What's wrong with putting ontologies in database tables?"@en ; schema:text "What is wrong with putting ontologies in database tables?"@en ; schema:acceptedAnswer :a8 . :a8 a schema:Answer ; schema:text "Tony Seale: You wouldn't write application code in a database table. Thomas Smith adds: relational databases index binary trees — two dimensions only. Ontologies need triples for three dimensions. Graphs handle circular references that choke SQL. Stepan Karandin: the relational model is the worst kind of normalization for ontology."@en .
+
+:q9 a schema:Question ; schema:name "How do you bridge tables to ontology code?"@en ; schema:text "How do you bridge existing tables to ontology code?"@en ; schema:acceptedAnswer :a9 . :a9 a schema:Answer ; schema:text "Veronika Heimsbakk: Getting ontology from tables into code is straightforward — 'four lines of Python' using tools like maplib and OTTR templates to map structured data to ontology properties."@en .
+
+:q10 a schema:Question ; schema:name "Can ontologies be executable?"@en ; schema:text "Can ontologies be made executable?"@en ; schema:acceptedAnswer :a10 . :a10 a schema:Answer ; schema:text "Kyle Tobin argues for Pydantic-defined ontologies where entities are executable — 'they don't just describe their own behavior. They conduct it too!' Robert Sanderson demonstrates this with Linked Art's transpilation from RDFS+OWL into Python class libraries. Both approaches embed ontology into application architecture rather than smearing it across components."@en .
+
+:q11 a schema:Question ; schema:name "Who owns the ontology in an organization?"@en ; schema:text "Who owns the ontology in an organization?"@en ; schema:acceptedAnswer :a11 . :a11 a schema:Answer ; schema:text "Harish Iyer frames this as one of the most consequential product decisions a company will make. The ontology guardian role sits at the intersection of engineering, design, and product — a decision owner who maintains the language of the company. Context switching is replaced by context expansion."@en .
+
+:q12 a schema:Question ; schema:name "What is the upstream/downstream gap in AI?"@en ; schema:text "What is the upstream/downstream gap in AI?"@en ; schema:acceptedAnswer :a12 . :a12 a schema:Answer ; schema:text "Edward Henry warns the biggest illusion is trying to address upstream problems downstream — turning LLM slop into something real. Ontology-as-code addresses this by formalizing meaning at the source rather than patching it in production. Joseph Macdonald extends this with TODAG: temporal patterns (WhenTTT) that make ontologies revenue-generating assets, not just cost centers."@en .
+
+# ============================================================================
+# GLOSSARY (12 Terms)
+# ============================================================================
+
+:glossarySection a skos:ConceptScheme, schema:DefinedTermSet ;
+    schema:name "Ontology as Code Glossary"@en ;
+    schema:description "Key terms from the ontology-as-code discussion, including contributions from all 14 commenters."@en ;
+    schema:hasDefinedTerm :termOntologyAsCode, :termCompile, :termPlainText, :termGovernance, :termRDFTurtle, :termLLM, :termDecisionOntology, :termSemanticWeb, :termKnowledgeGraph, :termMcOntology, :termPydanticOntology, :termTODAG ;
+    schema:isPartOf :analysis .
+
+:termOntologyAsCode a skos:Concept, schema:DefinedTerm ; schema:name "Ontology as Code"@en ; schema:description "Treating ontologies as source code with compilation, version control, and engineering governance."@en ; skos:definition "Treating ontologies as source code."@en ; skos:inScheme :glossarySection .
+:termCompile a skos:Concept, schema:DefinedTerm ; schema:name "Compile"@en ; schema:description "The build step that checks an ontology for logical contradictions and unexpected entailments — breaking the build on failure."@en ; skos:definition "Build step for checking logical consistency."@en ; skos:inScheme :glossarySection .
+:termPlainText a skos:Concept, schema:DefinedTerm ; schema:name "Plain Text"@en ; schema:description "The storage format for ontologies enabling diffs, branches, and LLM navigation — Turtle for readability, JSON-LD for tooling."@en ; skos:definition "Storage format enabling version control and LLM editing."@en ; skos:inScheme :glossarySection .
+:termGovernance a skos:Concept, schema:DefinedTerm ; schema:name "Governance"@en ; schema:description "Engineering discipline applied to ontology management — version control, code review, CI/CD pipelines for meaning."@en ; skos:definition "Engineering discipline for ontology management."@en ; skos:inScheme :glossarySection .
+:termRDFTurtle a skos:Concept, schema:DefinedTerm ; schema:name "RDF-Turtle"@en ; schema:description "Human-readable shorthand notation for RDF triples — preferred for LLM-mediated ontology creation and filesystem-based management."@en ; skos:definition "Human-readable RDF notation."@en ; skos:inScheme :glossarySection .
+:termLLM a skos:Concept, schema:DefinedTerm ; schema:name "LLM"@en ; schema:description "Large Language Model — AI systems that can read, navigate, and edit ontology source files directly. When paired with skills and bound to a backend RDF DBMS, they enable natural-language-driven ontology management."@en ; skos:definition "Large Language Model for ontology interaction."@en ; skos:inScheme :glossarySection .
+:termDecisionOntology a skos:Concept, schema:DefinedTerm ; schema:name "Decision Ontology"@en ; schema:description "An ontology describing who owns each decision, what triggers it, and what action it generates — making the enterprise executable rather than merely legible. Honorio J. Padrón III: 'source code for your will to act.'"@en ; skos:definition "Ontology describing enterprise decisions and actions."@en ; skos:inScheme :glossarySection .
+:termSemanticWeb a skos:Concept, schema:DefinedTerm ; schema:name "Semantic Web Stack"@en ; schema:description "The W3C technology stack including RDF, SPARQL, OWL, and JSON-LD — now gelling naturally with LLMs for a filesystem-based ontology workflow."@en ; skos:definition "W3C technology stack for linked data."@en ; skos:inScheme :glossarySection .
+:termKnowledgeGraph a skos:Concept, schema:DefinedTerm ; schema:name "Knowledge Graph"@en ; schema:description "A graph-structured data model connecting entities through typed relationships — the runtime instantiation of ontologies, now manageable via plain-text files and LLM agents."@en ; skos:definition "Graph-structured data model from ontologies."@en ; skos:inScheme :glossarySection .
+:termMcOntology a skos:Concept, schema:DefinedTerm ; schema:name "McOntology"@en ; schema:description "Commoditized, fast-food approach to ontology — mass-produced rather than carefully engineered. The antithesis of ontology-as-code."@en ; skos:definition "Commoditized fast-food ontology approach."@en ; skos:inScheme :glossarySection .
+:termPydanticOntology a skos:Concept, schema:DefinedTerm ; schema:name "Pydantic-Executable Ontology"@en ; schema:description "Kyle Tobin's approach: ontologies defined in Pydantic where entities are executable — they don't just describe behavior, they conduct it. Ontology reflected in application architecture."@en ; skos:definition "Executable ontology in Pydantic."@en ; skos:inScheme :glossarySection .
+:termTODAG a skos:Concept, schema:DefinedTerm ; schema:name "Temporal Objective-Directed Acyclic Graph (TODAG)"@en ; schema:description "Joseph Macdonald's hypergraph approach using WhenTTT (When-Then-Then-Then) patterns for temporal, revenue-generating ontologies — treating ontologies as assets, not cost centers."@en ; skos:definition "Temporal hypergraph for revenue-generating ontologies."@en ; skos:inScheme :glossarySection .
+
+# ============================================================================
+# HOWTO: 7 Steps
+# ============================================================================
+
+:howtoSection a schema:HowTo ;
+    schema:name "Adopting Ontology as Code"@en ;
+    schema:description "Seven steps to transition from database-centric to code-centric ontology management, incorporating insights from all 14 discussion participants."@en ;
+    schema:step :step1, :step2, :step3, :step4, :step5, :step6, :step7 ;
+    schema:hasPart :step1, :step2, :step3, :step4, :step5, :step6, :step7 ;
+    schema:isPartOf :analysis .
+
+:step1 a schema:HowToStep ; schema:name "Extract Your Ontology from Database Tables"@en ; schema:description "Use four lines of Python (maplib + OTTR templates) to map existing table-based ontology rows into RDF triples in a plain-text file. As Veronika Heimsbakk demonstrates: the extraction is straightforward."@en ; schema:position 1 ; schema:isPartOf :howtoSection .
+:step2 a schema:HowToStep ; schema:name "Store in Plain Text (Turtle or JSON-LD)"@en ; schema:description "Save your ontology as an RDF-Turtle or JSON-LD file. Turtle for human readability and LLM navigation; JSON-LD for tooling compatibility. This enables diffs, branches, and blame."@en ; schema:position 2 ; schema:isPartOf :howtoSection .
+:step3 a schema:HowToStep ; schema:name "Set Up Compilation"@en ; schema:description "Implement a build step that validates logical consistency — contradictions or unexpected entailments should break the build. Jacob Friedman notes OWL is based on Description Logic: leverage its formal semantics for normalization checks."@en ; schema:position 3 ; schema:isPartOf :howtoSection .
+:step4 a schema:HowToStep ; schema:name "Version Control with Git"@en ; schema:description "Commit your ontology files to Git. Use branches for ontology changes, pull requests for review, and blame for provenance tracking. Governance with standard engineering discipline."@en ; schema:position 4 ; schema:isPartOf :howtoSection .
+:step5 a schema:HowToStep ; schema:name "Enable LLM-Mediated Editing"@en ; schema:description "Use AI Agents like Claude Code with appropriate skills to read, navigate, and edit ontology source files. Kingsley Idehen: ask the agent to express worldviews in your preferred notation. The Semantic Web stack + LLMs form a natural ecosystem."@en ; schema:position 5 ; schema:isPartOf :howtoSection .
+:step6 a schema:HowToStep ; schema:name "Bind to a Backend RDF DBMS"@en ; schema:description "Copy ontology files to a folder transparently bound to a Virtuoso or similar quad/triple store via WebDAV. Filesystem changes automatically propagate to the live knowledge graph. See linkeddata.uriburner.com/DAV/demos/daas/ for live demos."@en ; schema:position 6 ; schema:isPartOf :howtoSection .
+:step7 a schema:HowToStep ; schema:name "Define Decision Ownership and Make It Executable"@en ; schema:description "Model who owns each decision, what triggers it, and what action it generates (Honorio J. Padrón III). Consider Pydantic for executable entities (Kyle Tobin) or transpilation to class libraries (Robert Sanderson). Consider TODAG temporal patterns for revenue-generating ontologies (Joseph Macdonald). Apply code governance to decisions — break the build when authority is undefined."@en ; schema:position 7 ; schema:isPartOf :howtoSection .
+
+# ============================================================================
+# INDUSTRY SECTION
+# ============================================================================
+
+:industrySection a schema:ArticleSection ;
+    schema:name "Industry Context"@en ;
+    schema:hasPart :knowledgeEngineeringVertical ;
+    schema:isPartOf :analysis .
+
+# ============================================================================
+# PROVENANCE
+# ============================================================================
+
+:kgGeneratorSkill a schema:SoftwareApplication ;
+    schema:name "kg-generator skill v2"@en ;
+    schema:url "https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator" ;
+    schema:description "Generated this enhanced RDF-Turtle Knowledge Graph (Edition 2) from the LinkedIn post and its 14-comment discussion thread."@en .
+
+:rdfInfographicSkill a schema:SoftwareApplication ;
+    schema:name "rdf-infographic-skill v2"@en ;
+    schema:url "https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/rdf-infographic-skill" ;
+    schema:description "Generated the companion HTML infographic and Markdown document (Edition 2)."@en .

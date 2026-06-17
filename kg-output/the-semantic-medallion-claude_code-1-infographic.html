@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Semantic Medallion — Knowledge Graph-Powered Data Catalog</title>
+<meta name="description" content="Interactive infographic exploring the Semantic Medallion architecture: augmenting traditional data pipelines with RDF knowledge graphs, DCAT catalog metadata, OTTR templates, and executable SPARQL queries.">
+<meta property="og:title" content="The Semantic Medallion — Knowledge Graph-Powered Data Catalog">
+<meta property="og:description" content="How Bronze→Silver→Gold medallion architecture becomes a self-describing knowledge graph catalog with DCAT, PROV-O, and SPARQL.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://moderndata101.substack.com/p/the-semantic-medallion">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Semantic Medallion — Knowledge Graph-Powered Data Catalog">
+<link rel="related" href="the-semantic-medallion-claude_code-1.ttl" type="text/turtle">
+<link rel="alternate" href="the-semantic-medallion-claude_code-1.jsonld" type="application/ld+json">
+<link rel="alternate" href="the-semantic-medallion-claude_code-1-relationships.md" type="text/markdown">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Poppins:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f8f9fc; --panel:#ffffff; --ink:#1a1a2e; --muted:#64748b;
+  --accent:#6366f1; --accent2:#8b5cf6; --line:#e2e8f0; --card-shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.04);
+  --hero-gradient:linear-gradient(135deg,#6366f1 0%,#8b5cf6 40%,#ec4899 100%);
+  --bronze:#cd7f32; --silver:#94a3b8; --gold:#eab308;
+  --radius:12px; --radius-lg:20px; --transition:0.3s cubic-bezier(0.4,0,0.2,1);
+}
+html[data-theme="dark"],@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#0f0f1a; --panel:#1a1a2e; --ink:#e2e8f0; --muted:#94a3b8;
+    --line:#2d2d4a; --card-shadow:0 1px 3px rgba(0,0,0,.2),0 4px 16px rgba(0,0,0,.15);
+  }
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Poppins',sans-serif;font-weight:600;line-height:1.3}
+h2{font-size:2rem;margin-bottom:1.5rem}
+h3{font-size:1.3rem;margin-bottom:0.75rem}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.section{padding:80px 0;position:relative}
+.section-title{text-align:center;margin-bottom:48px}
+.eyebrow{text-transform:uppercase;letter-spacing:.15em;font-size:0.75rem;font-weight:600;color:var(--accent);margin-bottom:8px;text-align:center}
+.eyebrow-dark{text-transform:uppercase;letter-spacing:.15em;font-size:0.75rem;font-weight:600;color:var(--accent);margin-bottom:8px}
+
+/* Navigation */
+.floating-nav{position:fixed;top:20px;right:20px;z-index:1000;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:0 8px 32px rgba(0,0,0,.12);width:260px;transition:all var(--transition);overflow:hidden}
+.floating-nav.collapsed{width:48px;border-radius:var(--radius)}
+.nav-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:move;background:var(--panel);border-bottom:1px solid var(--line);user-select:none}
+.nav-header h4{font-size:0.8rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-family:'Inter',sans-serif;white-space:nowrap;overflow:hidden}
+.nav-toggle{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.2rem;padding:2px 6px;border-radius:6px;flex-shrink:0}
+.nav-toggle:hover{background:var(--bg);color:var(--ink)}
+.nav-links{list-style:none;padding:8px 0;max-height:60vh;overflow-y:auto}
+.nav-links li a{display:block;padding:8px 16px;color:var(--muted);text-decoration:none;font-size:0.85rem;font-weight:500;transition:all .2s;border-left:3px solid transparent}
+.nav-links li a:hover,.nav-links li a.active{color:var(--accent);border-left-color:var(--accent);background:var(--bg)}
+.collapsed .nav-links,.collapsed .nav-header h4{display:none}
+.collapsed .nav-header{border-bottom:none;justify-content:center;padding:10px}
+.header-bar{display:none;position:fixed;top:0;left:0;right:0;z-index:999;background:var(--panel);border-bottom:1px solid var(--line);padding:8px 24px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+
+/* Hero */
+.hero{padding:120px 0 80px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:var(--hero-gradient);opacity:.04;z-index:0}
+.hero h1{font-size:clamp(2rem,5vw,3.2rem);font-family:'Space Grotesk',sans-serif;font-weight:700;margin-bottom:16px;position:relative;z-index:1;background:var(--hero-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero .tagline{font-size:1.15rem;color:var(--muted);max-width:680px;margin:0 auto 24px;position:relative;z-index:1}
+.hero .meta{font-size:0.85rem;color:var(--muted);position:relative;z-index:1}
+.hero .meta a{color:var(--accent);text-decoration:none;font-weight:500}
+.hero .meta a:hover{text-decoration:underline}
+
+/* Cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-top:32px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-lg);padding:28px;box-shadow:var(--card-shadow);transition:transform var(--transition),box-shadow var(--transition)}
+.card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.1)}
+.card-icon{width:48px;height:48px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:16px;font-weight:700}
+.card-icon.bronze{background:rgba(205,127,50,.15);color:var(--bronze)}
+.card-icon.silver{background:rgba(148,163,184,.15);color:var(--silver)}
+.card-icon.gold{background:rgba(234,179,8,.15);color:var(--gold)}
+.card h4{font-size:1.1rem;margin-bottom:8px}
+.card p{font-size:0.9rem;color:var(--muted);line-height:1.6}
+
+/* Layer indicator strip */
+.layer-strip{display:flex;border-radius:var(--radius-lg);overflow:hidden;margin:32px auto;max-width:720px;box-shadow:var(--card-shadow)}
+.layer-strip>div{flex:1;padding:24px 16px;text-align:center;color:#fff;font-weight:600;font-size:0.9rem;position:relative}
+.layer-strip>div:first-child{background:linear-gradient(135deg,#8B6914,#cd7f32)}
+.layer-strip>div:nth-child(2){background:linear-gradient(135deg,#64748b,#94a3b8)}
+.layer-strip>div:last-child{background:linear-gradient(135deg,#b8860b,#eab308)}
+.layer-strip .layer-arrow{position:absolute;right:-12px;top:50%;transform:translateY(-50%);z-index:1;font-size:1.2rem}
+
+/* Accordions */
+.accordion{border:1px solid var(--line);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;background:var(--panel);transition:box-shadow var(--transition)}
+.accordion:hover{box-shadow:var(--card-shadow)}
+.accordion summary{padding:16px 20px;cursor:pointer;font-weight:600;font-size:0.95rem;list-style:none;display:flex;align-items:center;justify-content:space-between;user-select:none}
+.accordion summary::-webkit-details-marker{display:none}
+.accordion summary::after{content:'+';font-size:1.4rem;color:var(--accent);font-weight:400;transition:transform 0.3s ease;flex-shrink:0;margin-left:12px;line-height:1}
+.accordion[open] summary::after{transform:rotate(45deg)}
+.accordion .content{padding:0 20px 20px;font-size:0.9rem;color:var(--muted);line-height:1.7}
+.accordion .content a{color:var(--accent);text-decoration:none;font-weight:500}
+.accordion .content a:hover{text-decoration:underline}
+
+/* SPARQL code blocks */
+pre.sparql{background:#1a1a2e;color:#e2e8f0;padding:20px;border-radius:var(--radius);overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:0.8rem;line-height:1.6;margin:12px 0;position:relative}
+pre.sparql code{font-family:inherit}
+.sparql-live{margin-top:8px;font-size:0.8rem}
+.sparql-live a{display:inline-flex;align-items:center;gap:6px;color:var(--accent);text-decoration:none;font-weight:600;padding:6px 14px;border:1px solid var(--accent);border-radius:20px;transition:all .2s}
+.sparql-live a:hover{background:var(--accent);color:#fff}
+
+/* Glossary grid */
+.glossary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-top:24px}
+.glossary-item{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.glossary-item dt{font-weight:700;font-size:0.95rem;margin-bottom:6px}
+.glossary-item dt a{color:var(--ink);text-decoration:none}
+.glossary-item dt a:hover{color:var(--accent)}
+.glossary-item dd{font-size:0.85rem;color:var(--muted);line-height:1.6}
+.howto-steps{counter-reset:step;list-style:none;max-width:800px;margin:0 auto}
+.howto-steps li{counter-increment:step;position:relative;padding:24px 24px 24px 72px;margin-bottom:16px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-lg)}
+.howto-steps li::before{content:counter(step);position:absolute;left:20px;top:24px;width:36px;height:36px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem}
+.howto-steps li h4{margin-bottom:6px}
+.howto-steps li p{font-size:0.9rem;color:var(--muted)}
+
+/* KG Explorer */
+#kg-explorer{border:2px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:var(--panel);margin-top:24px;transition:border-color var(--transition),box-shadow var(--transition);cursor:default}
+#kg-explorer.kg-active{border-color:var(--accent);box-shadow:0 0 0 4px rgba(99,102,241,.15),0 8px 32px rgba(99,102,241,.1)}
+#kg-explorer.kg-active::before{content:'Click outside to release zoom';display:block;text-align:center;font-size:0.7rem;color:var(--accent);padding:6px 0;background:rgba(99,102,241,.06);border-bottom:1px solid var(--line);font-family:'Inter',sans-serif;letter-spacing:.03em;animation:fadeHint 2.5s ease-out forwards}
+@keyframes fadeHint{0%,70%{opacity:1}100%{opacity:0}}
+#kg-svg{display:block;width:100%;height:100%;background:var(--bg);cursor:grab}
+#kg-explorer.kg-active #kg-svg{cursor:grab}
+#kg-explorer.kg-active #kg-svg:active{cursor:grabbing}
+.kg-inactive-hint{text-align:center;font-size:0.7rem;color:var(--muted);padding:4px 0 0;font-family:'Inter',sans-serif;opacity:0.6}
+.kg-controls{display:flex;flex-wrap:wrap;gap:12px;padding:16px;border-top:1px solid var(--line);align-items:center}
+.kg-controls button{padding:8px 16px;border:1px solid var(--line);border-radius:20px;background:var(--panel);color:var(--ink);cursor:pointer;font-size:0.8rem;font-weight:500;transition:all .2s}
+.kg-controls button:hover,.kg-controls button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.kg-controls label{font-size:0.8rem;color:var(--muted)}
+.kg-controls input[type=range]{width:80px}
+.kg-legend{display:flex;gap:16px;font-size:0.75rem;padding:8px 16px;color:var(--muted)}
+.kg-legend span{display:flex;align-items:center;gap:4px}
+.kg-legend .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.kg-search{flex:1;min-width:160px;max-width:260px;padding:8px 14px;border:1px solid var(--line);border-radius:20px;font-size:0.8rem;font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink)}
+.kg-status{font-size:0.75rem;color:var(--muted);white-space:nowrap}
+#kg-adv-toolbar{display:none;gap:8px}
+.adv-btn{padding:6px 12px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);cursor:pointer;font-size:0.75rem;transition:all .2s}
+.adv-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+#kg-graph{position:relative;width:100%;height:500px;overflow:hidden}
+#kg-settings-panel{position:absolute;top:0;right:0;width:270px;height:100%;background:var(--panel);border-left:1px solid var(--line);padding:16px 14px;overflow-y:auto;display:none;z-index:100;font-size:0.8rem;box-shadow:-4px 0 24px rgba(0,0,0,.08)}
+#kg-settings-panel h4{font-family:'Inter',sans-serif;font-size:0.75rem;font-weight:700;color:var(--ink);margin:12px 0 6px;text-transform:uppercase;letter-spacing:.06em}
+#kg-settings-panel label{display:flex;align-items:center;gap:6px;margin-bottom:5px;cursor:pointer;color:var(--muted);font-size:0.78rem}
+#kg-settings-panel input[type=range]{width:100%;accent-color:var(--accent)}
+.settings-close{float:right;background:none;border:none;cursor:pointer;font-size:1rem;color:var(--muted);padding:2px 6px;border-radius:6px}
+.settings-close:hover{background:var(--bg);color:var(--ink)}
+.sel-all-btn{padding:3px 10px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--muted);cursor:pointer;font-size:0.7rem}
+.sel-all-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.node-chip-sm{padding:4px 10px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--muted);cursor:pointer;font-size:0.72rem;transition:all .2s}
+.node-chip-sm.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+#kg-tooltip{display:none;position:fixed;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-size:0.75rem;color:var(--ink);box-shadow:0 4px 16px rgba(0,0,0,.1);pointer-events:none;z-index:200;max-width:320px;backdrop-filter:blur(12px)}
+
+/* Footer */
+.footer{background:var(--panel);border-top:1px solid var(--line);padding:48px 24px;text-align:center}
+.kg-format-tabs{display:flex;gap:8px;justify-content:center;margin-bottom:12px}
+.kg-format-tabs button{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:6px 14px;cursor:pointer;font-size:0.8rem;font-weight:500;transition:all .2s}
+.kg-format-tabs button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--accent);color:#fff;border-radius:12px;text-decoration:none;font-weight:600;font-size:0.95rem;transition:all var(--transition)}
+.cta-btn:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(99,102,241,.3)}
+.tech-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px;border-top:1px solid var(--line);padding-top:24px}
+.tech-card{text-align:center;padding:16px;background:var(--bg);border-radius:12px;border:1px solid var(--line)}
+.tech-card h4{font-size:0.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:8px;font-family:'Inter',sans-serif}
+.tech-card a{color:var(--accent);font-family:'Space Grotesk';font-weight:600;font-size:0.95rem;text-decoration:none}
+
+/* Fade-in animation */
+.fade-up{opacity:0;transform:translateY(30px);transition:opacity .6s ease-out,transform .6s ease-out}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* Dark mode toggle */
+#theme-toggle{position:fixed;bottom:24px;right:24px;z-index:1001;width:44px;height:44px;border-radius:50%;background:var(--panel);border:1px solid var(--line);cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.1);transition:all var(--transition)}
+#theme-toggle:hover{transform:scale(1.1)}
+
+/* Resolver links */
+a.resolve{color:var(--accent);text-decoration:none;font-weight:500;border-bottom:1px dashed var(--accent)}
+a.resolve:hover{border-bottom-style:solid}
+
+@media(max-width:768px){
+  .hero{padding:80px 0 48px}
+  .cards{grid-template-columns:1fr}
+  .tech-grid{grid-template-columns:repeat(2,1fr)}
+  .glossary-grid{grid-template-columns:1fr}
+  .howto-steps li{padding-left:60px}
+  .floating-nav{width:220px}
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="floating-nav" id="floatingNav">
+  <div class="nav-header" id="navHeader">
+    <h4>Navigate</h4>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&minus;</button>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#medallion">Medallion Layers</a></li>
+    <li><a href="#technology">Technology Stack</a></li>
+    <li><a href="#sparql-queries">SPARQL Queries</a></li>
+    <li><a href="#kg-explorer-section">KG Explorer</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#glossary">Glossary</a></li>
+    <li><a href="#howto">How-To Guide</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+</nav>
+<div class="header-bar" id="headerBar">
+  <span style="font-weight:600;font-size:0.9rem">The Semantic Medallion</span>
+  <button id="expandNav" style="background:var(--accent);color:#fff;border:none;padding:4px 12px;border-radius:6px;cursor:pointer;font-size:0.8rem">Menu</button>
+</div>
+
+<button id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="container">
+    <h1>The Semantic Medallion</h1>
+    <p class="tagline">Building a Knowledge Graph-Powered Data Catalog — augmenting traditional medallion architecture with RDF, DCAT, and SPARQL to create a self-describing catalog where metadata and data coexist in the same queryable graph.</p>
+    <p class="meta">
+      By <a href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23veronikaHeimsbakk" target="_blank" rel="noopener noreferrer">Veronika Heimsbakk</a>
+      &middot; Knowledge Graph Specialist at Data Treehouse
+      &middot; <a href="https://moderndata101.substack.com/p/the-semantic-medallion" target="_blank" rel="noopener noreferrer">Modern Data 101</a>
+      &middot; May 14, 2026
+    </p>
+  </div>
+</header>
+
+<!-- Overview -->
+<section class="section" id="overview">
+  <div class="container">
+    <div class="section-title fade-up">
+      <div class="eyebrow">Overview</div>
+      <h2>From Raw Data to Knowledge Graph</h2>
+      <p style="color:var(--muted);max-width:720px;margin:0 auto">The Semantic Medallion redefines the traditional Bronze&rarr;Silver&rarr;Gold data pipeline by making the Gold layer an RDF knowledge graph. DCAT catalog metadata is woven into the same graph, creating a unified query surface where data catalog and customer facts coexist.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Medallion Layers -->
+<section class="section" id="medallion" style="padding-top:0">
+  <div class="container">
+    <div class="section-title fade-up">
+      <div class="eyebrow">Architecture</div>
+      <h2>The Three Medallion Layers</h2>
+    </div>
+
+    <div class="layer-strip fade-up">
+      <div>Bronze<div style="font-size:0.7rem;font-weight:400;margin-top:4px;opacity:.85">Raw Harvest</div></div>
+      <div>Silver<div style="font-size:0.7rem;font-weight:400;margin-top:4px;opacity:.85">IRI Minting</div></div>
+      <div>Gold<div style="font-size:0.7rem;font-weight:400;margin-top:4px;opacity:.85">RDF Knowledge Graph</div></div>
+    </div>
+
+    <div class="cards fade-up">
+      <div class="card">
+        <div class="card-icon bronze">B</div>
+        <h4><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23bronzeLayer" target="_blank" rel="noopener noreferrer">Bronze Layer</a></h4>
+        <p>Raw data harvested from source systems — CRM, ERP, billing, support. No semantics applied. This is pure raw material ingestion. Data is stored as-is, preserving original formats and timestamps.</p>
+        <p style="margin-top:12px"><strong>Semantic Enrichment:</strong> None &middot; <strong>Order:</strong> 1</p>
+      </div>
+      <div class="card">
+        <div class="card-icon silver">S</div>
+        <h4><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23silverLayer" target="_blank" rel="noopener noreferrer">Silver Layer</a></h4>
+        <p>Every entity receives a stable globally unique IRI. Raw records become identifiable, linkable resources with local semantics. IRI minting is the critical step — without stable identifiers, cross-system linking breaks.</p>
+        <p style="margin-top:12px"><strong>Semantic Enrichment:</strong> Local &middot; <strong>IRI Minting:</strong> Yes &middot; <strong>Order:</strong> 2</p>
+      </div>
+      <div class="card">
+        <div class="card-icon gold">G</div>
+        <h4><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23goldLayer" target="_blank" rel="noopener noreferrer">Gold Layer</a></h4>
+        <p>DataFrames are mapped to RDF via a shared ontology using OTTR templates and maplib. Global semantics enable cross-system entity resolution, semantic search, and impact analysis through SPARQL — the traditional Gold layer reimagined as linked data.</p>
+        <p style="margin-top:12px"><strong>Semantic Enrichment:</strong> Global &middot; <strong>Order:</strong> 3</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Technology Stack -->
+<section class="section" id="technology">
+  <div class="container">
+    <div class="section-title fade-up">
+      <div class="eyebrow">Technology Stack</div>
+      <h2>Tools That Power the Semantic Medallion</h2>
+    </div>
+    <div class="cards fade-up">
+      <div class="card">
+        <h4><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23maplib" target="_blank" rel="noopener noreferrer">maplib</a></h4>
+        <p>Python library for DataFrame-to-RDF transformation. A single <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-size:0.85rem">maplib.map(dataframe, template, result_container)</code> call converts Silver-layer DataFrames into RDF triples using OTTR templates — reducing hundreds of lines of triple-construction code to four lines of Python.</p>
+      </div>
+      <div class="card">
+        <h4><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23ottrTemplates" target="_blank" rel="noopener noreferrer">OTTR (Reasonable Ontology Templates)</a></h4>
+        <p>Template-based ontology mapping framework. stOTTR (string syntax) defines reusable templates that declaratively map DataFrame columns to RDF ontology classes and properties, enabling consistent repeatable transformations.</p>
+      </div>
+      <div class="card">
+        <h4><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23dcatCatalog" target="_blank" rel="noopener noreferrer">DCAT — Data Catalog Vocabulary</a></h4>
+        <p>W3C standard for describing data catalogs, datasets, distributions, and data services in RDF. Applied at each medallion layer to weave catalog metadata into the knowledge graph — the catalog describes itself.</p>
+      </div>
+      <div class="card">
+        <h4><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23provO" target="_blank" rel="noopener noreferrer">PROV-O</a></h4>
+        <p>W3C Provenance Ontology for tracking data lineage. Answers "where did this record come from?" by linking Gold-layer entities back to their source systems — CRM, ERP, billing — via <code>prov:wasDerivedFrom</code>.</p>
+      </div>
+      <div class="card">
+        <h4><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23shacl" target="_blank" rel="noopener noreferrer">SHACL</a></h4>
+        <p>Shapes Constraint Language — W3C standard for validating RDF graphs against shape conditions. Enforces data quality rules: every Customer must have required properties, contracts must have valid statuses, data sources must be properly typed.</p>
+      </div>
+      <div class="card">
+        <h4><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23iriMinting" target="_blank" rel="noopener noreferrer">IRI Minting</a></h4>
+        <p>The process of assigning stable globally unique identifiers to every entity at the Silver layer. IRIs are the foundation of linked data — they make entities referenceable across systems without fragile key matching.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPARQL Queries -->
+<section class="section" id="sparql-queries">
+  <div class="container">
+    <div class="section-title fade-up">
+      <div class="eyebrow">The Catalog Experience</div>
+      <h2>SPARQL Query Examples</h2>
+      <p style="color:var(--muted);max-width:640px;margin:0 auto">Three queries demonstrating how a knowledge graph-powered catalog replaces traditional catalog browsing. Each query targets the <a class="resolve" href="https://linkeddata.uriburner.com/sparql" target="_blank" rel="noopener noreferrer">URIBurner SPARQL endpoint</a> and is backed by sample instance data making them fully executable.</p>
+    </div>
+
+    <div class="fade-up" style="max-width:860px;margin:0 auto">
+      <details class="accordion" id="q1-accordion">
+        <summary>Query 1: All Facts About Customer C-001</summary>
+        <div class="content">
+          <p>Retrieve every property-value pair for a single customer. The simplest entry point into the catalog — equivalent to "show me everything we know about Acme Corporation."</p>
+          <pre class="sparql"><code>PREFIX : &lt;https://moderndata101.substack.com/p/the-semantic-medallion#&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX prov: &lt;http://www.w3.org/ns/prov#&gt;
+
+SELECT ?property ?value WHERE {
+  :C-001 ?property ?value .
+  OPTIONAL { ?value rdfs:label ?label }
+}
+ORDER BY ?property</code></pre>
+          <div class="sparql-live"><a href="https://linkeddata.uriburner.com/sparql?default-graph-uri=&query=PREFIX%20%3A%20%3Chttps%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23%3E%0APREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0APREFIX%20prov%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0ASELECT%20%3Fproperty%20%3Fvalue%20WHERE%20%7B%0A%20%20GRAPH%20%3Chttps%3A%2F%2Flinkeddata.uriburner.com%2FDAV%2Fdemos%2Fdaas%2Fthe-semantic-medallion-claude_code-1.ttl%3E%20%7B%0A%20%20%20%20%3AC-001%20%3Fproperty%20%3Fvalue%20.%0A%20%20%20%20OPTIONAL%20%7B%20%3Fvalue%20rdfs%3Alabel%20%3Flabel%20%7D%0A%20%20%7D%0A%7D%0AORDER%20BY%20%3Fproperty&format=text%2Fhtml&timeout=0&debug=on&run=+Run+Query+" target="_blank" rel="noopener noreferrer">&#9654; Run Live Query</a></div>
+        </div>
+      </details>
+
+      <details class="accordion" id="q2-accordion">
+        <summary>Query 2: Contributing Data Sources for Customer C-001</summary>
+        <div class="content">
+          <p>Trace the provenance chain — list all source systems (CRM, ERP, billing) that contributed records for a customer. Answers "where did this customer view come from?" using PROV-O lineage.</p>
+          <pre class="sparql"><code>PREFIX : &lt;https://moderndata101.substack.com/p/the-semantic-medallion#&gt;
+PREFIX prov: &lt;http://www.w3.org/ns/prov#&gt;
+
+SELECT ?source ?sourceName ?sourceType WHERE {
+  :C-001 prov:wasDerivedFrom ?source .
+  ?source a :DataSource ;
+    :sourceName ?sourceName ;
+    :sourceType ?sourceType .
+}
+ORDER BY ?sourceName</code></pre>
+          <div class="sparql-live"><a href="https://linkeddata.uriburner.com/sparql?default-graph-uri=&query=PREFIX%20%3A%20%3Chttps%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23%3E%0APREFIX%20prov%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0ASELECT%20%3Fsource%20%3FsourceName%20%3FsourceType%20WHERE%20%7B%0A%20%20GRAPH%20%3Chttps%3A%2F%2Flinkeddata.uriburner.com%2FDAV%2Fdemos%2Fdaas%2Fthe-semantic-medallion-claude_code-1.ttl%3E%20%7B%0A%20%20%20%20%3AC-001%20prov%3AwasDerivedFrom%20%3Fsource%20.%0A%20%20%20%20%3Fsource%20a%20%3ADataSource%20%3B%0A%20%20%20%20%20%20%3AsourceName%20%3FsourceName%20%3B%0A%20%20%20%20%20%20%3AsourceType%20%3FsourceType%20.%0A%20%20%7D%0A%7D%0AORDER%20BY%20%3FsourceName&format=text%2Fhtml&timeout=0&debug=on&run=+Run+Query+" target="_blank" rel="noopener noreferrer">&#9654; Run Live Query</a></div>
+        </div>
+      </details>
+
+      <details class="accordion" id="q3-accordion">
+        <summary>Query 3: Customers with Billing Issues AND Active Contracts</summary>
+        <div class="content">
+          <p>Cross-domain pattern detection — find all customers who have both an open billing issue and an active contract. This query spans the billing, contract, and customer domains, a pattern that would require complex joins across siloed SQL databases but is natural in a knowledge graph.</p>
+          <pre class="sparql"><code>PREFIX : &lt;https://moderndata101.substack.com/p/the-semantic-medallion#&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+
+SELECT ?customer ?name ?issueDescription ?contractStatus WHERE {
+  ?customer a :Customer ;
+    :hasName ?name ;
+    :hasBillingIssue ?issue ;
+    :hasContract ?contract .
+  ?issue a :BillingIssue ;
+    :issueDescription ?issueDescription .
+  ?contract a :Contract ;
+    :contractStatus "Active" .
+}
+ORDER BY ?name</code></pre>
+          <div class="sparql-live"><a href="https://linkeddata.uriburner.com/sparql?default-graph-uri=&query=PREFIX%20%3A%20%3Chttps%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23%3E%0APREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0ASELECT%20%3Fcustomer%20%3Fname%20%3FissueDescription%20%3FcontractStatus%20WHERE%20%7B%0A%20%20GRAPH%20%3Chttps%3A%2F%2Flinkeddata.uriburner.com%2FDAV%2Fdemos%2Fdaas%2Fthe-semantic-medallion-claude_code-1.ttl%3E%20%7B%0A%20%20%20%20%3Fcustomer%20a%20%3ACustomer%20%3B%0A%20%20%20%20%20%20%3AhasName%20%3Fname%20%3B%0A%20%20%20%20%20%20%3AhasBillingIssue%20%3Fissue%20%3B%0A%20%20%20%20%20%20%3AhasContract%20%3Fcontract%20.%0A%20%20%20%20%3Fissue%20a%20%3ABillingIssue%20%3B%0A%20%20%20%20%20%20%3AissueDescription%20%3FissueDescription%20.%0A%20%20%20%20%3Fcontract%20a%20%3AContract%20%3B%0A%20%20%20%20%20%20%3AcontractStatus%20%22Active%22%20.%0A%20%20%7D%0A%7D%0AORDER%20BY%20%3Fname&format=text%2Fhtml&timeout=0&debug=on&run=+Run+Query+" target="_blank" rel="noopener noreferrer">&#9654; Run Live Query</a></div>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- KG Explorer -->
+<section class="section" id="kg-explorer-section">
+  <div class="container">
+    <div class="section-title fade-up">
+      <div class="eyebrow">Knowledge Graph Explorer</div>
+      <h2>Explore the Semantic Medallion Graph</h2>
+      <p style="color:var(--muted);max-width:600px;margin:0 auto">Interactive force-directed visualization of classes, instances, and relationships. Drag nodes, hover for details, and toggle between Basic and Advanced views.</p>
+    </div>
+    <div class="fade-up" id="kg-explorer">
+      <div class="kg-controls">
+        <button class="active" id="btn-basic" onclick="setMode('basic')" title="Basic graph — essential controls and lighter visualization">Basic</button>
+        <button id="btn-adv" onclick="setMode('advanced')" title="Advanced graph — settings panel with physics, predicate filters, and node type chips">Advanced</button>
+        <button class="active" id="f-class" onclick="toggleFilter('class')" title="Toggle class nodes (ontology classes, rdfs:Class)">● Classes</button>
+        <button class="active" id="f-property" onclick="toggleFilter('property')" title="Toggle property nodes (rdf:Property, custom properties)">● Properties</button>
+        <button class="active" id="f-instance" onclick="toggleFilter('instance')" title="Toggle instance nodes (customers, data sources, contracts)">● Instances</button>
+        <button class="active" id="f-layer" onclick="toggleFilter('layer')" title="Toggle medallion layer nodes (Bronze, Silver, Gold)">● Layers</button>
+        <button class="active" id="f-query" onclick="toggleFilter('query')" title="Toggle SPARQL query nodes">● Queries</button>
+        <button class="active" id="d-core" onclick="setDensity('core')" title="Core density — show only the most-connected nodes (25 of 31)">Core</button>
+        <button id="d-full" onclick="setDensity('full')" title="Full density — show every node and relationship">Full</button>
+        <input class="kg-search" type="text" placeholder="Search nodes by name or description…" oninput="searchNodes(this.value)" title="Filter nodes by name or description">
+        <span class="kg-status" id="kg-status" title="Current graph state: node count, link count, mode, density">Loading...</span>
+      </div>
+      <div class="kg-mode-wrap">
+        <div id="kg-adv-toolbar">
+          <button class="adv-btn" onclick="centerGraph()" title="Re-center the force simulation">⊕ Center</button>
+          <button class="adv-btn" onclick="toggleFullscreen()" title="Toggle fullscreen graph view">⛶ Fullscreen</button>
+          <button class="adv-btn" id="btn-settings" aria-expanded="false" onclick="toggleSettings()" title="Open settings panel — physics, predicates, filtering, resolver, arrow style">⚙ Settings</button>
+        </div>
+        <div id="kg-graph">
+          <svg id="kg-svg"></svg>
+          <div id="kg-settings-panel">
+            <button class="settings-close" onclick="toggleSettings()" title="Close settings">✕</button>
+            <h4>⚙ KG Settings</h4>
+            <h4>Physics Simulation</h4>
+            <label>Charge strength<input type="range" id="s-charge" min="-1200" max="-50" value="-400" oninput="updatePhysics()"></label>
+            <label>Link distance<input type="range" id="s-dist" min="40" max="320" value="110" oninput="updatePhysics()"></label>
+            <label><input type="checkbox" id="s-physics" checked onchange="togglePhysics()"> Enable physics</label>
+            <h4>Predicate Display</h4>
+            <label><input type="radio" name="pred" value="labels" checked onchange="updatePredDisplay()"> Labels</label>
+            <label><input type="radio" name="pred" value="icons" onchange="updatePredDisplay()"> Icons</label>
+            <h4>Edge Predicates</h4>
+            <div style="display:flex;gap:6px;margin-bottom:6px">
+              <button class="sel-all-btn" onclick="selectAllPredicates(true)">Select All</button>
+              <button class="sel-all-btn" onclick="selectAllPredicates(false)">Deselect All</button>
+            </div>
+            <div id="s-edge-filters"></div>
+            <h4>Node Filtering</h4>
+            <div style="display:flex;gap:6px;margin-bottom:6px">
+              <button class="sel-all-btn" onclick="selectAllNodeTypes(true)">Select All</button>
+              <button class="sel-all-btn" onclick="selectAllNodeTypes(false)">Deselect All</button>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px">
+              <button class="node-chip-sm active" id="nc-class" onclick="toggleNodeChip('class',this)">● Classes</button>
+              <button class="node-chip-sm active" id="nc-property" onclick="toggleNodeChip('property',this)">● Properties</button>
+              <button class="node-chip-sm active" id="nc-instance" onclick="toggleNodeChip('instance',this)">● Instances</button>
+              <button class="node-chip-sm active" id="nc-layer" onclick="toggleNodeChip('layer',this)">● Layers</button>
+              <button class="node-chip-sm active" id="nc-query" onclick="toggleNodeChip('query',this)">● Queries</button>
+            </div>
+            <h4>Resolver</h4>
+            <label><input type="radio" name="resolver" value="uriburner" checked> URIBurner</label>
+            <label><input type="radio" name="resolver" value="none"> None</label>
+            <h4>Arrow Style</h4>
+            <label><input type="radio" name="arrow" value="single" checked> Single arrow</label>
+            <label><input type="radio" name="arrow" value="dual"> Dual arrows</label>
+          </div>
+        </div>
+        <div class="kg-legend">
+          <span><span class="dot" style="background:#ea580c"></span>Classes</span>
+          <span><span class="dot" style="background:#0ea5e9"></span>Properties</span>
+          <span><span class="dot" style="background:#059669"></span>Instances</span>
+          <span><span class="dot" style="background:var(--gold)"></span>Layers</span>
+          <span><span class="dot" style="background:#8b5cf6"></span>Queries</span>
+        </div>
+      </div>
+      <div id="kg-tooltip"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-title fade-up">
+      <div class="eyebrow">Frequently Asked Questions</div>
+      <h2>FAQ</h2>
+    </div>
+    <div class="fade-up" style="max-width:800px;margin:0 auto">
+      <details class="accordion"><summary><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23q1" target="_blank" rel="noopener noreferrer">What is the Semantic Medallion?</a></summary><div class="content"><p>The Semantic Medallion is an augmentation of the traditional medallion data architecture (Bronze &rarr; Silver &rarr; Gold) where the Gold layer becomes an RDF knowledge graph instead of clean tabular data. DCAT catalog metadata is woven into the same graph, creating a self-describing knowledge graph-powered data catalog.</p></div></details>
+      <details class="accordion"><summary><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23q2" target="_blank" rel="noopener noreferrer">How does the Bronze layer differ from traditional medallion Bronze?</a></summary><div class="content"><p>In the Semantic Medallion, the Bronze layer functions identically to traditional medallion — it harvests raw data from source systems without transformation. The difference emerges at Silver, where IRIs are minted instead of just cleaning data.</p></div></details>
+      <details class="accordion"><summary><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23q3" target="_blank" rel="noopener noreferrer">What is IRI minting and why is it important?</a></summary><div class="content"><p>IRI minting is the process of assigning a stable globally unique Internationalized Resource Identifier to every entity at the Silver layer. It is critical because it makes entities referenceable across systems — without stable IRIs, linking customer records from CRM, ERP, and billing systems would require fragile key matching. IRIs are the foundation of linked data.</p></div></details>
+      <details class="accordion"><summary><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23q4" target="_blank" rel="noopener noreferrer">What role do OTTR templates play?</a></summary><div class="content"><p>OTTR (Reasonable Ontology Templates) provides a declarative template language for mapping structured data to RDF. Using stOTTR syntax, templates define how DataFrame columns map to ontology classes and properties. A single template can transform millions of Silver-layer rows into RDF triples in a consistent repeatable way.</p></div></details>
+      <details class="accordion"><summary><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23q5" target="_blank" rel="noopener noreferrer">How does maplib simplify the DataFrame-to-RDF transformation?</a></summary><div class="content"><p>maplib is a Python library that accepts a pandas DataFrame, an OTTR template, and a result RDF container, then executes the mapping in a single call. This reduces what would otherwise be hundreds of lines of triple-construction code to four lines of Python.</p></div></details>
+      <details class="accordion"><summary><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23q6" target="_blank" rel="noopener noreferrer">What is DCAT and why is it used in the Semantic Medallion?</a></summary><div class="content"><p>DCAT (Data Catalog Vocabulary) is a W3C standard for describing data catalogs, datasets, distributions, and data services in RDF. In the Semantic Medallion, each medallion layer receives DCAT descriptions — the catalog metadata and the actual data coexist in the same graph, making the catalog self-describing rather than a separate metadata store.</p></div></details>
+      <details class="accordion"><summary><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23q7" target="_blank" rel="noopener noreferrer">How does PROV-O enhance the catalog?</a></summary><div class="content"><p>PROV-O (Provenance Ontology) tracks data lineage — where each record came from, which system generated it, and what transformations were applied. In the catalog, provenance links connect customer facts back to their source systems, answering questions like "Which CRM and billing records contributed to this customer view?"</p></div></details>
+      <details class="accordion"><summary><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23q8" target="_blank" rel="noopener noreferrer">What kinds of queries does the knowledge graph catalog enable?</a></summary><div class="content"><p>The knowledge graph catalog enables three categories of queries: entity lookup (retrieve all facts about a single entity), provenance tracing (list all source systems contributing to a record), and cross-domain pattern detection (find entities matching conditions spanning multiple domains, such as customers with both active contracts and open billing issues).</p></div></details>
+      <details class="accordion"><summary><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23q9" target="_blank" rel="noopener noreferrer">How does the Semantic Medallion handle entity resolution?</a></summary><div class="content"><p>Entity resolution happens naturally through IRI alignment. Because every entity receives a globally unique IRI at the Silver layer, records from different source systems that refer to the same real-world entity are linked to the same IRI. The Gold layer's ontology then connects these IRIs across domains.</p></div></details>
+      <details class="accordion"><summary><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23q10" target="_blank" rel="noopener noreferrer">What is SHACL and how does it fit?</a></summary><div class="content"><p>SHACL (Shapes Constraint Language) is a W3C standard for validating RDF data against shape conditions. In the Semantic Medallion architecture, SHACL shapes can be applied to the Gold layer to enforce data quality rules — ensuring every Customer has required properties, contracts have valid statuses, and data sources are properly typed.</p></div></details>
+      <details class="accordion"><summary><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23q11" target="_blank" rel="noopener noreferrer">What are the key lessons from implementing the Semantic Medallion?</a></summary><div class="content"><p>Three key lessons: (1) Start with IRIs early — minting identifiers at the Silver layer pays compounding dividends as more systems connect. (2) Design ontologies iteratively — begin with a minimal shared ontology and expand as new use cases emerge. (3) The medallion is about semantic enrichment layers — Bronze has no semantics, Silver has local semantics, Gold has global semantics.</p></div></details>
+      <details class="accordion"><summary><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23q12" target="_blank" rel="noopener noreferrer">How does the Semantic Medallion compare to a traditional data catalog?</a></summary><div class="content"><p>Traditional data catalogs describe where data lives (table names, column schemas, storage locations) but do not describe how data connects across systems. A knowledge graph-powered catalog captures both — DCAT metadata describes the datasets while RDF relationships connect customer entities to their source systems, contracts, and issues.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- Glossary -->
+<section class="section" id="glossary">
+  <div class="container">
+    <div class="section-title fade-up">
+      <div class="eyebrow">Glossary</div>
+      <h2>Key Terminology</h2>
+    </div>
+    <div class="glossary-grid fade-up">
+      <div class="glossary-item"><dt><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23termMedallionArchitecture" target="_blank" rel="noopener noreferrer">Medallion Architecture</a></dt><dd>A data architecture pattern organizing data into Bronze (raw), Silver (cleaned/enriched), and Gold (analytics-ready) layers. The Semantic Medallion redefines Gold as an RDF knowledge graph.</dd></div>
+      <div class="glossary-item"><dt><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23termIRIMinting" target="_blank" rel="noopener noreferrer">IRI Minting</a></dt><dd>The process of assigning stable globally unique Internationalized Resource Identifiers to entities, enabling cross-system linking and resolution in linked data architectures.</dd></div>
+      <div class="glossary-item"><dt><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23termOTTR" target="_blank" rel="noopener noreferrer">OTTR</a></dt><dd>A framework for template-based ontology mapping. stOTTR (string syntax) defines reusable templates that declaratively map structured data columns to RDF ontology classes and properties.</dd></div>
+      <div class="glossary-item"><dt><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23termMaplib" target="_blank" rel="noopener noreferrer">maplib</a></dt><dd>A Python library for DataFrame-to-RDF transformation using OTTR templates. Enables a single function call to convert pandas DataFrames into RDF knowledge graphs.</dd></div>
+      <div class="glossary-item"><dt><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23termDCAT" target="_blank" rel="noopener noreferrer">DCAT</a></dt><dd>A W3C standard RDF vocabulary for describing data catalogs, datasets, distributions, and data services. Used in the Semantic Medallion to weave catalog metadata into the knowledge graph.</dd></div>
+      <div class="glossary-item"><dt><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23termPROVO" target="_blank" rel="noopener noreferrer">PROV-O</a></dt><dd>A W3C standard ontology for representing provenance information — tracking who generated data, what sources it came from, and what transformations were applied.</dd></div>
+      <div class="glossary-item"><dt><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23termSHACL" target="_blank" rel="noopener noreferrer">SHACL</a></dt><dd>A W3C standard for validating RDF graphs against shape conditions, enabling data quality enforcement in knowledge graph systems.</dd></div>
+      <div class="glossary-item"><dt><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23termKnowledgeGraph" target="_blank" rel="noopener noreferrer">Knowledge Graph</a></dt><dd>A graph-structured representation of data where entities are nodes connected by typed relationships, enabling semantic querying and inference beyond what relational databases support.</dd></div>
+      <div class="glossary-item"><dt><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23termSPARQL" target="_blank" rel="noopener noreferrer">SPARQL</a></dt><dd>SPARQL Protocol and RDF Query Language — the W3C standard query language for RDF knowledge graphs, analogous to SQL for relational databases but designed for graph pattern matching.</dd></div>
+      <div class="glossary-item"><dt><a class="resolve" href="https://linkeddata.uriburner.com/describe/?url=https%3A%2F%2Fmoderndata101.substack.com%2Fp%2Fthe-semantic-medallion%23termSemanticEnrichment" target="_blank" rel="noopener noreferrer">Semantic Enrichment</a></dt><dd>The progressive addition of meaning to data as it moves through the medallion layers: none at Bronze, local at Silver (IRIs within a domain), global at Gold (cross-domain ontology linking).</dd></div>
+    </div>
+  </div>
+</section>
+
+<!-- How-To -->
+<section class="section" id="howto">
+  <div class="container">
+    <div class="section-title fade-up">
+      <div class="eyebrow">Implementation Guide</div>
+      <h2>How to Build a Semantic Medallion Pipeline</h2>
+    </div>
+    <ol class="howto-steps fade-up">
+      <li><h4>Harvest Raw Data into the Bronze Layer</h4><p>Ingest raw data from all source systems — CRM, ERP, billing, support — into the Bronze layer. Apply no transformations. Preserve original formats and timestamps.</p></li>
+      <li><h4>Mint Stable IRIs at the Silver Layer</h4><p>For every entity in the Bronze data, create a stable globally unique IRI. Choose a consistent IRI pattern. This is the most critical step — IRIs are the foundation for all downstream linking.</p></li>
+      <li><h4>Design a Shared Ontology</h4><p>Define the core classes (Customer, Contract, DataSource) and properties (hasContract, wasDerivedFrom) that span your business domains. Start minimal and expand iteratively.</p></li>
+      <li><h4>Author OTTR Templates</h4><p>Write stOTTR templates that map Silver-layer DataFrame columns to your shared ontology. Each template defines how a row becomes RDF — which column maps to which class, which columns become properties.</p></li>
+      <li><h4>Transform to RDF with maplib</h4><p>Load Silver-layer DataFrames into pandas. Call maplib.map(dataframe, template, result_container) for each template. Validate the output RDF syntax before proceeding.</p></li>
+      <li><h4>Weave in DCAT and PROV-O Metadata</h4><p>Describe each medallion layer as a DCAT Dataset with distributions and data services. Add PROV-O provenance links connecting Gold-layer entities back to their source systems.</p></li>
+      <li><h4>Query and Validate</h4><p>Load the RDF into a SPARQL-capable triplestore. Run validation queries. Apply SHACL shapes for data quality enforcement. Then query your knowledge graph catalog — start with entity lookup, progress to provenance tracing, and finally cross-domain pattern detection.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- About -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="section-title fade-up">
+      <div class="eyebrow-dark">About</div>
+      <h2>About This Page</h2>
+    </div>
+    <div class="fade-up" style="max-width:720px;margin:0 auto">
+      <p style="color:var(--muted);line-height:1.7">This knowledge graph infographic was generated from the article <a href="https://moderndata101.substack.com/p/the-semantic-medallion" target="_blank" style="color:var(--accent)">"The Semantic Medallion: Building a Knowledge Graph-Powered Data Catalog"</a> by Veronika Heimsbakk (Modern Data 101, May 2026). The original article was transformed into RDF using the <strong>kg-generator</strong> skill, producing a custom Semantic Medallion Ontology with 8 classes, 15 properties, 3 executable SPARQL queries backed by sample instance data (3 customers, 4 data sources, 3 contracts, 2 billing issues). The HTML infographic was rendered using the <strong>rdf-infographic-skill</strong> powered by Claude Code (deepseek-v4-pro) and designed for the URIBurner linked data resolver.</p>
+      <p style="margin-top:16px;font-size:0.85rem;color:var(--ink)"><strong>Technology Stack:</strong></p>
+      <ul style="margin-top:8px;font-size:0.85rem;color:var(--ink);list-style:disc;padding-left:20px;line-height:2">
+        <li>AI Agent: <a href="https://claude.ai/code" target="_blank" style="color:var(--accent)">Claude Code</a></li>
+        <li>Skills: <a href="https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator" target="_blank" style="color:var(--accent)">kg-generator</a>, <a href="https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/rdf-infographic-skill" target="_blank" style="color:var(--accent)">rdf-infographic-skill</a></li>
+        <li>Language Model: <a href="https://deepseek.com" target="_blank" style="color:var(--accent)">deepseek-v4-pro</a></li>
+        <li>Resolver: <a href="https://linkeddata.uriburner.com" target="_blank" style="color:var(--accent)">URIBurner</a></li>
+        <li>Server Platform: <a href="https://virtuoso.openlinksw.com/" target="_blank" style="color:var(--accent)">Virtuoso</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="kg-format-tabs">
+      <button class="active" id="fmtTtl" onclick="setSparqlFormat('ttl')">RDF Turtle</button>
+      <button id="fmtJsonld" onclick="setSparqlFormat('jsonld')">JSON-LD</button>
+    </div>
+    <p style="margin-bottom:20px">
+      <a id="sparqlBtn" href="#" target="_blank" class="cta-btn">Explore Knowledge Graph using SPARQL <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z"/><path d="M9.646 10.5H12a3 3 0 0 0 0-6H9a3 3 0 0 0-2.83 4H7c.086 0 .17-.01.25-.031A2 2 0 0 1 9 5.5h3a2 2 0 1 1 0 4H10.465a3.975 3.975 0 0 1-.82 1z"/></svg></a>
+    </p>
+    <div class="tech-grid">
+      <div class="tech-card"><h4>AI Agent</h4><a href="https://claude.ai/code" target="_blank">Claude Code</a></div>
+      <div class="tech-card"><h4>AI Agent Skills</h4><div style="font-size:0.8rem"><a href="https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator" target="_blank" style="color:var(--accent);text-decoration:none">kg-generator</a><br><a href="https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/rdf-infographic-skill" target="_blank" style="color:var(--accent);text-decoration:none">rdf-infographic</a></div></div>
+      <div class="tech-card"><h4>Language Model</h4><a href="https://deepseek.com" target="_blank">deepseek-v4-pro</a></div>
+      <div class="tech-card"><h4>Server Platform</h4><a href="https://virtuoso.openlinksw.com/" target="_blank">Virtuoso</a></div>
+    </div>
+    <p style="margin-top:24px;font-size:0.75rem;color:var(--muted)">Companion files: <a href="the-semantic-medallion-claude_code-1.ttl" style="color:var(--accent);text-decoration:none">RDF Turtle</a> &middot; <a href="the-semantic-medallion-claude_code-1.jsonld" style="color:var(--accent);text-decoration:none">JSON-LD</a> &middot; <a href="the-semantic-medallion-claude_code-1-relationships.md" style="color:var(--accent);text-decoration:none">Markdown</a></p>
+  </div>
+</footer>
+
+<script>
+// Navigation
+const nav = document.getElementById('floatingNav');
+const navHeader = document.getElementById('navHeader');
+const navToggle = document.getElementById('navToggle');
+const headerBar = document.getElementById('headerBar');
+const expandNav = document.getElementById('expandNav');
+let navCollapsed = false;
+
+function toggleNav() {
+  navCollapsed = !navCollapsed;
+  nav.classList.toggle('collapsed', navCollapsed);
+  navToggle.textContent = navCollapsed ? '+' : '−';
+  headerBar.style.display = navCollapsed ? 'flex' : 'none';
+}
+
+navToggle.addEventListener('click', toggleNav);
+expandNav.addEventListener('click', toggleNav);
+
+// Draggable nav
+let dragging = false, dragX, dragY, startX, startY;
+navHeader.addEventListener('mousedown', e => {
+  if (e.target === navToggle) return;
+  dragging = true;
+  const rect = nav.getBoundingClientRect();
+  startX = rect.left; startY = rect.top;
+  dragX = e.clientX - startX; dragY = e.clientY - startY;
+  nav.style.transition = 'none';
+});
+document.addEventListener('mousemove', e => {
+  if (!dragging) return;
+  nav.style.left = (e.clientX - dragX) + 'px';
+  nav.style.top = (e.clientY - dragY) + 'px';
+  nav.style.right = 'auto';
+});
+document.addEventListener('mouseup', () => {
+  if (dragging) { dragging = false; nav.style.transition = ''; }
+});
+
+// Scroll animations
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Active nav link
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links li a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+});
+
+// Theme toggle
+const themeToggle = document.getElementById('theme-toggle');
+themeToggle.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme');
+  document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+  themeToggle.textContent = current === 'dark' ? '☾' : '☀';
+  if (simRef) redrawKG();
+});
+
+// SPARQL format toggle
+function setSparqlFormat(fmt) {
+  document.getElementById('fmtTtl').classList.toggle('active', fmt === 'ttl');
+  document.getElementById('fmtJsonld').classList.toggle('active', fmt === 'jsonld');
+  const ext = fmt === 'jsonld' ? 'jsonld' : 'ttl';
+  const slug = 'the-semantic-medallion-claude_code-1';
+  const graphIri = 'https://linkeddata.uriburner.com/DAV/demos/daas/' + slug + '.' + ext;
+  const query = 'PREFIX+rdf%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0A%0ASELECT%0A++++%3Ftype%0A++++%28SAMPLE%28%3Fs%29+AS+%3FsampleEntity%29%0A++++%28SAMPLE%28%3Flabel%29+AS+%3FsampleLabel%29%0A++++%28COUNT%28%3Fs%29+AS+%3FentityCount%29%0AWHERE+%7B%0A++++GRAPH+%3C' + encodeURIComponent(graphIri) + '%3E+%7B%0A++++++++%3Fs+rdf%3Atype+%3Ftype+.%0A%0A++++++++OPTIONAL+%7B%0A++++++++++++%3Fs+rdfs%3Alabel+%3Flabel%0A++++++++%7D%0A++++%7D%0A%7D%0AGROUP+BY+%3Ftype%0AORDER+BY+DESC%28%3FentityCount%29';
+  document.getElementById('sparqlBtn').href = 'https://linkeddata.uriburner.com/sparql?query=' + query;
+}
+setSparqlFormat('ttl');
+
+// KG Explorer — derived from companion RDF
+const BASE = 'https://moderndata101.substack.com/p/the-semantic-medallion#';
+const RESOLVER = 'https://linkeddata.uriburner.com/describe/?url=';
+
+/* ══ ALL NODES (full dataset) ══ */
+const allNodes = [
+  {id:BASE+'semanticMedallionOntology',label:'Semantic Medallion Ontology',type:'class',desc:'Core ontology defining the medallion architecture'},
+  {id:BASE+'MedallionLayer',label:'MedallionLayer',type:'class',desc:'Base class for medallion architecture layers'},
+  {id:BASE+'BronzeLayer',label:'BronzeLayer',type:'class',desc:'Raw data harvest layer'},
+  {id:BASE+'SilverLayer',label:'SilverLayer',type:'class',desc:'IRI minting layer'},
+  {id:BASE+'GoldLayer',label:'GoldLayer',type:'class',desc:'RDF knowledge graph layer'},
+  {id:BASE+'Customer',label:'Customer',type:'class',desc:'Customer entity with IRI-based identity'},
+  {id:BASE+'DataSource',label:'DataSource',type:'class',desc:'Contributing data source system'},
+  {id:BASE+'Contract',label:'Contract',type:'class',desc:'Customer contract with status'},
+  {id:BASE+'BillingIssue',label:'BillingIssue',type:'class',desc:'Billing problem or dispute'},
+  {id:BASE+'bronzeLayer',label:'Bronze Layer',type:'layer',desc:'Raw data harvest — no semantics'},
+  {id:BASE+'silverLayer',label:'Silver Layer',type:'layer',desc:'IRI minting — local semantics'},
+  {id:BASE+'goldLayer',label:'Gold Layer',type:'layer',desc:'RDF KG — global semantics'},
+  {id:BASE+'C-001',label:'C-001 Acme Corp',type:'instance',desc:'Customer: Acme Corporation'},
+  {id:BASE+'C-002',label:'C-002 Beta Ind',type:'instance',desc:'Customer: Beta Industries'},
+  {id:BASE+'C-003',label:'C-003 Gamma Sol',type:'instance',desc:'Customer: Gamma Solutions'},
+  {id:BASE+'contractC001',label:'Contract (Active)',type:'instance',desc:'Acme Corp Enterprise Plan'},
+  {id:BASE+'contractC002',label:'Contract (Active)',type:'instance',desc:'Beta Ind Standard Plan'},
+  {id:BASE+'contractC003',label:'Contract (Active)',type:'instance',desc:'Gamma Sol Premium Plan'},
+  {id:BASE+'billingIssueC001',label:'Billing Issue',type:'instance',desc:'Duplicate charge on March invoice'},
+  {id:BASE+'billingIssueC003',label:'Billing Issue',type:'instance',desc:'Incorrect plan tier applied'},
+  {id:BASE+'srcCRM',label:'SalesForce CRM',type:'instance',desc:'Data source: CRM system'},
+  {id:BASE+'srcERP',label:'SAP ERP',type:'instance',desc:'Data source: ERP system'},
+  {id:BASE+'srcBilling',label:'Stripe Billing',type:'instance',desc:'Data source: Billing system'},
+  {id:BASE+'srcSupport',label:'Zendesk Support',type:'instance',desc:'Data source: Support system'},
+  {id:BASE+'sparqlQuery1',label:'Query: Customer Facts',type:'query',desc:'SPARQL — all facts about C-001'},
+  {id:BASE+'sparqlQuery2',label:'Query: Data Sources',type:'query',desc:'SPARQL — contributing sources'},
+  {id:BASE+'sparqlQuery3',label:'Query: Billing+Active',type:'query',desc:'SPARQL — billing issues + active contracts'},
+  {id:BASE+'maplib',label:'maplib',type:'instance',desc:'Python DataFrame-to-RDF library'},
+  {id:BASE+'ottrTemplates',label:'OTTR Templates',type:'instance',desc:'Template-based ontology mapping'},
+  {id:BASE+'dcatCatalog',label:'DCAT Catalog',type:'instance',desc:'W3C Data Catalog Vocabulary'},
+  {id:BASE+'analysis',label:'Article: Semantic Medallion',type:'instance',desc:'Source article by Veronika Heimsbakk'},
+];
+
+/* ══ ALL LINKS ══ */
+const allLinks = [
+  {source:BASE+'bronzeLayer',target:BASE+'BronzeLayer',label:'rdf:type'},
+  {source:BASE+'silverLayer',target:BASE+'SilverLayer',label:'rdf:type'},
+  {source:BASE+'goldLayer',target:BASE+'GoldLayer',label:'rdf:type'},
+  {source:BASE+'bronzeLayer',target:BASE+'silverLayer',label:'transformsTo'},
+  {source:BASE+'silverLayer',target:BASE+'goldLayer',label:'transformsTo'},
+  {source:BASE+'BronzeLayer',target:BASE+'MedallionLayer',label:'subClassOf'},
+  {source:BASE+'SilverLayer',target:BASE+'MedallionLayer',label:'subClassOf'},
+  {source:BASE+'GoldLayer',target:BASE+'MedallionLayer',label:'subClassOf'},
+  {source:BASE+'C-001',target:BASE+'Customer',label:'rdf:type'},
+  {source:BASE+'C-002',target:BASE+'Customer',label:'rdf:type'},
+  {source:BASE+'C-003',target:BASE+'Customer',label:'rdf:type'},
+  {source:BASE+'C-001',target:BASE+'contractC001',label:'hasContract'},
+  {source:BASE+'C-001',target:BASE+'billingIssueC001',label:'hasBillingIssue'},
+  {source:BASE+'C-003',target:BASE+'contractC003',label:'hasContract'},
+  {source:BASE+'C-003',target:BASE+'billingIssueC003',label:'hasBillingIssue'},
+  {source:BASE+'contractC001',target:BASE+'Contract',label:'rdf:type'},
+  {source:BASE+'contractC002',target:BASE+'Contract',label:'rdf:type'},
+  {source:BASE+'contractC003',target:BASE+'Contract',label:'rdf:type'},
+  {source:BASE+'billingIssueC001',target:BASE+'BillingIssue',label:'rdf:type'},
+  {source:BASE+'billingIssueC003',target:BASE+'BillingIssue',label:'rdf:type'},
+  {source:BASE+'C-001',target:BASE+'srcCRM',label:'wasDerivedFrom'},
+  {source:BASE+'C-001',target:BASE+'srcERP',label:'wasDerivedFrom'},
+  {source:BASE+'C-001',target:BASE+'srcBilling',label:'wasDerivedFrom'},
+  {source:BASE+'C-002',target:BASE+'srcCRM',label:'wasDerivedFrom'},
+  {source:BASE+'C-002',target:BASE+'srcSupport',label:'wasDerivedFrom'},
+  {source:BASE+'C-003',target:BASE+'srcCRM',label:'wasDerivedFrom'},
+  {source:BASE+'C-003',target:BASE+'srcBilling',label:'wasDerivedFrom'},
+  {source:BASE+'C-003',target:BASE+'srcSupport',label:'wasDerivedFrom'},
+  {source:BASE+'srcCRM',target:BASE+'DataSource',label:'rdf:type'},
+  {source:BASE+'srcERP',target:BASE+'DataSource',label:'rdf:type'},
+  {source:BASE+'srcBilling',target:BASE+'DataSource',label:'rdf:type'},
+  {source:BASE+'srcSupport',target:BASE+'DataSource',label:'rdf:type'},
+  {source:BASE+'sparqlQuery1',target:BASE+'C-001',label:'target'},
+  {source:BASE+'sparqlQuery2',target:BASE+'C-001',label:'target'},
+  {source:BASE+'sparqlQuery3',target:BASE+'Customer',label:'target'},
+  {source:BASE+'goldLayer',target:BASE+'maplib',label:'about'},
+  {source:BASE+'goldLayer',target:BASE+'ottrTemplates',label:'about'},
+  {source:BASE+'goldLayer',target:BASE+'dcatCatalog',label:'about'},
+  {source:BASE+'MedallionLayer',target:BASE+'semanticMedallionOntology',label:'isDefinedBy'},
+  {source:BASE+'Customer',target:BASE+'semanticMedallionOntology',label:'isDefinedBy'},
+  {source:BASE+'DataSource',target:BASE+'semanticMedallionOntology',label:'isDefinedBy'},
+  {source:BASE+'Contract',target:BASE+'semanticMedallionOntology',label:'isDefinedBy'},
+  {source:BASE+'BillingIssue',target:BASE+'semanticMedallionOntology',label:'isDefinedBy'},
+  {source:BASE+'analysis',target:BASE+'semanticMedallionOntology',label:'hasPart'},
+];
+
+/* CORE node IDs (most connected/important for Core density) */
+const CORE_IDS = new Set([
+  BASE+'MedallionLayer',BASE+'BronzeLayer',BASE+'SilverLayer',BASE+'GoldLayer',
+  BASE+'Customer',BASE+'DataSource',BASE+'Contract',BASE+'BillingIssue',
+  BASE+'bronzeLayer',BASE+'silverLayer',BASE+'goldLayer',
+  BASE+'C-001',BASE+'C-002',BASE+'C-003',
+  BASE+'contractC001',BASE+'billingIssueC001',
+  BASE+'srcCRM',BASE+'srcERP',BASE+'srcBilling',BASE+'srcSupport',
+  BASE+'sparqlQuery1',BASE+'sparqlQuery2',BASE+'sparqlQuery3',
+  BASE+'semanticMedallionOntology'
+]);
+
+/* ══ STATE ══ */
+let kgMode = 'basic', density = 'core', filters = new Set(['class','property','instance','layer','query']);
+let searchQ = '', simRef = null, advOpen = false;
+let hiddenPredicates = new Set();
+
+/* ══ PREDICATE MAPS ══ */
+const PRED_MAP = {
+  'a':'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
+  'rdf:type':'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
+  'subClassOf':'http://www.w3.org/2000/01/rdf-schema#subClassOf',
+  'isDefinedBy':'http://www.w3.org/2000/01/rdf-schema#isDefinedBy',
+  'transformsTo':BASE+'transformsTo',
+  'hasContract':BASE+'hasContract',
+  'hasBillingIssue':BASE+'hasBillingIssue',
+  'wasDerivedFrom':'http://www.w3.org/ns/prov#wasDerivedFrom',
+  'target':'http://schema.org/target',
+  'about':'http://schema.org/about',
+  'hasPart':'http://schema.org/hasPart',
+};
+const PRED_DESC = {
+  'a':'rdf:type — Instance-of relationship',
+  'rdf:type':'rdf:type — Instance-of relationship',
+  'subClassOf':'rdfs:subClassOf — Subclass relationship',
+  'isDefinedBy':'rdfs:isDefinedBy — Ontology membership',
+  'transformsTo':'domain-specific — Layer transforms to next layer',
+  'hasContract':'domain-specific — Customer has this contract',
+  'hasBillingIssue':'domain-specific — Customer has this billing issue',
+  'wasDerivedFrom':'prov:wasDerivedFrom — Data lineage provenance',
+  'target':'schema:target — Query targets this entity',
+  'about':'schema:about — Subject/topic relationship',
+  'hasPart':'schema:hasPart — Composition relationship',
+};
+function resolveEdgeIRI(label){ return PRED_MAP[label] || (BASE + label); }
+
+/* ══ KG CONTROLS ══ */
+function setMode(m){
+  kgMode = m;
+  document.getElementById('btn-basic').classList.toggle('active', m==='basic');
+  document.getElementById('btn-adv').classList.toggle('active', m==='advanced');
+  document.getElementById('kg-adv-toolbar').style.display = m==='advanced'?'flex':'none';
+  redrawKG();
+}
+function toggleFilter(t){
+  const b = document.getElementById('f-'+t);
+  if(filters.has(t)) filters.delete(t); else filters.add(t);
+  b.classList.toggle('active', filters.has(t));
+  const nc = document.getElementById('nc-'+t);
+  if(nc) nc.classList.toggle('active', filters.has(t));
+  redrawKG();
+}
+function setDensity(d){
+  density = d;
+  document.getElementById('d-core').classList.toggle('active', d==='core');
+  document.getElementById('d-full').classList.toggle('active', d==='full');
+  redrawKG();
+}
+function searchNodes(q){ searchQ = q.toLowerCase(); redrawKG(); }
+function toggleFullscreen(){
+  const el = document.getElementById('kg-graph');
+  if(!document.fullscreenElement) el.requestFullscreen?.();
+  else document.exitFullscreen?.();
+}
+function centerGraph(){ if(simRef) simRef.alpha(.3).restart(); }
+function toggleSettings(){
+  const p = document.getElementById('kg-settings-panel'), b = document.getElementById('btn-settings');
+  advOpen = !advOpen;
+  p.style.display = advOpen?'block':'none';
+  if(b) b.setAttribute('aria-expanded', String(advOpen));
+  if(advOpen){ populateEdgeFilters(); syncNodeChips(); }
+}
+function updatePhysics(){
+  if(!simRef) return;
+  simRef.force('charge').strength(+document.getElementById('s-charge').value);
+  simRef.force('link').distance(+document.getElementById('s-dist').value);
+  simRef.alpha(.3).restart();
+}
+function togglePhysics(){
+  if(simRef){
+    if(document.getElementById('s-physics').checked) simRef.alpha(.3).restart();
+    else simRef.stop();
+  }
+}
+function updatePredDisplay(){ redrawKG(); }
+
+function populateEdgeFilters(){
+  const cont = document.getElementById('s-edge-filters');
+  const labels = [...new Set(allLinks.map(l => l.label))].sort();
+  cont.innerHTML = labels.map(l => `<label><input type="checkbox" ${hiddenPredicates.has(l)?'':'checked'} onchange="togglePred('${l}',this)"> ${l}</label>`).join('');
+}
+function togglePred(p, cb){ if(!cb.checked) hiddenPredicates.add(p); else hiddenPredicates.delete(p); redrawKG(); }
+function selectAllPredicates(select){
+  const labels = [...new Set(allLinks.map(l => l.label))];
+  if(select) hiddenPredicates.clear(); else labels.forEach(l => hiddenPredicates.add(l));
+  populateEdgeFilters(); redrawKG();
+}
+const NODE_TYPES = ['class','property','instance','layer','query'];
+function syncNodeChips(){
+  NODE_TYPES.forEach(t => {
+    const el = document.getElementById('nc-'+t);
+    if(el) el.classList.toggle('active', filters.has(t));
+  });
+}
+function toggleNodeChip(t, btn){
+  if(filters.has(t)) filters.delete(t); else filters.add(t);
+  btn.classList.toggle('active', filters.has(t));
+  const tb = document.getElementById('f-'+t);
+  if(tb) tb.classList.toggle('active', filters.has(t));
+  redrawKG();
+}
+function selectAllNodeTypes(select){
+  NODE_TYPES.forEach(t => {
+    if(select) filters.add(t); else filters.delete(t);
+    const el = document.getElementById('nc-'+t);
+    if(el) el.classList.toggle('active', filters.has(t));
+    const tb = document.getElementById('f-'+t);
+    if(tb) tb.classList.toggle('active', filters.has(t));
+  });
+  redrawKG();
+}
+
+/* ══ FILTERED DATA ══ */
+function getFilteredData(){
+  let nodes = allNodes.filter(n => {
+    if(!filters.has(n.type)) return false;
+    if(density==='core' && !CORE_IDS.has(n.id)) return false;
+    if(searchQ && !n.label.toLowerCase().includes(searchQ) && !(n.desc||'').toLowerCase().includes(searchQ)) return false;
+    return true;
+  });
+  const nodeIds = new Set(nodes.map(n => n.id));
+  let links = allLinks.filter(l => {
+    const s = typeof l.source==='object' ? l.source.id : l.source;
+    const t = typeof l.target==='object' ? l.target.id : l.target;
+    return nodeIds.has(s) && nodeIds.has(t) && !hiddenPredicates.has(l.label);
+  });
+  /* orphan pruning */
+  const connected = new Set();
+  links.forEach(l => {
+    const s = typeof l.source==='object' ? l.source.id : l.source;
+    const t = typeof l.target==='object' ? l.target.id : l.target;
+    connected.add(s); connected.add(t);
+  });
+  nodes = nodes.filter(n => connected.has(n.id));
+  return {nodes, links};
+}
+
+/* ══ DRAW KG ══ */
+function redrawKG(){
+  if(simRef) simRef.stop();
+  const container = document.getElementById('kg-graph');
+  const W = container.clientWidth || 800, H = 500;
+  const svg = d3.select('#kg-svg').attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('height', H);
+  svg.selectAll('*').remove();
+  const {nodes, links} = getFilteredData();
+  document.getElementById('kg-status').textContent = `${nodes.length} nodes · ${links.length} links · ${kgMode} · ${density}`;
+  if(!nodes.length){
+    svg.append('text').attr('x', W/2).attr('y', H/2).attr('text-anchor','middle')
+      .attr('fill','var(--muted)').attr('font-size',14).text('No nodes match current filters');
+    return;
+  }
+  /* Arrowhead — arrow style (single/dual) */
+  const arrowStyle = document.querySelector('input[name="arrow"]:checked')?.value || 'single';
+  const defs = svg.append('defs');
+  defs.append('marker').attr('id','arr-end').attr('viewBox','0 -5 10 10').attr('refX',24).attr('refY',0)
+    .attr('markerWidth',6).attr('markerHeight',6).attr('orient','auto')
+    .append('path').attr('d','M0,-5L10,0L0,5').attr('fill','#94a3b8');
+  if (arrowStyle === 'dual') {
+    defs.append('marker').attr('id','arr-start').attr('viewBox','0 -5 10 10').attr('refX',-14).attr('refY',0)
+      .attr('markerWidth',6).attr('markerHeight',6).attr('orient','auto')
+      .append('path').attr('d','M10,-5L0,0L10,5').attr('fill','#94a3b8');
+  }
+  const markerEnd = 'url(#arr-end)';
+  const markerStart = arrowStyle === 'dual' ? 'url(#arr-start)' : null;
+  const color = d => d.type==='class'?'#ea580c':d.type==='property'?'#0ea5e9':d.type==='layer'?'#eab308':d.type==='query'?'#8b5cf6':'#059669';
+  const linksData = links.map(l => ({...l}));
+  const sim = d3.forceSimulation(nodes)
+    .force('link', d3.forceLink(linksData).id(d => d.id).distance(+document.getElementById('s-dist')?.value||110))
+    .force('charge', d3.forceManyBody().strength(+document.getElementById('s-charge')?.value||-400))
+    .force('center', d3.forceCenter(W/2, H/2))
+    .force('collision', d3.forceCollide(32));
+  simRef = sim;
+  const g = svg.append('g');
+
+  /* Zoom — stored for focus-activated attach */
+  const zoom = d3.zoom().scaleExtent([.2,4]).on('zoom', e => g.attr('transform', e.transform));
+  window._kgZoom = zoom; window._kgSvg = svg; window._kgG = g;
+
+  /* Links with arrow style */
+  const linkAttrs = { 'stroke':'#94a3b8','stroke-opacity':.4,'stroke-width':1.5,'marker-end':markerEnd };
+  if (markerStart) linkAttrs['marker-start'] = markerStart;
+  const link = g.append('g').selectAll('line').data(linksData).join('line')
+    .attr('stroke', linkAttrs['stroke']).attr('stroke-opacity', linkAttrs['stroke-opacity'])
+    .attr('stroke-width', linkAttrs['stroke-width']).attr('marker-end', linkAttrs['marker-end'])
+    .call(function(sel){ if(markerStart) sel.attr('marker-start', markerStart); });
+  /* Edge labels — predicate display: Labels vs Icons */
+  const predMode = document.querySelector('input[name="pred"]:checked')?.value || 'labels';
+  const PRED_ICONS = {
+    'rdf:type':'🟰','a':'🟰','subClassOf':'⤷','isDefinedBy':'📌','transformsTo':'→',
+    'hasContract':'📋','hasBillingIssue':'⚠','wasDerivedFrom':'📥',
+    'target':'🎯','about':'ℹ','hasPart':'⊞'
+  };
+  const edgeLbl = g.append('g').selectAll('text').data(linksData).join('text')
+    .attr('font-size', predMode === 'icons' ? 11 : 8)
+    .attr('fill', 'var(--muted)').attr('text-anchor','middle')
+    .attr('pointer-events','all').style('cursor','pointer')
+    .text(d => predMode === 'icons' ? (PRED_ICONS[d.label] || '•') : d.label)
+    .on('click', function(e,d){
+      const iri = resolveEdgeIRI(d.label);
+      const res = document.querySelector('input[name="resolver"]:checked')?.value||'uriburner';
+      if(res==='uriburner') window.open(RESOLVER+encodeURIComponent(iri),'_blank');
+    })
+    .on('mouseover', function(e,d){
+      const tt = document.getElementById('kg-tooltip');
+      tt.textContent = PRED_DESC[d.label]||d.label;
+      tt.style.display='block'; tt.style.left=(e.clientX+12)+'px'; tt.style.top=(e.clientY-20)+'px';
+    })
+    .on('mouseout', () => document.getElementById('kg-tooltip').style.display='none');
+  /* Nodes */
+  const drag = d3.drag()
+    .on('start', function(e,d){ if(!e.active) sim.alphaTarget(.3).restart(); d.fx=d.x; d.fy=d.y; })
+    .on('drag', function(e,d){ d.fx=e.x; d.fy=e.y; })
+    .on('end', function(e,d){ if(!e.active) sim.alphaTarget(0); });
+  const node = g.append('g').selectAll('g').data(nodes).join('g').call(drag)
+    .style('cursor','pointer')
+    .on('dblclick', function(e,d){ d.fx=null; d.fy=null; sim.alpha(.2).restart(); })
+    .on('click', function(e,d){
+      e.stopPropagation();
+      const res = document.querySelector('input[name="resolver"]:checked')?.value||'uriburner';
+      if(res==='uriburner') window.open(RESOLVER+encodeURIComponent(d.id),'_blank');
+    })
+    .on('mouseover', function(e,d){
+      const tt = document.getElementById('kg-tooltip');
+      tt.textContent = d.label + (d.desc ? ' — '+d.desc : '');
+      tt.style.display='block'; tt.style.left=(e.clientX+12)+'px'; tt.style.top=(e.clientY-20)+'px';
+    })
+    .on('mouseout', () => document.getElementById('kg-tooltip').style.display='none');
+  node.append('circle').attr('r', d => d.type==='class'?16:d.type==='property'?10:13)
+    .attr('fill', color).attr('stroke','#fff').attr('stroke-width',2).attr('opacity',.9);
+  node.append('text').attr('text-anchor','middle').attr('dominant-baseline','middle')
+    .attr('font-size', d => d.type==='class'?8:7).attr('fill','#fff').attr('font-weight','700')
+    .attr('pointer-events','none').text(d => d.label.length>10?d.label.slice(0,9)+'…':d.label);
+  node.append('text').attr('text-anchor','middle').attr('y', d => d.type==='class'?24:20)
+    .attr('font-size',7).attr('fill','var(--muted)').attr('pointer-events','none')
+    .text(d => d.label.length>14?d.label.slice(0,13)+'…':d.label);
+  sim.on('tick', function(){
+    link.attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+        .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+    edgeLbl.attr('x', d => (d.source.x+d.target.x)/2).attr('y', d => (d.source.y+d.target.y)/2-4);
+    node.attr('transform', d => `translate(${d.x},${d.y})`);
+  });
+}
+
+/* ══ ZOOM ISOLATION: click-to-activate, click-outside-to-release ══ */
+(function(){
+  const explorer = document.getElementById('kg-explorer');
+  const svg = document.getElementById('kg-svg');
+  let zoomActive = false;
+  function activateZoom(){
+    if(zoomActive) return;
+    zoomActive = true;
+    explorer.classList.add('kg-active');
+    if(window._kgZoom && window._kgSvg) window._kgSvg.call(window._kgZoom);
+  }
+  function deactivateZoom(){
+    if(!zoomActive) return;
+    zoomActive = false;
+    explorer.classList.remove('kg-active');
+    if(window._kgSvg) window._kgSvg.on('.zoom', null);
+  }
+  svg.addEventListener('click', function(e){ e.stopPropagation(); activateZoom(); });
+  document.addEventListener('click', function(e){
+    if(!explorer.contains(e.target)) deactivateZoom();
+  });
+})();
+
+/* ══ INIT ══ */
+window.addEventListener('load', function(){
+  setTimeout(redrawKG, 200);
+  setSparqlFormat('ttl');
+});
+window.addEventListener('resize', function(){
+  if(simRef){ simRef.stop(); simRef = null; }
+  setTimeout(redrawKG, 100);
+});
+
+// JSON-LD Structured Data
+const jsonld = {
+  "@context": { "@vocab": "http://schema.org/", "prov": "http://www.w3.org/ns/prov#", "owl": "http://www.w3.org/2002/07/owl#" },
+  "@base": "https://moderndata101.substack.com/p/the-semantic-medallion/",
+  "@type": "Article",
+  "name": "The Semantic Medallion: Building a Knowledge Graph-Powered Data Catalog",
+  "headline": "The Semantic Medallion: Building a Knowledge Graph-Powered Data Catalog",
+  "datePublished": "2026-05-14",
+  "url": "https://moderndata101.substack.com/p/the-semantic-medallion",
+  "author": { "@type": "Person", "name": "Veronika Heimsbakk" },
+  "publisher": { "@type": "Organization", "name": "Modern Data 101" },
+  "relatedLink": [
+    { "@id": "the-semantic-medallion-claude_code-1.ttl" },
+    { "@id": "the-semantic-medallion-claude_code-1.jsonld" },
+    { "@id": "the-semantic-medallion-claude_code-1-relationships.md" }
+  ],
+  "prov:wasGeneratedBy": [
+    { "@type": "SoftwareApplication", "name": "kg-generator skill", "url": "https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/kg-generator", "description": "Knowledge Graph generation skill" },
+    { "@type": "SoftwareApplication", "name": "rdf-infographic-skill", "url": "https://github.com/OpenLinkSoftware/ai-agent-skills/tree/main/rdf-infographic-skill", "description": "RDF infographic generation skill" }
+  ]
+};
+const script = document.createElement('script');
+script.type = 'application/ld+json';
+script.textContent = JSON.stringify(jsonld, null, 2);
+document.head.appendChild(script);
+</script>
+
+</body>
+</html>

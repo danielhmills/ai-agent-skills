@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ title }} — Interactive Infographic</title>
+<meta name="description" content="{{ description }}">
+<meta property="og:title" content="{{ title }}">
+<meta property="og:description" content="{{ description }}">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="related" href="{{ rdf_rel_path }}" type="text/turtle">
+<link rel="alternate" href="{{ rdf_rel_path }}" type="text/turtle">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://d3js.org/d3@7"></script>
+<style>
+{{ css_content }}
+.d3-fallback-message{display:none;text-align:center;padding:3rem;color:var(--text-secondary)}
+</style>
+<script type="application/ld+json">{{ jsonld_content }}</script>
+</head>
+<body>
+
+<!-- Floating Navigation -->
+<nav id="floating-nav" class="section-nav" role="navigation" aria-label="Section navigation">
+  <div id="nav-header">
+    <span class="nav-title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      Sections
+    </span>
+    <div style="display:flex;align-items:center;gap:2px">
+      <button class="theme-btn theme-toggle" id="themeToggle" aria-label="Toggle dark mode" style="width:auto;height:28px;padding:0 6px;display:flex;align-items:center;gap:3px;background:none;border:none;cursor:pointer;border-radius:6px;font-size:13px;color:var(--text);transition:background .2s" title="Toggle dark mode">🌓</button>
+      <button id="nav-toggle" aria-label="Expand navigation" title="Expand">+</button>
+    </div>
+  </div>
+  <div id="nav-links">
+    {% for link in nav_links %}
+    <a href="{{ link.href }}" class="section-link">{{ link.label }}</a>
+    {% endfor %}
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+  <div class="hero-content">
+    {% if hero_tagline %}
+    <div class="tagline" style="margin-bottom:.75rem">{{ hero_tagline }}</div>
+    {% endif %}
+    <h1>{{ title }}</h1>
+    {% if tagline %}
+    <p class="tagline">{{ tagline }}</p>
+    {% endif %}
+    {% if meta_html %}
+    <div class="meta">{{ meta_html }}</div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Narrative Sections -->
+{{ narrative_html }}
+
+<!-- KG Explorer -->
+<section class="section section-alt" id="kg-explorer">
+  <h2>Knowledge Graph Explorer<a class="headline-anchor" href="#kg-explorer" aria-label="Link to this section">¶</a></h2>
+  <p>Interactive graph visualization derived from the companion RDF. Click nodes to resolve, drag to explore. <span style="font-size:12px;color:var(--text-secondary)">Graph data embedded from companion RDF at generation time.</span></p>
+
+  <div id="kg-explorer">
+    <div class="kg-header">
+      <h3>{{ title }}</h3>
+      <div style="display:flex;gap:8px;align-items:center">
+        <span class="kg-badge" id="kgNodeCount">Nodes: 0</span>
+        <span class="kg-badge" id="kgLinkCount">Links: 0</span>
+        <button id="kgControlsBtn" class="kg-toolbar-btn">Controls</button>
+      </div>
+    </div>
+    <div id="kgToolbar">
+      <div class="kg-controls-inner">
+        <div id="kgInnerToolbar" class="kg-toolbar">
+          <div class="kg-mode-btns">
+            <button id="kgModeBasic" class="btn-basic active" style="font-size:11px;padding:3px 10px;border-radius:6px;border:1px solid var(--border);background:var(--primary);color:#fff;cursor:pointer">Basic</button>
+            <button id="kgModeAdvanced" class="btn-advanced" style="font-size:11px;padding:3px 10px;border-radius:6px;border:1px solid var(--border);background:var(--card-bg);color:var(--text);cursor:pointer">Advanced</button>
+          </div>
+          <span style="width:1px;height:20px;background:var(--border);margin:0 4px"></span>
+          <button id="kgDensityCore" data-density="Core" style="font-size:11px;padding:3px 10px;border-radius:6px;border:1px solid var(--border);background:var(--primary);color:#fff;cursor:pointer">Core</button>
+          <button id="kgDensityFull" data-density="Full" style="font-size:11px;padding:3px 10px;border-radius:6px;border:1px solid var(--border);background:var(--card-bg);color:var(--text);cursor:pointer">Full</button>
+          <button id="kgFullscreenBtn" class="kg-toolbar-btn">⛶ Fullscreen</button>
+          <button id="kgCenterBtn" class="kg-toolbar-btn">◎ Center</button>
+          <button id="kgSettingsBtn" class="kg-toolbar-btn" data-advanced-control hidden>⚙ Settings</button>
+        </div>
+        <div id="settings-panel">
+          <div id="kgSettingsPanel" class="kg-settings-panel" data-advanced-control hidden>
+            <div class="settings-panel-header">
+              <h4>KG Settings</h4>
+              <button id="kgSettingsClose" aria-label="Close settings">✕</button>
+            </div>
+            <div class="kg-settings-grid">
+              <label>Charge <input type="range" id="kgCharge" min="-1200" max="-50" value="-300" step="10"></label>
+              <label>Link Distance <input type="range" id="kgLinkDist" min="40" max="320" value="120" step="10"></label>
+              <label>Physics <select id="kgPhysics"><option value="1">Enabled</option><option value="0">Disabled</option></select></label>
+              <label>Resolver <select id="kgResolver"><option value="uriburner">URIBurner</option><option value="none">None</option><option value="custom">Custom</option></select></label>
+              <label>Custom Pattern <input type="text" id="kgResolverCustom" placeholder="https://...?url={uri}" disabled></label>
+              <label>Arrow Style <select id="kgArrowStyle"><option value="single">Single Arrow</option><option value="dual">Dual Arrows</option></select></label>
+            </div>
+            <div class="kg-filter-section">
+              <h5>Predicate Filters</h5>
+              <div class="filter-actions">
+                <button id="setPredAll">Select All</button>
+                <button id="setPredNone">Deselect All</button>
+              </div>
+              <div id="pred-filters" class="pred-filters"></div>
+            </div>
+            <div class="kg-filter-section">
+              <h5>Node Types</h5>
+              <div class="filter-actions">
+                <button id="setNodeTypeAllBtn">Select All</button>
+                <button id="setNodeTypeNoneBtn">Deselect All</button>
+              </div>
+              <div id="node-type-chips" class="node-type-chips"></div>
+            </div>
+            <div class="kg-filter-section">
+              <h5>Literal Filter</h5>
+              <input type="text" id="literal-filter" placeholder="Filter by label/name..." style="width:100%;padding:4px 8px;border:1px solid var(--border);border-radius:4px;font-size:12px;background:var(--card-bg);color:var(--text)">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <svg id="kgSvg"></svg>
+    <div class="hint-text">Click SVG to activate zoom, click outside to release | Drag nodes to pin, double-click to unpin</div>
+    <div id="kgLegend" class="kg-legend">
+      <span class="kg-legend-item"><span class="kg-legend-dot" style="background:#ea580c"></span> Classes</span>
+      <span class="kg-legend-item"><span class="kg-legend-dot" style="background:#0ea5e9"></span> Properties</span>
+      <span class="kg-legend-item"><span class="kg-legend-dot" style="background:#059669"></span> Instances</span>
+    </div>
+  </div>
+</section>
+
+<!-- SPARQL Workbench -->
+<section class="section" id="sparql-explorer">
+  <h2>Explore Knowledge Graph using SPARQL<a class="headline-anchor" href="#sparql-explorer" aria-label="Link to this section">¶</a></h2>
+  <p>Query the companion RDF data using SPARQL. Use the default endpoint or copy queries to your own SPARQL client.</p>
+  <div class="sparql-card">
+    <div class="sparql-card-header">
+      <h3>SPARQL Query Workbench</h3>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <select id="sparqlGraph" style="padding:4px 8px;border:1px solid var(--border);border-radius:4px;font-size:12px;background:var(--card-bg);color:var(--text)">
+          <option value="">Default Graph</option>
+          <option value="{{ base_iri }}">Named Graph (Article)</option>
+        </select>
+        <select id="sparqlRecipe" style="padding:4px 8px;border:1px solid var(--border);border-radius:4px;font-size:12px;background:var(--card-bg);color:var(--text)">
+          {% for recipe in sparql_recipes %}
+          <option value="{{ recipe.query|e }}">{{ recipe.label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="sparql-body">
+      <label for="sparqlText">SPARQL Query</label>
+      <textarea id="sparqlText" placeholder="SELECT * WHERE { ?s ?p ?o } LIMIT 25">{{ default_sparql }}</textarea>
+      <div class="sparql-actions">
+        <button id="sparqlRun" class="primary">▶ Run</button>
+        <a id="sparqlLiveLink" href="https://linkeddata.uriburner.com/sparql" target="_blank" rel="noopener noreferrer" class="primary">🔗 Run live</a>
+        <button id="sparqlCopy">📋 Copy</button>
+        <span id="sparqlFormat" style="font-size:11px;color:var(--text-secondary);align-self:center">SELECT: text/x-html+tr | DESCRIBE/CONSTRUCT: text/x-html-nice-turtle</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Attribution Footer -->
+<section class="footer-attribution" id="footer">
+  <div class="section">
+    <h2>Attribution &amp; Provenance<a class="headline-anchor" href="#footer" aria-label="Link to this section">¶</a></h2>
+    <p style="font-size:.88rem;color:var(--text-secondary);margin-bottom:1rem">Source material, companion files, skills used, generation environment, and extraction provenance.</p>
+    <div class="attr-grid">
+      <div class="attr-card">
+        <h4>Source material</h4>
+        {% if source_url %}
+        <p><a href="{{ source_url }}" target="_blank" rel="noopener noreferrer">{{ source_label or source_url }}</a></p>
+        {% endif %}
+      </div>
+      <div class="attr-card">
+        <h4>Companion files</h4>
+        <p>RDF: <a href="{{ rdf_rel_path }}" target="_blank" rel="noopener noreferrer">{{ rdf_filename }}</a></p>
+        <p>HTML: <a href="{{ output_filename }}" target="_blank" rel="noopener noreferrer">{{ output_filename }}</a></p>
+      </div>
+      <div class="attr-card">
+        <h4>Skills used</h4>
+        <p><a href="https://github.com/anomalyco/opencode-skills/tree/main/rdf-infographic-skill" target="_blank" rel="noopener noreferrer">rdf-infographic-skill</a></p>
+        <p><a href="https://github.com/anomalyco/opencode-skills/tree/main/kg-generator" target="_blank" rel="noopener noreferrer">kg-generator</a></p>
+      </div>
+      <div class="attr-card">
+        <h4>Generation environment</h4>
+        <p>RDF Infographic Generator v1</p>
+        <p><a href="https://python.org" target="_blank" rel="noopener noreferrer">Python</a> + <a href="https://rdflib.readthedocs.io" target="_blank" rel="noopener noreferrer">rdflib</a> + <a href="https://jinja.palletsprojects.com" target="_blank" rel="noopener noreferrer">Jinja2</a></p>
+      </div>
+      <div class="attr-card">
+        <h4>Linked Data runtime</h4>
+        <p><a href="https://virtuoso.openlinksw.com/" target="_blank" rel="noopener noreferrer">OpenLink Virtuoso</a></p>
+        <p><a href="https://linkeddata.uriburner.com/" target="_blank" rel="noopener noreferrer">URIBurner Linked Data Dashboard</a></p>
+      </div>
+      <div class="attr-card">
+        <h4>Named graphs</h4>
+        <p><a href="{{ base_iri }}" target="_blank" rel="noopener noreferrer">{{ base_iri }}</a></p>
+      </div>
+      <div class="attr-card">
+        <h4>Resolver pattern</h4>
+        <p><a href="https://linkeddata.uriburner.com/describe/?url=" target="_blank" rel="noopener noreferrer">https://linkeddata.uriburner.com/describe/?url={uri}</a></p>
+      </div>
+      <div class="attr-card">
+        <h4>Extraction provenance</h4>
+        <p>Entities, relationships, and narrative extracted from companion RDF using rdflib. Graph data embedded at generation time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+// kgData derived from companion RDF at generation time
+const kgData = {{ kgdata_json }};
+
+// Theme toggle
+(function(){
+  var themeToggle = document.getElementById('themeToggle');
+  var navToggle = document.getElementById('nav-toggle');
+  var navLinks = document.getElementById('nav-links');
+
+  themeToggle.addEventListener('click', function() {
+    var html = document.documentElement;
+    var current = html.getAttribute('data-theme');
+    var next = current === 'light' ? 'dark' : 'light';
+    html.setAttribute('data-theme', next);
+    themeToggle.textContent = next === 'dark' ? '🌜' : '🌓';
+    themeToggle.setAttribute('aria-label', 'Toggle ' + (next === 'dark' ? 'light' : 'dark') + ' mode');
+  });
+
+  // Draggable nav
+  (function() {
+    var nav = document.getElementById('floating-nav');
+    var header = document.getElementById('nav-header');
+    var isDragging = false, startX, startY, origX, origY;
+    header.addEventListener('mousedown', function(e) {
+      if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') return;
+      isDragging = true;
+      startX = e.clientX; startY = e.clientY;
+      origX = nav.offsetLeft; origY = nav.offsetTop;
+      function onMove(e2) {
+        if (!isDragging) return;
+        nav.style.left = (origX + e2.clientX - startX) + 'px';
+        nav.style.top = (origY + e2.clientY - startY) + 'px';
+        nav.style.right = 'auto';
+      }
+      function onUp() { isDragging = false; document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+  })();
+
+  navToggle.addEventListener('click', function() {
+    var expanded = navLinks.classList.toggle('open');
+    navToggle.textContent = expanded ? '−' : '+';
+    navToggle.setAttribute('aria-label', expanded ? 'Collapse navigation' : 'Expand navigation');
+    navToggle.setAttribute('title', expanded ? 'Collapse' : 'Expand');
+  });
+})();
+
+// Scroll animations
+(function(){
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.anim-fade').forEach(function(el) { observer.observe(el); });
+})();
+
+// FAQ accordion
+(function(){
+  document.querySelectorAll('.faq-question').forEach(function(q) {
+    q.addEventListener('click', function() {
+      var item = this.parentElement;
+      item.classList.toggle('open');
+    });
+  });
+})();
+
+// SPARQL workbench
+(function(){
+  var textarea = document.getElementById('sparqlText');
+  var recipe = document.getElementById('sparqlRecipe');
+  var liveLink = document.getElementById('sparqlLiveLink');
+  var runBtn = document.getElementById('sparqlRun');
+  var copyBtn = document.getElementById('sparqlCopy');
+  var endpoint = 'https://linkeddata.uriburner.com/sparql';
+
+  function updateLiveLink() {
+    var q = textarea.value;
+    var encoded = encodeURIComponent(q);
+    var graph = document.getElementById('sparqlGraph').value;
+    liveLink.href = endpoint + '?default-graph-uri=' + encodeURIComponent(graph) + '&query=' + encoded + '&format=text%2Fx-html%2Btr&timeout=0&debug=on&run=+Run+Query+';
+  }
+
+  if (recipe) {
+    recipe.addEventListener('change', function() {
+      textarea.value = this.value;
+      updateLiveLink();
+    });
+  }
+  textarea.addEventListener('input', updateLiveLink);
+  updateLiveLink();
+
+  if (runBtn) {
+    runBtn.addEventListener('click', function() { window.open(liveLink.href, '_blank', 'noopener,noreferrer'); });
+  }
+  if (copyBtn) {
+    copyBtn.addEventListener('click', function() {
+      navigator.clipboard.writeText(textarea.value).catch(function() {});
+    });
+  }
+})();
+
+// KG Explorer (must be after kgData is defined)
+{{ kg_explorer_js }}
+(function(){
+  if (typeof initKGExplorer === 'function') {
+    initKGExplorer({
+      kgData: kgData,
+      options: {
+        baseIRI: '{{ base_iri }}',
+        resolver: 'uriburner'
+      }
+    });
+  }
+})();
+</script>
+</body>
+</html>
