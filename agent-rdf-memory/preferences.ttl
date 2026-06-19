@@ -1631,9 +1631,8 @@ Response format (after gate):
 • Name: Kingsley Uyi Idehen
 • Email: kidehen@openlinksw.com
 • Role: Founder & CEO, OpenLink Software
-• WebID: https://www.linkedin.com/in/kidehen#this
-• Verified Identity: {user SAN URI} {✅ | ⚠️ Unverified}
-• Aliases: https://x.com/kidehen#this, https://substack.com/@kidehen#this
+• WebID: {user SAN URI} {✅ | ⚠️ Unverified}
+• owl:sameAs: https://www.linkedin.com/in/kidehen#this, https://x.com/kidehen#this, https://substack.com/@kidehen#this
 
 **Agent (me)**
 • Model: {model name} ({llm-id})
@@ -1645,7 +1644,8 @@ Response format (after gate):
 • On-Behalf-Of WebID: https://www.linkedin.com/in/kidehen#this
 • Agent WebID: {agent SAN URI} {✅ | ⚠️ Unverified}
 
-Always emit both Verified Identity and Agent WebID lines even when unverified — ⚠️ is informative."""@en ;
+The cert-verified SAN URI is the canonical WebID. owl:sameAs lists all known equivalent IRIs.
+Always emit the WebID and Agent WebID lines even when unverified — ⚠️ is informative."""@en ;
     onto:hasTrigger onto:triggerWhoamiQuery ;
     schema:url <howto/verified-identity.ttl> .
 

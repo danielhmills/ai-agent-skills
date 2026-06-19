@@ -129,9 +129,8 @@ Fill runtime values (model, env, path, project) from current session context.
 • Name: Kingsley Uyi Idehen
 • Email: kidehen@openlinksw.com
 • Role: Founder & CEO, OpenLink Software
-• WebID: https://www.linkedin.com/in/kidehen#this
-• Verified Identity: {user SAN URI} {✅ | ⚠️ Unverified}
-• Aliases: https://x.com/kidehen#this, https://substack.com/@kidehen#this
+• WebID: {user SAN URI} {✅ | ⚠️ Unverified}
+• owl:sameAs: https://www.linkedin.com/in/kidehen#this, https://x.com/kidehen#this, https://substack.com/@kidehen#this
 
 **Agent (me)**
 • Model: {model name} ({llm-id used in session filenames})
@@ -143,5 +142,7 @@ Fill runtime values (model, env, path, project) from current session context.
 • On-Behalf-Of WebID: https://www.linkedin.com/in/kidehen#this
 • Agent WebID: {agent SAN URI} {✅ | ⚠️ Unverified}
 
-If verification is skipped (cert files absent, openssl unavailable) emit both lines
-with ⚠️ Unverified rather than omitting them — absence of the badge is informative."""@en .
+The cert-verified SAN URI is the canonical WebID — the primary authoritative identifier.
+owl:sameAs lists all known equivalent IRIs (LinkedIn, X, Substack, etc.).
+If verification is skipped (cert files absent, openssl unavailable) emit the WebID line
+with ⚠️ Unverified and fall back to the memory-known SAN URI rather than omitting it."""@en .
