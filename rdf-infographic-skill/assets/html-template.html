@@ -596,13 +596,14 @@
     <section class="section" id="faq">
         <div class="container">
             <h2>Frequently Asked Questions</h2>
+            <!-- Each FAQ question heading MUST carry a unique stable id attribute in lowercase kebab-case (e.g., id="faq-what-is-main-title") -->
             <div style="max-width: 800px; margin: 0 auto;">
                 <div class="card" style="margin-bottom: 1rem;">
-                    <h4>What is [MAIN_TITLE]?</h4>
+                    <h4 id="faq-sample-question">What is [MAIN_TITLE]?</h4>
                     <p>Provide a comprehensive answer to this question.</p>
                 </div>
                 <div class="card">
-                    <h4>How do I get started?</h4>
+                    <h4 id="faq-get-started">How do I get started?</h4>
                     <p>Provide step-by-step instructions for getting started.</p>
                 </div>
             </div>
@@ -613,17 +614,18 @@
     <section class="section" id="glossary">
         <div class="container">
             <h2>Key Terms</h2>
+            <!-- Each glossary term heading MUST carry a unique stable id attribute in lowercase kebab-case (e.g., id="glossary-term-1") -->
             <div class="grid-3">
                 <div class="card">
-                    <h4 style="color: var(--primary);">Term 1 (T1)</h4>
+                    <h4 id="glossary-term-1" style="color: var(--primary);">Term 1 (T1)</h4>
                     <p>Definition of the term and its relevance to the solution.</p>
                 </div>
                 <div class="card">
-                    <h4 style="color: var(--primary);">Term 2 (T2)</h4>
+                    <h4 id="glossary-term-2" style="color: var(--primary);">Term 2 (T2)</h4>
                     <p>Definition of the term and its relevance to the solution.</p>
                 </div>
                 <div class="card">
-                    <h4 style="color: var(--primary);">Term 3 (T3)</h4>
+                    <h4 id="glossary-term-3" style="color: var(--primary);">Term 3 (T3)</h4>
                     <p>Definition of the term and its relevance to the solution.</p>
                 </div>
             </div>
