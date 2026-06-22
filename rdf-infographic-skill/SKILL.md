@@ -154,7 +154,7 @@ Pass the RDF data and parameters to generate a complete, single-file HTML docume
 - Floating, draggable, resizable navigation panel
 - Scroll-triggered animations using Intersection Observer API
 - Interactive FAQ accordion with smooth transitions
-- Section anchors with copy-to-clipboard functionality
+- Section anchors with stable URL fragment identifiers and copy-to-clipboard functionality
 - Entity linking to external URIs
 - Comprehensive metadata (JSON-LD, microdata, Open Graph)
 - Professional typography and color schemes
@@ -301,10 +301,13 @@ See `references/design-patterns.md` for detailed design system guidelines.
 - Implemented via Intersection Observer API for performance
 - Staggered animation timing for visual flow
 
-#### Section Anchors
-- Heading hover shows visible 🔗 icon
-- Click copies direct link to clipboard
-- Enables shareable section references
+#### Section Anchors and URL Fragment Identifiers
+- **Every section/subsection heading MUST carry a stable, unique HTML `id` attribute** serving as a URL-addressable fragment identifier (e.g., `<h2 id="overview">`, `<h3 id="faq-what-is-opal">`).
+- Fragment IDs MUST use lowercase kebab-case: alphanumeric characters and hyphens only (no spaces, underscores, special characters, or leading digits).
+- Fragment IDs MUST be stable across regenerations of the same content — derive them from the section heading text (slugified) or the RDF entity IRI local name, never from auto-incrementing counters, timestamps, or random values.
+- The URL fragment MUST resolve natively: `<a href="#id">` scrolls to the correct section without JavaScript dependency (`html { scroll-behavior: smooth; }` is sufficient).
+- Heading hover shows visible 🔗 icon that copies the full page URL with the fragment to clipboard.
+- **Enables shareable section references** — both via the 🔗 copy mechanism and by direct URL fragment navigation (e.g., `page.html#faq-what-is-opal`).
 
 #### Entity Linking
 - First occurrence of RDF entities become hyperlinks
@@ -358,7 +361,9 @@ Use this checklist to validate generated infographics:
 ### Content Structure
 - [ ] All RDF entities are represented
 - [ ] Acronyms expanded on first use
-- [ ] Section anchors have copy functionality
+- [ ] Every section/subsection heading has a unique, stable HTML `id` attribute (lowercase kebab-case)
+- [ ] Fragment IDs are directly addressable via URL (e.g., `page.html#section-id` scrolls to the correct section)
+- [ ] Section anchors have copy-to-clipboard functionality
 - [ ] Entity links point to correct external URIs
 - [ ] Problem-solution framing is clear
 
@@ -1163,6 +1168,9 @@ Navigation state persistence **MUST** handle these edge cases:
 - [ ] Dark mode: both `html[data-theme="dark"]` and `@media (prefers-color-scheme: dark)` produce equivalent rendering; no hardcoded colors outside CSS variables.
 - [ ] Dark mode CSS blocks are **not** comma-combined: `html[data-theme="dark"] { … }` and `@media (prefers-color-scheme:dark) { … }` must be two entirely separate blocks. A trailing comma after a selector followed by an `@media` rule is invalid CSS and silently fails in most browsers.
 - [ ] Light/dark theme toggle is present in the **nav panel header bar** (`#fnav-header`) — not inside the collapsible `#fnav-links` section — so it is accessible whether the nav is collapsed or expanded. The button must carry `title` and `aria-label` attributes and update its icon/label to reflect the current theme state on each click.
+- [ ] Every section heading (`h1`–`h4`) throughout the document carries a unique HTML `id` attribute in lowercase kebab-case.
+- [ ] Fragment IDs are stable (derived from heading text slug or entity IRI local name, not from counters or timestamps).
+- [ ] Each fragment ID resolves natively: `<a href="#id">` positions the section correctly without JavaScript dependency.
 
 ---
 
