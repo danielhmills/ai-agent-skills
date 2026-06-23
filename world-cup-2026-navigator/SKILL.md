@@ -70,6 +70,27 @@ When writing SPARQL, always specify the graph with `FROM <graph-iri>` or `GRAPH 
 
 ---
 
+## SPARQL Endpoint
+
+**Default endpoint**: `https://demo.openlinksw.com/sparql`
+
+Use this endpoint for all queries against the FIFA World Cup Knowledge Graph unless the user specifies otherwise.
+
+**Example curl:**
+```bash
+curl -s -G "https://demo.openlinksw.com/sparql" \
+  -H "Accept: application/sparql-results+json" \
+  --data-urlencode "query=<SPARQL_QUERY>"
+```
+
+**Example SPASQL via `execute_spasql_query`:**
+```
+sql: SPARQL <SPARQL_QUERY>
+```
+Set the `default-graph-uri` parameter to a named graph IRI when needed.
+
+---
+
 ## Ontology Metadata
 
 ```turtle

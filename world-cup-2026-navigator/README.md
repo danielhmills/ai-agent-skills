@@ -126,6 +126,10 @@ PREFIX xsd:          <http://www.w3.org/2001/XMLSchema#>
 - "Find players by country / position"
 - "Query urn:fifa:powerrankings"
 
+## SPARQL Endpoint
+
+**Default**: `https://demo.openlinksw.com/sparql`
+
 ## Ontology
 
 - **Namespace**: `https://www.openlinksw.com/ontology/fifa#`
